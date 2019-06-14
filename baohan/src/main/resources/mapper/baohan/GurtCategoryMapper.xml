@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.baohan.mapper.GurtCategoryMapper">
+    
+    <resultMap type="GurtCategory" id="GurtCategoryResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="remark"    column="remark"    />
+        <result property="createUserId"    column="create_user_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+	
+	<sql id="selectGurtCategoryVo">
+        select id, name, remark, create_user_id, create_time, deleted from gurt_category
+    </sql>
+	
+    <select id="selectGurtCategoryList" parameterType="GurtCategory" resultMap="GurtCategoryResult">
+        <include refid="selectGurtCategoryVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="createUserId != null "> and create_user_id = #{createUserId}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="deleted != null "> and deleted = #{deleted}</if>
+         </where>
+    </select>
+    
+    <select id="selectGurtCategoryById" parameterType="Long" resultMap="GurtCategoryResult">
+        <include refid="selectGurtCategoryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertGurtCategory" parameterType="GurtCategory">
+        insert into gurt_category
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="createUserId != null  ">create_user_id,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="deleted != null  ">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="createUserId != null  ">#{createUserId},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="deleted != null  ">#{deleted},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateGurtCategory" parameterType="GurtCategory">
+        update gurt_category
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="createUserId != null  ">create_user_id = #{createUserId},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="deleted != null  ">deleted = #{deleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteGurtCategoryById" parameterType="Long">
+        delete from gurt_category where id = #{id}
+    </delete>
+	
+    <delete id="deleteGurtCategoryByIds" parameterType="String">
+        delete from gurt_category where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

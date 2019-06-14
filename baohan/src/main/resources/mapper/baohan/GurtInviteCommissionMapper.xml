@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.baohan.mapper.GurtInviteCommissionMapper">
+    
+    <resultMap type="GurtInviteCommission" id="GurtInviteCommissionResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="commissionAmount"    column="commission_amount"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+	
+	<sql id="selectGurtInviteCommissionVo">
+        select id, order_id, commission_amount, status from gurt_invite_commission
+    </sql>
+	
+    <select id="selectGurtInviteCommissionList" parameterType="GurtInviteCommission" resultMap="GurtInviteCommissionResult">
+        <include refid="selectGurtInviteCommissionVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="orderId != null "> and order_id = #{orderId}</if>
+             <if test="commissionAmount != null "> and commission_amount = #{commissionAmount}</if>
+             <if test="status != null "> and status = #{status}</if>
+         </where>
+    </select>
+    
+    <select id="selectGurtInviteCommissionById" parameterType="Long" resultMap="GurtInviteCommissionResult">
+        <include refid="selectGurtInviteCommissionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertGurtInviteCommission" parameterType="GurtInviteCommission">
+        insert into gurt_invite_commission
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="orderId != null  ">order_id,</if>
+			<if test="commissionAmount != null  ">commission_amount,</if>
+			<if test="status != null  ">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="orderId != null  ">#{orderId},</if>
+			<if test="commissionAmount != null  ">#{commissionAmount},</if>
+			<if test="status != null  ">#{status},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateGurtInviteCommission" parameterType="GurtInviteCommission">
+        update gurt_invite_commission
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null  ">order_id = #{orderId},</if>
+            <if test="commissionAmount != null  ">commission_amount = #{commissionAmount},</if>
+            <if test="status != null  ">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteGurtInviteCommissionById" parameterType="Long">
+        delete from gurt_invite_commission where id = #{id}
+    </delete>
+	
+    <delete id="deleteGurtInviteCommissionByIds" parameterType="String">
+        delete from gurt_invite_commission where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

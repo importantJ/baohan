@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.baohan.mapper.GurtOrderMapper">
+    
+    <resultMap type="GurtOrder" id="GurtOrderResult">
+        <result property="id"    column="id"    />
+        <result property="warrantee"    column="warrantee"    />
+        <result property="beneficiary"    column="beneficiary"    />
+        <result property="projectNumber"    column="project_number"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="closingTime"    column="closing_time"    />
+        <result property="guaranteeAmount"    column="guarantee_amount"    />
+        <result property="validityDeadline"    column="validity_deadline"    />
+        <result property="guaranteeId"    column="guarantee_id"    />
+        <result property="bankId"    column="bank_id"    />
+        <result property="projectTypeId"    column="project_type_id"    />
+        <result property="amount"    column="amount"    />
+        <result property="createUserId"    column="create_user_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="bankSubmissionTime"    column="bank_submission_time"    />
+        <result property="status"    column="status"    />
+        <result property="needInvoice"    column="need_invoice"    />
+        <result property="companyName"    column="company_name"    />
+        <result property="taxNumber"    column="tax_number"    />
+        <result property="bankName"    column="bank_name"    />
+        <result property="bankAccount"    column="bank_account"    />
+        <result property="companyAddress"    column="company_address"    />
+        <result property="phoneNumber"    column="phone_number"    />
+        <result property="invoiceFileDownloadUrl"    column="invoice_file_download_url"    />
+    </resultMap>
+	
+	<sql id="selectGurtOrderVo">
+        select id, warrantee, beneficiary, project_number, project_name, closing_time, guarantee_amount, validity_deadline, guarantee_id, bank_id, project_type_id, amount, create_user_id, create_time, bank_submission_time, status, need_invoice, company_name, tax_number, bank_name, bank_account, company_address, phone_number, invoice_file_download_url from gurt_order
+    </sql>
+	
+    <select id="selectGurtOrderList" parameterType="GurtOrder" resultMap="GurtOrderResult">
+        <include refid="selectGurtOrderVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="warrantee != null  and warrantee != '' "> and warrantee = #{warrantee}</if>
+             <if test="beneficiary != null  and beneficiary != '' "> and beneficiary = #{beneficiary}</if>
+             <if test="projectNumber != null  and projectNumber != '' "> and project_number = #{projectNumber}</if>
+             <if test="projectName != null  and projectName != '' "> and project_name = #{projectName}</if>
+             <if test="closingTime != null "> and closing_time = #{closingTime}</if>
+             <if test="guaranteeAmount != null "> and guarantee_amount = #{guaranteeAmount}</if>
+             <if test="validityDeadline != null "> and validity_deadline = #{validityDeadline}</if>
+             <if test="guaranteeId != null "> and guarantee_id = #{guaranteeId}</if>
+             <if test="bankId != null "> and bank_id = #{bankId}</if>
+             <if test="projectTypeId != null "> and project_type_id = #{projectTypeId}</if>
+             <if test="amount != null "> and amount = #{amount}</if>
+             <if test="createUserId != null "> and create_user_id = #{createUserId}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="bankSubmissionTime != null "> and bank_submission_time = #{bankSubmissionTime}</if>
+             <if test="status != null "> and status = #{status}</if>
+             <if test="needInvoice != null "> and need_invoice = #{needInvoice}</if>
+             <if test="companyName != null  and companyName != '' "> and company_name = #{companyName}</if>
+             <if test="taxNumber != null  and taxNumber != '' "> and tax_number = #{taxNumber}</if>
+             <if test="bankName != null  and bankName != '' "> and bank_name = #{bankName}</if>
+             <if test="bankAccount != null  and bankAccount != '' "> and bank_account = #{bankAccount}</if>
+             <if test="companyAddress != null  and companyAddress != '' "> and company_address = #{companyAddress}</if>
+             <if test="phoneNumber != null "> and phone_number = #{phoneNumber}</if>
+             <if test="invoiceFileDownloadUrl != null  and invoiceFileDownloadUrl != '' "> and invoice_file_download_url = #{invoiceFileDownloadUrl}</if>
+         </where>
+    </select>
+    
+    <select id="selectGurtOrderById" parameterType="Long" resultMap="GurtOrderResult">
+        <include refid="selectGurtOrderVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertGurtOrder" parameterType="GurtOrder">
+        insert into gurt_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="warrantee != null  and warrantee != ''  ">warrantee,</if>
+			<if test="beneficiary != null  and beneficiary != ''  ">beneficiary,</if>
+			<if test="projectNumber != null  and projectNumber != ''  ">project_number,</if>
+			<if test="projectName != null  and projectName != ''  ">project_name,</if>
+			<if test="closingTime != null  ">closing_time,</if>
+			<if test="guaranteeAmount != null  ">guarantee_amount,</if>
+			<if test="validityDeadline != null  ">validity_deadline,</if>
+			<if test="guaranteeId != null  ">guarantee_id,</if>
+			<if test="bankId != null  ">bank_id,</if>
+			<if test="projectTypeId != null  ">project_type_id,</if>
+			<if test="amount != null  ">amount,</if>
+			<if test="createUserId != null  ">create_user_id,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="bankSubmissionTime != null  ">bank_submission_time,</if>
+			<if test="status != null  ">status,</if>
+			<if test="needInvoice != null  ">need_invoice,</if>
+			<if test="companyName != null  and companyName != ''  ">company_name,</if>
+			<if test="taxNumber != null  and taxNumber != ''  ">tax_number,</if>
+			<if test="bankName != null  and bankName != ''  ">bank_name,</if>
+			<if test="bankAccount != null  and bankAccount != ''  ">bank_account,</if>
+			<if test="companyAddress != null  and companyAddress != ''  ">company_address,</if>
+			<if test="phoneNumber != null  ">phone_number,</if>
+			<if test="invoiceFileDownloadUrl != null  and invoiceFileDownloadUrl != ''  ">invoice_file_download_url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="warrantee != null  and warrantee != ''  ">#{warrantee},</if>
+			<if test="beneficiary != null  and beneficiary != ''  ">#{beneficiary},</if>
+			<if test="projectNumber != null  and projectNumber != ''  ">#{projectNumber},</if>
+			<if test="projectName != null  and projectName != ''  ">#{projectName},</if>
+			<if test="closingTime != null  ">#{closingTime},</if>
+			<if test="guaranteeAmount != null  ">#{guaranteeAmount},</if>
+			<if test="validityDeadline != null  ">#{validityDeadline},</if>
+			<if test="guaranteeId != null  ">#{guaranteeId},</if>
+			<if test="bankId != null  ">#{bankId},</if>
+			<if test="projectTypeId != null  ">#{projectTypeId},</if>
+			<if test="amount != null  ">#{amount},</if>
+			<if test="createUserId != null  ">#{createUserId},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="bankSubmissionTime != null  ">#{bankSubmissionTime},</if>
+			<if test="status != null  ">#{status},</if>
+			<if test="needInvoice != null  ">#{needInvoice},</if>
+			<if test="companyName != null  and companyName != ''  ">#{companyName},</if>
+			<if test="taxNumber != null  and taxNumber != ''  ">#{taxNumber},</if>
+			<if test="bankName != null  and bankName != ''  ">#{bankName},</if>
+			<if test="bankAccount != null  and bankAccount != ''  ">#{bankAccount},</if>
+			<if test="companyAddress != null  and companyAddress != ''  ">#{companyAddress},</if>
+			<if test="phoneNumber != null  ">#{phoneNumber},</if>
+			<if test="invoiceFileDownloadUrl != null  and invoiceFileDownloadUrl != ''  ">#{invoiceFileDownloadUrl},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateGurtOrder" parameterType="GurtOrder">
+        update gurt_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="warrantee != null  and warrantee != ''  ">warrantee = #{warrantee},</if>
+            <if test="beneficiary != null  and beneficiary != ''  ">beneficiary = #{beneficiary},</if>
+            <if test="projectNumber != null  and projectNumber != ''  ">project_number = #{projectNumber},</if>
+            <if test="projectName != null  and projectName != ''  ">project_name = #{projectName},</if>
+            <if test="closingTime != null  ">closing_time = #{closingTime},</if>
+            <if test="guaranteeAmount != null  ">guarantee_amount = #{guaranteeAmount},</if>
+            <if test="validityDeadline != null  ">validity_deadline = #{validityDeadline},</if>
+            <if test="guaranteeId != null  ">guarantee_id = #{guaranteeId},</if>
+            <if test="bankId != null  ">bank_id = #{bankId},</if>
+            <if test="projectTypeId != null  ">project_type_id = #{projectTypeId},</if>
+            <if test="amount != null  ">amount = #{amount},</if>
+            <if test="createUserId != null  ">create_user_id = #{createUserId},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="bankSubmissionTime != null  ">bank_submission_time = #{bankSubmissionTime},</if>
+            <if test="status != null  ">status = #{status},</if>
+            <if test="needInvoice != null  ">need_invoice = #{needInvoice},</if>
+            <if test="companyName != null  and companyName != ''  ">company_name = #{companyName},</if>
+            <if test="taxNumber != null  and taxNumber != ''  ">tax_number = #{taxNumber},</if>
+            <if test="bankName != null  and bankName != ''  ">bank_name = #{bankName},</if>
+            <if test="bankAccount != null  and bankAccount != ''  ">bank_account = #{bankAccount},</if>
+            <if test="companyAddress != null  and companyAddress != ''  ">company_address = #{companyAddress},</if>
+            <if test="phoneNumber != null  ">phone_number = #{phoneNumber},</if>
+            <if test="invoiceFileDownloadUrl != null  and invoiceFileDownloadUrl != ''  ">invoice_file_download_url = #{invoiceFileDownloadUrl},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteGurtOrderById" parameterType="Long">
+        delete from gurt_order where id = #{id}
+    </delete>
+	
+    <delete id="deleteGurtOrderByIds" parameterType="String">
+        delete from gurt_order where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

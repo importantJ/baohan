@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.baohan.mapper.GurtGuaranteeMapper">
+    
+    <resultMap type="GurtGuarantee" id="GurtGuaranteeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="remark"    column="remark"    />
+        <result property="guaranteeFilePath"    column="guarantee_file_path"    />
+    </resultMap>
+	
+	<sql id="selectGurtGuaranteeVo">
+        select id, name, remark, guarantee_file_path from gurt_guarantee
+    </sql>
+	
+    <select id="selectGurtGuaranteeList" parameterType="GurtGuarantee" resultMap="GurtGuaranteeResult">
+        <include refid="selectGurtGuaranteeVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="guaranteeFilePath != null  and guaranteeFilePath != '' "> and guarantee_file_path = #{guaranteeFilePath}</if>
+         </where>
+    </select>
+    
+    <select id="selectGurtGuaranteeById" parameterType="Long" resultMap="GurtGuaranteeResult">
+        <include refid="selectGurtGuaranteeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertGurtGuarantee" parameterType="GurtGuarantee" useGeneratedKeys="true" keyProperty="id">
+        insert into gurt_guarantee
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="guaranteeFilePath != null  and guaranteeFilePath != ''  ">guarantee_file_path,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="guaranteeFilePath != null  and guaranteeFilePath != ''  ">#{guaranteeFilePath},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateGurtGuarantee" parameterType="GurtGuarantee">
+        update gurt_guarantee
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="guaranteeFilePath != null  and guaranteeFilePath != ''  ">guarantee_file_path = #{guaranteeFilePath},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteGurtGuaranteeById" parameterType="Long">
+        delete from gurt_guarantee where id = #{id}
+    </delete>
+	
+    <delete id="deleteGurtGuaranteeByIds" parameterType="String">
+        delete from gurt_guarantee where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
