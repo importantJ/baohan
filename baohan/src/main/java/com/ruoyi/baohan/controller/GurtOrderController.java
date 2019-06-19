@@ -1,6 +1,9 @@
 package com.ruoyi.baohan.controller;
 
 import java.util.List;
+
+import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.SysUser;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +22,8 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * 订单 信息操作处理
  * 
@@ -27,7 +32,7 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
  */
 @Controller
 @RequestMapping("/baohan/gurtOrder")
-public class GurtOrderController extends BaseController
+public class 	GurtOrderController extends BaseController
 {
     private String prefix = "baohan/gurtOrder";
 	
@@ -74,6 +79,11 @@ public class GurtOrderController extends BaseController
 	@GetMapping("/add")
 	public String add()
 	{
+
+ 		SysUser currentUser = ShiroUtils.getSysUser();
+
+
+
 	    return prefix + "/add";
 	}
 	
