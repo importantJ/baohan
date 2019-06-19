@@ -2,41 +2,94 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
 	<th:block th:include="include :: header('修改项目基础资料')" />
+	<style type="text/css">
+		#u2399 div{
+			display: inline-block;
+
+		}
+		#u2399{
+			display: inline-block;
+			width: 440px;
+			text-align: center;
+		}
+		div{
+			display: inline-block;
+		}
+	</style>
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-gurtCategory-edit" th:object="${gurtCategory}">
-            <input id="id" name="id" th:field="*{id}"  type="hidden">
+            <input id="id" name="id" th:value="${id}"  type="hidden">
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">类目名称：</label>
 				<div class="col-sm-8">
-					<input id="name" name="name" th:field="*{name}" class="form-control" type="text">
+					<input id="name" style="width: 300px" name="name" th:value="${gurtCategory.name}" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">备注说明：</label>
 				<div class="col-sm-8">
-					<input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text">
+					<input id="remark" style="width: 800px" name="remark" th:value="${gurtCategory.remark}" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">：</label>
-				<div class="col-sm-8">
-					<input id="createUserId" name="createUserId" th:field="*{createUserId}" class="form-control" type="text">
+			<h4>项目分类</h4>
+
+
+			<span th:if="${gurtCategory}">
+			<div  id="u2399" class="ax_default" th:each="project:${gurtCategory.gurtProjectTypeList}">
+				<div style="width: 440px;text-align: left;font-weight: bold" th:text="${project.name}"></div>
+				<!-- Unnamed (Table Cell) -->
+				<div id="u2400" class="ax_default table_cell" style="width: 200px">
+
+					<div id="u2400_text" class="text ">
+						<p><span>保函金额(元)</span></p>
+					</div>
 				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">：</label>
-				<div class="col-sm-8">
-					<input id="createTime" name="createTime" th:field="*{createTime}" class="form-control" type="text">
+
+				<!-- Unnamed (Table Cell) -->
+				<div id="u2401" class="ax_default table_cell" style="width: 110px">
+
+					<div id="u2401_text" class="text ">
+						<p><span>单笔</span></p>
+					</div>
 				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">是否删除(0 否; 1 是)：</label>
-				<div class="col-sm-8">
-					<input id="deleted" name="deleted" th:field="*{deleted}" class="form-control" type="text">
+
+				<!-- Unnamed (Table Cell) -->
+				<div id="u2402" class="ax_default table_cell" style="width: 120px">
+
+					<div id="u2402_text" class="text ">
+						<p><span>多笔</span></p>
+					</div>
 				</div>
+
+				<span th:each="conf:${project.gurtProjectTypeCostConfigList}">
+					<!-- Unnamed (Table Cell) -->
+				<div id="u2403" class="ax_default table_cell" style="width: 200px">
+
+					<div id="u2403_text" class="text ">
+						<p><span th:text="${conf.startingAmount}"></span>-<span th:text="${conf.endingAmount}"></span></p>
+					</div>
+				</div>
+
+					<!-- Unnamed (Table Cell) -->
+				<div id="u2404" class="ax_default table_cell" style="width: 110px">
+
+					<div id="u2404_text" class="text ">
+						<p><span th:text="${conf.singlePaymentCost}"></span><span th:if="${conf.singlePaymentCountType==1}">%</span></p>
+					</div>
+				</div>
+
+					<!-- Unnamed (Table Cell) -->
+				<div id="u2405" class="ax_default table_cell" style="width: 110px">
+
+					<div id="u2405_text" class="text ">
+						<p><span th:text="${conf.multiplePaymentCost}"></span><span th:if="${conf.multiplePaymentCountType==1}">%</span></p>
+					</div>
+				</div>
+				</span>
 			</div>
+</span>
 		</form>
     </div>
     <div th:include="include::footer"></div>
@@ -50,12 +103,7 @@
 			},
 			focusCleanup: true
 		});
-		
-		function submitHandler() {
-	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/edit", $('#form-gurtCategory-edit').serialize());
-	        }
-	    }
+
 	</script>
 </body>
 </html>

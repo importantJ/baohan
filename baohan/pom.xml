@@ -24,6 +24,7 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>

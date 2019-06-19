@@ -12,7 +12,7 @@
 <div class="wrapper wrapper-content animated fadeInRight ibox-content" style="width: auto">
     <form class="form-horizontal m" id="form-gurtCategory-add">
         <input type="hidden" name="type"/>
-        <input type="hidden" name="catId" th:value="${gurtProjectType.catId}"/>
+        <input type="hidden" name="gurtProjectTypeid" th:value="${gurtProjectType.id}"/>
         <!--<div class="form-group">
             <label class="col-sm-3 control-label">类目名称：</label>
             <div class="col-sm-8">
@@ -34,54 +34,64 @@
                     <input id="name" th:value="${gurtProjectType.name}" name="name" class="form-control" type="text">
                 </div>
             </div>
-            <p>担保设置<a style="margin-left: 550px" onclick="addt()">添加担保</a></p>
+            <p>担保设置<!--<a style="margin-left: 550px" onclick="addt()">添加担保</a>--></p>
 
             <div class="form-group" >
 
-                <!--<div class="col-sm-8" style="margin-left: 230px">
+                <span th:each="project:${gurtProjectTypeList}">
+                    <input type="hidden" name="id" th:value="${project.id}"/>
+                    <div class="col-sm-8" style="margin-left: 230px">
                     <label style="margin-left: -50px" class="col-sm-3 control-label">担保金额：</label>
-                    <input style="width: 150px;float: left;" name="starting_amount" class="form-control" type="text">
+                    <input style="width: 150px;float: left;" th:value="${project.startingAmount}" name="starting_amount" class="form-control" type="text">
                     <span style="float: left;">&nbsp;—&nbsp;</span>
-                    <input style="width: 150px;float: left;" name="ending_amount" class="form-control" type="text">
+                    <input style="width: 150px;float: left;" th:value="${project.endingAmount}" name="ending_amount" class="form-control" type="text">
                 </div>
 
 
                 <div class="col-sm-8">
                     <label style="margin-left: -50px" class="col-sm-3 control-label">单笔：</label>
-                    <input style="width: 150px;float: left;" name="single_payment_cost" class="form-control" type="text">
+                    <input style="width: 150px;float: left;" th:value="${project.singlePaymentCost}" name="single_payment_cost" class="form-control" type="text">
                     <span style="float: left;">
                             <label class="col-sm-3 control-label">
-                                <input checked="checked" style="float: left;margin-left: 20px" value="0" type="radio" name="single_payment_count_type"/>&nbsp;元
+                                <input style="float: left;margin-left: 20px" th:if="${project.singlePaymentCountType==0}" checked="checked" value="0" type="radio" th:name="${project.id}"/>
+                                <input style="float: left;margin-left: 20px" value="0" type="radio" th:if="${project.singlePaymentCountType==1}" th:name="${project.id}"/>&nbsp;元
                             </label>
                         </span>
                     <span style="float: left;"><label class="col-sm-3 control-label">
-                                <input style="float: left;" type="radio" value="1" name="single_payment_count_type"/>&nbsp;%</label></span>
+                                <input style="float: left;" type="radio" value="1" th:if="${project.singlePaymentCountType==1}" checked="checked" th:name="${project.id}"/>
+                                <input style="float: left;" type="radio" value="1" th:if="${project.singlePaymentCountType==0}" th:name="${project.id}"/>
+                        &nbsp;%</label></span>
                 </div>
 
 
                 <div  class="col-sm-8" style="margin-left: -50px">
                     <label style="margin-left: -50px" class="col-sm-3 control-label">多笔：</label>
-                    <input style="width: 150px;float: left;" name="multiple_payment_cost" class="form-control" type="text">
+                    <input style="width: 150px;float: left;" name="multiple_payment_cost" th:value="${project.multiplePaymentCost}" class="form-control" type="text">
+                    <span style="float: left;">
+                            <label class="col-sm-3 control-label">
+                                <input style="float: left;margin-left: 20px" th:if="${project.multiplePaymentCountType==0}" checked="checked" value="0" type="radio" th:name="${project.id+10000}"/>
+                                <input style="float: left;margin-left: 20px" value="0" type="radio" th:if="${project.multiplePaymentCountType==1}" th:name="${project.id+10000}"/>&nbsp;元
+                            </label>
+                        </span>
                     <span style="float: left;"><label class="col-sm-3 control-label">
-                            <input checked="checked" style="float: left;margin-left: 20px" type="radio" value="0" name="multiple_payment_count_type"/>&nbsp;元</label></span>
-                    <span style="float: left;"><label class="col-sm-3 control-label">
-                            <input style="float: left;" value="1" type="radio" name="multiple_payment_count_type"/>&nbsp;%</label></span>
-                </div>-->
+                                <input style="float: left;" type="radio" value="1" th:if="${project.multiplePaymentCountType==1}" checked="checked" th:name="${project.id+10000}"/>
+                                <input style="float: left;" type="radio" value="1" th:if="${project.multiplePaymentCountType==0}" th:name="${project.id+10000}"/>
+                        &nbsp;%</label></span>
             </div>
 
 
         </div>
-        <a onclick="submitHandler()">新增项目分类</a>
+        <a onclick="submitHandler()">修改项目分类</a>
     </form>
 </div>
 <div th:include="include::footer"></div>
 <script type="text/javascript">
     var i=1;
-    function addCat() {
+    /*function addCat() {
         $("[name=ca]").toggle();
         $("[name=ca]").is(":hidden");
-    }
-    $(function () {
+    }*/
+    /*$(function () {
         addt();
     })
     function addt() {
@@ -116,8 +126,8 @@
             "\t\t\t\t\t\t\t<input style=\"float: left;\" value=\"1\" type=\"radio\" name="+i+1000+"/>&nbsp;%</label></span>\n" +
             "\t\t\t\t</div>\n" +
             "\t\t\t\t")
-    }
-    var prefix = ctx + "baohan/gurtCategory"
+    }*/
+    var prefix = ctx + "baohan/gurtProjectTypeCostConfig"
     $("#form-gurtCategory-add").validate({
         rules:{
             xxxx:{
@@ -136,7 +146,7 @@
                 // 计算
             }
             $("[name=type]").val(ty);
-            $.operate.save(prefix + "/addType", $('#form-gurtCategory-add').serialize());
+            $.operate.save(prefix + "/modifyConf", $('#form-gurtCategory-add').serialize());
         }
     }
 </script>

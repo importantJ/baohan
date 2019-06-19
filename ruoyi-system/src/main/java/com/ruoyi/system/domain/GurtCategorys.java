@@ -12,7 +12,7 @@ import java.util.List;
  * @author ruoyi
  * @date 2019-06-14
  */
-public class GurtCategory extends BaseEntity
+public class GurtCategorys extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 
@@ -25,7 +25,7 @@ public class GurtCategory extends BaseEntity
 	/** 是否删除(0 否; 1 是) */
 	private Integer deleted;
 
-	
+
 	public void setId(Integer id)
 	{
 		this.id = id;

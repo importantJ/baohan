@@ -34,7 +34,9 @@ public interface GurtCategoryMapper
      * @return 结果
      */
 	public int insertGurtCategory(GurtCategory gurtCategory);
-	
+
+
+	GurtCategory selectGurtCategoryAndProjectById(Long id);
 	/**
      * 修改项目基础资料
      * 

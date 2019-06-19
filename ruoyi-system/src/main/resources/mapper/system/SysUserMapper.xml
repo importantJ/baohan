@@ -195,7 +195,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="salt != null and salt != ''">salt,</if>
  			<if test="status != null and status != ''">status,</if>
  			<if test="createBy != null and createBy != ''">create_by,</if>
- 			<if test="remark != null and remark != ''">remark,</if>
+ 			<if test="inviteUserId != null and inviteUserId != ''">invite_user_id,</if>
+			<if test="catId != null and catId != ''">category_id,</if>
  			create_time
  		)values(
  			<if test="userId != null and userId != ''">#{userId},</if>
@@ -210,6 +211,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="status != null and status != ''">#{status},</if>
  			<if test="createBy != null and createBy != ''">#{createBy},</if>
  			<if test="remark != null and remark != ''">#{remark},</if>
+		<if test="inviteUserId != null and inviteUserId != ''">#{inviteUserId},</if>
+		<if test="catId != null and catId != ''">#{catId},</if>
  			sysdate()
  		)
 	</insert>

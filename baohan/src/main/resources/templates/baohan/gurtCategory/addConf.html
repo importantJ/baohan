@@ -2,131 +2,144 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
 	<th:block th:include="include :: header('添加项目基础资料')" />
-
+	<style type="text/css">
+		.col-sm-8{
+			width: 450px;
+		}
+	</style>
 </head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content" style="width: auto">
-        <form class="form-horizontal m" id="form-gurtCategory-add">
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">类目名称：</label>
-				<div class="col-sm-8">
-					<input id="name" name="name" class="form-control" type="text">
-					<input type="hidden" name="type"/>
-				</div>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content" style="width: auto">
+	<form class="form-horizontal m" id="form-gurtCategory-add">
+		<input type="hidden" name="type"/>
+		<input type="hidden" name="catId" th:value="${id}"/>
+		<!--<div class="form-group">
+			<label class="col-sm-3 control-label">类目名称：</label>
+			<div class="col-sm-8">
+				<input id="name" name="name" class="form-control" type="text">
+				<input type="hidden" name="type"/>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">备注说明：</label>
-				<div class="col-sm-8">
-					<input id="remark" name="remark" class="form-control" type="text">
-				</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">备注说明：</label>
+			<div class="col-sm-8">
+				<input id="remark" name="remark" class="form-control" type="text">
 			</div>
-			<a onclick="addCat()">增加分类</a>
-			<div name="ca" style="display: none">
-				<div class="form-group" >
-					<label class="col-sm-3 control-label">项目名称：</label>
-					<div class="col-sm-8">
-						<input id="projectName" name="projectName" class="form-control" type="text">
-					</div>
-				</div>
-				<p>担保设置<a style="margin-left: 550px" onclick="addt()">添加担保</a></p>
+		</div>
+		<a onclick="addCat()">增加分类</a>-->
+		<div name="ca">
+			<div class="form-group" >
+				<label class="col-sm-3 control-label">项目名称：</label>
+				<div class="col-sm-9">
 
-					<div class="form-group" >
-						<label style="margin-left: -50px" class="col-sm-3 control-label">担保金额：</label>
-						<div class="col-sm-8">
-							<input style="width: 150px;float: left;" name="starting_amount" class="form-control" type="text">
-							<span style="float: left;">&nbsp;—&nbsp;</span>
-							<input style="width: 150px;float: left;" name="ending_amount" class="form-control" type="text">
-						</div>
-						<br/>
-						<label style="margin-left: -50px" class="col-sm-3 control-label">单笔：</label>
-						<div class="col-sm-8">
-							<input style="width: 150px;float: left;" name="single_payment_cost" class="form-control" type="text">
-							<span style="float: left;">
+					<input id="projectName" name="projectName" class="form-control" type="text">
+				</div>
+			</div>
+			<p>担保设置<a style="margin-left: 550px" onclick="addt()">添加担保</a></p>
+
+			<div class="form-group" >
+
+				<!--<div class="col-sm-8" style="margin-left: 230px">
+					<label style="margin-left: -50px" class="col-sm-3 control-label">担保金额：</label>
+					<input style="width: 150px;float: left;" name="starting_amount" class="form-control" type="text">
+					<span style="float: left;">&nbsp;—&nbsp;</span>
+					<input style="width: 150px;float: left;" name="ending_amount" class="form-control" type="text">
+				</div>
+
+
+				<div class="col-sm-8">
+					<label style="margin-left: -50px" class="col-sm-3 control-label">单笔：</label>
+					<input style="width: 150px;float: left;" name="single_payment_cost" class="form-control" type="text">
+					<span style="float: left;">
 							<label class="col-sm-3 control-label">
 								<input checked="checked" style="float: left;margin-left: 20px" value="0" type="radio" name="single_payment_count_type"/>&nbsp;元
 							</label>
 						</span>
-							<span style="float: left;"><label class="col-sm-3 control-label">
+					<span style="float: left;"><label class="col-sm-3 control-label">
 								<input style="float: left;" type="radio" value="1" name="single_payment_count_type"/>&nbsp;%</label></span>
-						</div>
-						<br/>
-						<label style="margin-left: -50px" class="col-sm-3 control-label">多笔：</label>
-						<div  class="col-sm-8">
-							<input style="width: 150px;float: left;" name="multiple_payment_cost" class="form-control" type="text">
-							<span style="float: left;"><label class="col-sm-3 control-label">
+				</div>
+
+
+				<div  class="col-sm-8" style="margin-left: -50px">
+					<label style="margin-left: -50px" class="col-sm-3 control-label">多笔：</label>
+					<input style="width: 150px;float: left;" name="multiple_payment_cost" class="form-control" type="text">
+					<span style="float: left;"><label class="col-sm-3 control-label">
 							<input checked="checked" style="float: left;margin-left: 20px" type="radio" value="0" name="multiple_payment_count_type"/>&nbsp;元</label></span>
-							<span style="float: left;"><label class="col-sm-3 control-label">
+					<span style="float: left;"><label class="col-sm-3 control-label">
 							<input style="float: left;" value="1" type="radio" name="multiple_payment_count_type"/>&nbsp;%</label></span>
-						</div>
-						<br/>
-					</div>
-
-
+				</div>-->
 			</div>
-		</form>
-	</div>
-    <div th:include="include::footer"></div>
-    <script type="text/javascript">
-		var i=1;
-		function addCat() {
-			$("[name=ca]").toggle();
-			$("[name=ca]").is(":hidden");
+
+
+		</div>
+		<a onclick="submitHandler()">新增项目分类</a>
+	</form>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript">
+    var i=1;
+    function addCat() {
+        $("[name=ca]").toggle();
+        $("[name=ca]").is(":hidden");
+    }
+    $(function () {
+		addt();
+    })
+    function addt() {
+        i++;
+        $("[name=ca]").append("<div class=\"col-sm-8\" style=\"margin-left: 230px\">\n" +
+            "\t\t\t\t\t<label style=\"margin-left: -50px\" class=\"col-sm-3 control-label\">担保金额：</label>\n" +
+            "\t\t\t\t\t<input style=\"width: 150px;float: left;\" name=\"starting_amount\" class=\"form-control\" type=\"text\">\n" +
+            "\t\t\t\t\t<span style=\"float: left;\">&nbsp;—&nbsp;</span>\n" +
+            "\t\t\t\t\t<input style=\"width: 150px;float: left;\" name=\"ending_amount\" class=\"form-control\" type=\"text\">\n" +
+            "\t\t\t\t</div>\n" +
+            "\n" +
+            "\n" +
+            "\t\t\t\t<div class=\"col-sm-8\">\n" +
+            "\t\t\t\t\t<label style=\"margin-left: -50px\" class=\"col-sm-3 control-label\">单笔：</label>\n" +
+            "\t\t\t\t\t<input style=\"width: 150px;float: left;\" name=\"single_payment_cost\" class=\"form-control\" type=\"text\">\n" +
+            "\t\t\t\t\t<span style=\"float: left;\">\n" +
+            "\t\t\t\t\t\t\t<label class=\"col-sm-3 control-label\">\n" +
+            "\t\t\t\t\t\t\t\t<input checked=\"checked\" style=\"float: left;margin-left: 20px\" value=\"0\" type=\"radio\" name="+i+"/>&nbsp;元\n" +
+            "\t\t\t\t\t\t\t</label>\n" +
+            "\t\t\t\t\t\t</span>\n" +
+            "\t\t\t\t\t<span style=\"float: left;\"><label class=\"col-sm-3 control-label\">\n" +
+            "\t\t\t\t\t\t\t\t<input style=\"float: left;\" type=\"radio\" value=\"1\" name="+i+"/>&nbsp;%</label></span>\n" +
+            "\t\t\t\t</div>\n" +
+            "\n" +
+            "\n" +
+            "\t\t\t\t<div  class=\"col-sm-8\" style=\"margin-left: -50px\">\n" +
+            "\t\t\t\t\t<label style=\"margin-left: -50px\" class=\"col-sm-3 control-label\">多笔：</label>\n" +
+            "\t\t\t\t\t<input style=\"width: 150px;float: left;\" name=\"multiple_payment_cost\" class=\"form-control\" type=\"text\">\n" +
+            "\t\t\t\t\t<span style=\"float: left;\"><label class=\"col-sm-3 control-label\">\n" +
+            "\t\t\t\t\t\t\t<input checked=\"checked\" style=\"float: left;margin-left: 20px\" type=\"radio\" value=\"0\" name="+i+1000+"/>&nbsp;元</label></span>\n" +
+            "\t\t\t\t\t<span style=\"float: left;\"><label class=\"col-sm-3 control-label\">\n" +
+            "\t\t\t\t\t\t\t<input style=\"float: left;\" value=\"1\" type=\"radio\" name="+i+1000+"/>&nbsp;%</label></span>\n" +
+            "\t\t\t\t</div>\n" +
+            "\t\t\t\t")
+    }
+    var prefix = ctx + "baohan/gurtCategory"
+    $("#form-gurtCategory-add").validate({
+        rules:{
+            xxxx:{
+                required:true,
+            },
+        },
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        var ty=[];
+        if ($.validate.form()) {
+            var checkInputs = document.querySelectorAll('input:checked')
+            for(var i = 0;i<checkInputs.length;i++){
+                ty.push(checkInputs[i].value);
+                // 计算
+            }
+            $("[name=type]").val(ty);
+            $.operate.save(prefix + "/addType", $('#form-gurtCategory-add').serialize());
         }
-        function addt() {
-		    i++;
-			$("[name=ca]").append("<div class=\"form-group\" >\n" +
-                "\t\t\t\t\t<label style=\"margin-left: -50px\" class=\"col-sm-3 control-label\">担保金额：</label>\n" +
-                "\t\t\t\t\t<div class=\"col-sm-8\">\n" +
-                "\t\t\t\t\t\t<input style=\"width: 150px;float: left;\" name=\"starting_amount\" class=\"form-control\" type=\"text\">\n" +
-                "\t\t\t\t\t\t<span style=\"float: left;\">&nbsp;—&nbsp;</span>\n" +
-                "\t\t\t\t\t\t<input style=\"width: 150px;float: left;\" name=\"ending_amount\" class=\"form-control\" type=\"text\">\n" +
-                "\t\t\t\t\t</div>\n" +
-                "\t\t\t\t\t<br/>\n" +
-                "\t\t\t\t\t<label style=\"margin-left: -50px\" class=\"col-sm-3 control-label\">单笔：</label>\n" +
-                "\t\t\t\t\t<div class=\"col-sm-8\">\n" +
-                "\t\t\t\t\t\t<input style=\"width: 150px;float: left;\" name='single_payment_cost' class=\"form-control\" type=\"text\">\n" +
-                "\t\t\t\t\t\t<span style=\"float: left;\">\n" +
-                "\t\t\t\t\t\t\t<label class=\"col-sm-3 control-label\">\n" +
-                "\t\t\t\t\t\t\t\t<input checked=\"checked\" style=\"float: left;margin-left: 20px\" value=\"0\" type=\"radio\" name="+i+"/>&nbsp;元\n" +
-                "\t\t\t\t\t\t\t</label>\n" +
-                "\t\t\t\t\t\t</span>\n" +
-                "\t\t\t\t\t\t<span style=\"float: left;\"><label class=\"col-sm-3 control-label\">\n" +
-                "\t\t\t\t\t\t\t\t<input style=\"float: left;\" type=\"radio\" value=\"1\" name="+i+"/>&nbsp;%</label></span>\n" +
-                "\t\t\t\t\t</div>\n" +
-                "\t\t\t\t\t<br/>\n" +
-                "\t\t\t\t\t<label style=\"margin-left: -50px\" class=\"col-sm-3 control-label\">多笔：</label>\n" +
-                "\t\t\t\t\t<div  class=\"col-sm-8\">\n" +
-                "\t\t\t\t\t\t<input style=\"width: 150px;float: left;\" name=\"multiple_payment_cost\" class=\"form-control\" type=\"text\">\n" +
-                "\t\t\t\t\t\t<span style=\"float: left;\"><label class=\"col-sm-3 control-label\">\n" +
-                "\t\t\t\t\t\t\t<input checked=\"checked\" style=\"float: left;margin-left: 20px\" type=\"radio\" value=\"0\" name="+i+1000+"/>&nbsp;元</label></span>\n" +
-                "\t\t\t\t\t\t<span style=\"float: left;\"><label class=\"col-sm-3 control-label\">\n" +
-                "\t\t\t\t\t\t\t<input style=\"float: left;\" value=\"1\" type=\"radio\" name="+i+1000+"/>&nbsp;%</label></span>\n" +
-                "\t\t\t\t\t</div>\n" +
-                "\t\t\t\t\t<br/>\n" +
-                "\t\t\t\t</div>")
-        }
-		var prefix = ctx + "baohan/gurtCategory"
-		$("#form-gurtCategory-add").validate({
-			rules:{
-				xxxx:{
-					required:true,
-				},
-			},
-			focusCleanup: true
-		});
-		
-		function submitHandler() {
-		    var ty=[];
-	        if ($.validate.form()) {
-                var checkInputs = document.querySelectorAll('input:checked')
-                for(var i = 0;i<checkInputs.length;i++){
-                    ty.push(checkInputs[i].value);
-                    // 计算
-                }
-                $("[name=type]").val(ty);
-	            $.operate.save(prefix + "/add", $('#form-gurtCategory-add').serialize());
-	        }
-	    }
-	</script>
+    }
+</script>
 </body>
 </html>

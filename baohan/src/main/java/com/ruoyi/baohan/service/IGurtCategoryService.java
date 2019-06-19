@@ -18,7 +18,8 @@ public interface IGurtCategoryService
      * @return 项目基础资料信息
      */
 	public GurtCategory selectGurtCategoryById(Long id);
-	
+
+	GurtCategory selectGurtCategoryAndProjectById(Long id);
 	/**
      * 查询项目基础资料列表
      * 

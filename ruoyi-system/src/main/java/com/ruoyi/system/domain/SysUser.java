@@ -21,7 +21,25 @@ public class SysUser extends BaseEntity
     /** 用户ID */
     @Excel(name = "用户序号", prompt = "用户编号")
     private Long userId;
+    private int catId;
 
+    public int getCatId() {
+        return catId;
+    }
+
+    public void setCatId(int catId) {
+        this.catId = catId;
+    }
+
+    public int getInviteUserId() {
+        return inviteUserId;
+    }
+
+    public void setInviteUserId(int inviteUserId) {
+        this.inviteUserId = inviteUserId;
+    }
+
+    private int inviteUserId;
     /** 部门ID */
     @Excel(name = "部门编号", type = Type.IMPORT)
     private Long deptId;

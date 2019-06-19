@@ -31,7 +31,12 @@ public class GurtCategoryServiceImpl implements IGurtCategoryService
 	{
 	    return gurtCategoryMapper.selectGurtCategoryById(id);
 	}
-	
+
+	@Override
+	public GurtCategory selectGurtCategoryAndProjectById(Long id) {
+		return gurtCategoryMapper.selectGurtCategoryAndProjectById(id);
+	}
+
 	/**
      * 查询项目基础资料列表
      * 

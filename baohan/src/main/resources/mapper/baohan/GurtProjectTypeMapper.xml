@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.baohan.mapper.GurtProjectTypeMapper">
+    
+    <resultMap type="GurtProjectType" id="GurtProjectTypeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+    </resultMap>
+	
+	<sql id="selectGurtProjectTypeVo">
+        select id, name from gurt_project_type
+    </sql>
+	
+    <select id="selectGurtProjectTypeList" parameterType="GurtProjectType" resultMap="GurtProjectTypeResult">
+        <include refid="selectGurtProjectTypeVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+            <if test="catId != null  and catId != '' "> and category_id = #{catId}</if>
+         </where>
+    </select>
+    
+    <select id="selectGurtProjectTypeById" parameterType="Long" resultMap="GurtProjectTypeResult">
+        <include refid="selectGurtProjectTypeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertGurtProjectType" parameterType="GurtProjectType" useGeneratedKeys="true" keyProperty="id">
+        insert into gurt_project_type
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null  and name != ''  ">name,</if>
+            <if test="catId != null  and catId != ''  ">category_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null  and name != ''  ">#{name},</if>
+            <if test="catId != null  and catId != ''  ">#{catId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateGurtProjectType" parameterType="GurtProjectType">
+        update gurt_project_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteGurtProjectTypeById" parameterType="Long">
+        delete from gurt_project_type where id = #{id}
+    </delete>
+
+    <delete id="deleteGurtProjectTypeById1" parameterType="Long">
+        delete from gurt_project_type where category_id = #{id}
+    </delete>
+	
+    <delete id="deleteGurtProjectTypeByIds" parameterType="String">
+        delete from gurt_project_type where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

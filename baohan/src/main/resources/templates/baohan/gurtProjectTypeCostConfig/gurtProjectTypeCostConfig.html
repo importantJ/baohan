@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-	<th:block th:include="include :: header('订单列表')" />
+	<th:block th:include="include :: header('项目分类列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,20 +11,36 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								搜索：<input type="text" name="warrantee"/>
+								：<input type="text" name="projectTypeId"/>
 							</li>
 
 							<li>
-								<div class="col-md-12">
-									<div class="form-group">
-										<label class="col-sm-3 control-label" style="font-size: 14px	">状态：</label>
-										<div class="col-sm-9">
-											<select class="form-control" name="status"></select>
-										</div>
-									</div>
-								</div>
+								：<input type="text" name="startingAmount"/>
 							</li>
 
+							<li>
+								：<input type="text" name="endingAmount"/>
+							</li>
+
+							<li>
+								：<input type="text" name="singlePaymentCost"/>
+							</li>
+
+							<li>
+								成本计算方式(0 元, 1 %)：<input type="text" name="singlePaymentCountType"/>
+							</li>
+
+							<li>
+								：<input type="text" name="multiplePaymentCost"/>
+							</li>
+
+							<li>
+								成本计算方式(0 元, 1 %)：<input type="text" name="multiplePaymentCountType"/>
+							</li>
+
+							<li>
+								：<input type="text" name="categoryId"/>
+							</li>
 
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -36,16 +52,16 @@
 			</div>
 			
 	        <div class="btn-group-sm" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="baohan:gurtOrder:add">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="baohan:gurtProjectTypeCostConfig:add">
 					<i class="fa fa-plus"></i> 添加
 				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="baohan:gurtOrder:edit">
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="baohan:gurtProjectTypeCostConfig:edit">
 					<i class="fa fa-edit"></i> 修改
 				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="baohan:gurtOrder:remove">
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="baohan:gurtProjectTypeCostConfig:remove">
 					<i class="fa fa-remove"></i> 删除
 				</a>
-				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="baohan:gurtOrder:export">
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="baohan:gurtProjectTypeCostConfig:export">
 						<i class="fa fa-download"></i> 导出
 				 </a>
 			</div>
@@ -56,9 +72,9 @@
 	</div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('baohan:gurtOrder:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('baohan:gurtOrder:remove')}]];
-        var prefix = ctx + "baohan/gurtOrder";
+        var editFlag = [[${@permission.hasPermi('baohan:gurtProjectTypeCostConfig:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('baohan:gurtProjectTypeCostConfig:remove')}]];
+        var prefix = ctx + "baohan/gurtProjectTypeCostConfig";
 
         $(function() {
             var options = {
@@ -67,79 +83,54 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
-                modalName: "订单",
+                modalName: "项目分类",
 		        showExport: true,
                 columns: [{
 		            checkbox: true
 		        },
 				{
 					field : 'id', 
-					title : '主键',
+					title : '',
 					visible: false
 				},
 				{
-					field : 'warrantee', 
-					title : '被保证人',
-					sortable: true
-				},
-				{
-					field : 'beneficiary', 
-					title : '受益人',
-					sortable: true
-				},
-				{
-					field : 'projectNumber', 
-					title : '项目编号',
-					sortable: true
-				},
-				{
-					field : 'projectName', 
-					title : '项目名称',
-					sortable: true
-				},
-				{
-					field : 'closingTime', 
-					title : '截标日期',
-					sortable: true
-				},
-				{
-					field : 'guaranteeAmount', 
-					title : '担保金额',
-					sortable: true
-				},
-				{
-					field : 'validityDeadline', 
-					title : '有效期',
-					sortable: true
-				},
-				{
-					field : 'guaranteeId', 
-					title : '保函格式',
-					sortable: true
-				},
-				{
-					field : 'bankId', 
-					title : '贷款银行',
-					sortable: true
-				},
-				{
 					field : 'projectTypeId', 
-					title : '项目分类',
+					title : '',
 					sortable: true
 				},
 				{
-					field : 'amount', 
-					title : '应付金额',
+					field : 'startingAmount', 
+					title : '',
 					sortable: true
 				},
 				{
-					field : 'createUserId', 
-					title : '处理人',
+					field : 'endingAmount', 
+					title : '',
 					sortable: true
 				},
 				{
-					field : 'status', 
-					title : '订单状态',
+					field : 'singlePaymentCost', 
+					title : '',
+					sortable: true
+				},
+				{
+					field : 'singlePaymentCountType', 
+					title : '成本计算方式(0 元, 1 %)',
+					sortable: true
+				},
+				{
+					field : 'multiplePaymentCost', 
+					title : '',
+					sortable: true
+				},
+				{
+					field : 'multiplePaymentCountType', 
+					title : '成本计算方式(0 元, 1 %)',
+					sortable: true
+				},
+				{
+					field : 'categoryId', 
+					title : '',
 					sortable: true
 				},
 		        {

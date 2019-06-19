@@ -2,6 +2,7 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 
+import com.ruoyi.system.domain.GurtCategorys;
 import com.ruoyi.system.domain.SysPost;
 import com.ruoyi.system.mapper.SysPostMapper;
 import com.ruoyi.system.mapper.SysUserPostMapper;
@@ -48,6 +49,11 @@ public class SysPostServiceImpl implements ISysPostService
     public List<SysPost> selectPostAll()
     {
         return postMapper.selectPostAll();
+    }
+
+    @Override
+    public List<GurtCategorys> selectCatAll() {
+        return postMapper.selectCatAll();
     }
 
     /**

@@ -2,6 +2,7 @@ package com.ruoyi.system.mapper;
 
 import java.util.List;
 
+import com.ruoyi.system.domain.GurtCategorys;
 import com.ruoyi.system.domain.SysPost;
 
 /**
@@ -18,7 +19,7 @@ public interface SysPostMapper
      * @return 岗位数据集合
      */
     public List<SysPost> selectPostList(SysPost post);
-
+    List<GurtCategorys> selectCatAll();
     /**
      * 查询所有岗位
      * 

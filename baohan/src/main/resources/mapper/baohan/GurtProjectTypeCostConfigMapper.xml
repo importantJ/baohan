@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.baohan.mapper.GurtProjectTypeCostConfigMapper">
+    
+    <resultMap type="GurtProjectTypeCostConfig" id="GurtProjectTypeCostConfigResult">
+        <result property="id"    column="id"    />
+        <result property="projectTypeId"    column="project_type_id"    />
+        <result property="startingAmount"    column="starting_amount"    />
+        <result property="endingAmount"    column="ending_amount"    />
+        <result property="singlePaymentCost"    column="single_payment_cost"    />
+        <result property="singlePaymentCountType"    column="single_payment_count_type"    />
+        <result property="multiplePaymentCost"    column="multiple_payment_cost"    />
+        <result property="multiplePaymentCountType"    column="multiple_payment_count_type"    />
+        <result property="categoryId"    column="category_id"    />
+    </resultMap>
+	
+	<sql id="selectGurtProjectTypeCostConfigVo">
+        select id, project_type_id, starting_amount, ending_amount, single_payment_cost, single_payment_count_type, multiple_payment_cost, multiple_payment_count_type, category_id from gurt_project_type_cost_config
+    </sql>
+	
+    <select id="selectGurtProjectTypeCostConfigList" parameterType="GurtProjectTypeCostConfig" resultMap="GurtProjectTypeCostConfigResult">
+        <include refid="selectGurtProjectTypeCostConfigVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="projectTypeId != null "> and project_type_id = #{projectTypeId}</if>
+             <if test="startingAmount != null "> and starting_amount = #{startingAmount}</if>
+             <if test="endingAmount != null "> and ending_amount = #{endingAmount}</if>
+             <if test="singlePaymentCost != null "> and single_payment_cost = #{singlePaymentCost}</if>
+             <if test="singlePaymentCountType != null "> and single_payment_count_type = #{singlePaymentCountType}</if>
+             <if test="multiplePaymentCost != null "> and multiple_payment_cost = #{multiplePaymentCost}</if>
+             <if test="multiplePaymentCountType != null "> and multiple_payment_count_type = #{multiplePaymentCountType}</if>
+             <if test="categoryId != null "> and category_id = #{categoryId}</if>
+         </where>
+    </select>
+    
+    <select id="selectGurtProjectTypeCostConfigById" parameterType="Long" resultMap="GurtProjectTypeCostConfigResult">
+        <include refid="selectGurtProjectTypeCostConfigVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertGurtProjectTypeCostConfig" parameterType="GurtProjectTypeCostConfig">
+        insert into gurt_project_type_cost_config
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="projectTypeId != null  ">project_type_id,</if>
+			<if test="startingAmount != null  ">starting_amount,</if>
+			<if test="endingAmount != null  ">ending_amount,</if>
+			<if test="singlePaymentCost != null  ">single_payment_cost,</if>
+			<if test="singlePaymentCountType != null  ">single_payment_count_type,</if>
+			<if test="multiplePaymentCost != null  ">multiple_payment_cost,</if>
+			<if test="multiplePaymentCountType != null  ">multiple_payment_count_type,</if>
+			<if test="categoryId != null  ">category_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="projectTypeId != null  ">#{projectTypeId},</if>
+			<if test="startingAmount != null  ">#{startingAmount},</if>
+			<if test="endingAmount != null  ">#{endingAmount},</if>
+			<if test="singlePaymentCost != null  ">#{singlePaymentCost},</if>
+			<if test="singlePaymentCountType != null  ">#{singlePaymentCountType},</if>
+			<if test="multiplePaymentCost != null  ">#{multiplePaymentCost},</if>
+			<if test="multiplePaymentCountType != null  ">#{multiplePaymentCountType},</if>
+			<if test="categoryId != null  ">#{categoryId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateGurtProjectTypeCostConfig" parameterType="GurtProjectTypeCostConfig">
+        update gurt_project_type_cost_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectTypeId != null  ">project_type_id = #{projectTypeId},</if>
+            <if test="startingAmount != null  ">starting_amount = #{startingAmount},</if>
+            <if test="endingAmount != null  ">ending_amount = #{endingAmount},</if>
+            <if test="singlePaymentCost != null  ">single_payment_cost = #{singlePaymentCost},</if>
+            <if test="singlePaymentCountType != null  ">single_payment_count_type = #{singlePaymentCountType},</if>
+            <if test="multiplePaymentCost != null  ">multiple_payment_cost = #{multiplePaymentCost},</if>
+            <if test="multiplePaymentCountType != null  ">multiple_payment_count_type = #{multiplePaymentCountType},</if>
+            <if test="categoryId != null  ">category_id = #{categoryId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteGurtProjectTypeCostConfigById" parameterType="Long">
+        delete from gurt_project_type_cost_config where project_type_id = #{id}
+    </delete>
+
+    <delete id="deleteGurtProjectTypeCostConfigByCatId" parameterType="Long">
+        delete from gurt_project_type_cost_config where category_id = #{id}
+    </delete>
+	
+    <delete id="deleteGurtProjectTypeCostConfigByIds" parameterType="String">
+        delete from gurt_project_type_cost_config where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

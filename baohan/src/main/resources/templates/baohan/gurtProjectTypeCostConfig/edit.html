@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改项目分类')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-gurtProjectTypeCostConfig-edit" th:object="${gurtProjectTypeCostConfig}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">：</label>
+				<div class="col-sm-8">
+					<input id="projectTypeId" name="projectTypeId" th:field="*{projectTypeId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">：</label>
+				<div class="col-sm-8">
+					<input id="startingAmount" name="startingAmount" th:field="*{startingAmount}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">：</label>
+				<div class="col-sm-8">
+					<input id="endingAmount" name="endingAmount" th:field="*{endingAmount}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">：</label>
+				<div class="col-sm-8">
+					<input id="singlePaymentCost" name="singlePaymentCost" th:field="*{singlePaymentCost}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">成本计算方式(0 元, 1 %)：</label>
+				<div class="col-sm-8">
+					<input id="singlePaymentCountType" name="singlePaymentCountType" th:field="*{singlePaymentCountType}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">：</label>
+				<div class="col-sm-8">
+					<input id="multiplePaymentCost" name="multiplePaymentCost" th:field="*{multiplePaymentCost}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">成本计算方式(0 元, 1 %)：</label>
+				<div class="col-sm-8">
+					<input id="multiplePaymentCountType" name="multiplePaymentCountType" th:field="*{multiplePaymentCountType}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">：</label>
+				<div class="col-sm-8">
+					<input id="categoryId" name="categoryId" th:field="*{categoryId}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "baohan/gurtProjectTypeCostConfig";
+		$("#form-gurtProjectTypeCostConfig-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-gurtProjectTypeCostConfig-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

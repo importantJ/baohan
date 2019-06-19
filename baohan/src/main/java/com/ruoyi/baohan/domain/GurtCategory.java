@@ -4,6 +4,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
 
+import java.util.List;
+
 /**
  * 项目基础资料表 gurt_category
  * 
@@ -13,22 +15,31 @@ import com.ruoyi.common.core.domain.BaseEntity;
 public class GurtCategory extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	/**  */
-	private Long id;
+	private Integer id;
 	/** 类目名称 */
 	private String name;
 	/**  */
-	private Long createUserId;
+	private Integer createUserId;
 	/** 是否删除(0 否; 1 是) */
 	private Integer deleted;
+	private List<GurtProjectType> gurtProjectTypeList;
 
-	public void setId(Long id) 
+	public List<GurtProjectType> getGurtProjectTypeList() {
+		return gurtProjectTypeList;
+	}
+
+	public void setGurtProjectTypeList(List<GurtProjectType> gurtProjectTypeList) {
+		this.gurtProjectTypeList = gurtProjectTypeList;
+	}
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
 
-	public Long getId() 
+	public Integer getId()
 	{
 		return id;
 	}
@@ -41,12 +52,12 @@ public class GurtCategory extends BaseEntity
 	{
 		return name;
 	}
-	public void setCreateUserId(Long createUserId) 
+	public void setCreateUserId(Integer createUserId)
 	{
 		this.createUserId = createUserId;
 	}
 
-	public Long getCreateUserId() 
+	public Integer getCreateUserId()
 	{
 		return createUserId;
 	}

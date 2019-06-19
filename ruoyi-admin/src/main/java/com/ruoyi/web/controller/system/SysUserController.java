@@ -107,6 +107,7 @@ public class SysUserController extends BaseController
     {
         mmap.put("roles", roleService.selectRoleAll());
         mmap.put("posts", postService.selectPostAll());
+        mmap.put("cats",postService.selectCatAll());
         return prefix + "/add";
     }
 

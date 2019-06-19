@@ -2,6 +2,7 @@ package com.ruoyi.system.mapper;
 
 import java.util.List;
 
+import com.ruoyi.system.domain.GurtCategorys;
 import com.ruoyi.system.domain.SysUserPost;
 
 /**
@@ -18,7 +19,7 @@ public interface SysUserPostMapper
      * @return 结果
      */
     public int deleteUserPostByUserId(Long userId);
-    
+
     /**
      * 通过岗位ID查询岗位使用数量
      * 

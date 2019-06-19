@@ -1,6 +1,11 @@
 package com.ruoyi.baohan.controller;
 
+import java.util.Arrays;
 import java.util.List;
+
+import com.ruoyi.baohan.domain.GurtProjectTypeCostConfig;
+import com.ruoyi.baohan.service.IGurtProjectTypeCostConfigService;
+import com.ruoyi.baohan.service.IGurtProjectTypeService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,107 +26,171 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 
 /**
  * 项目基础资料 信息操作处理
- * 
+ *
  * @author ruoyi
  * @date 2019-06-14
  */
 @Controller
 @RequestMapping("/baohan/gurtCategory")
-public class GurtCategoryController extends BaseController
-{
+public class GurtCategoryController extends BaseController {
     private String prefix = "baohan/gurtCategory";
-	
-	@Autowired
-	private IGurtCategoryService gurtCategoryService;
-	
-	@RequiresPermissions("baohan:gurtCategory:view")
-	@GetMapping()
-	public String gurtCategory()
-	{
-	    return prefix + "/gurtCategory";
-	}
-	
-	/**
-	 * 查询项目基础资料列表
-	 */
-	@RequiresPermissions("baohan:gurtCategory:list")
-	@PostMapping("/list")
-	@ResponseBody
-	public TableDataInfo list(GurtCategory gurtCategory)
-	{
-		startPage();
+
+    @Autowired
+    private IGurtCategoryService gurtCategoryService;
+
+    @Autowired
+    private IGurtProjectTypeService gurtProjectTypeService;
+    @Autowired
+    private IGurtProjectTypeCostConfigService gurtProjectTypeCostConfigService;
+
+    @RequiresPermissions("baohan:gurtCategory:view")
+    @GetMapping()
+    public String gurtCategory() {
+        return prefix + "/gurtCategory";
+    }
+
+    /**
+     * 查询项目基础资料列表
+     */
+    @RequiresPermissions("baohan:gurtCategory:list")
+    @PostMapping("/list")
+    @ResponseBody
+    public TableDataInfo list(GurtCategory gurtCategory) {
+        startPage();
         List<GurtCategory> list = gurtCategoryService.selectGurtCategoryList(gurtCategory);
-		return getDataTable(list);
-	}
-	
-	
-	/**
-	 * 导出项目基础资料列表
-	 */
-	@RequiresPermissions("baohan:gurtCategory:export")
+        return getDataTable(list);
+    }
+
+
+    /**
+     * 导出项目基础资料列表
+     */
+    @RequiresPermissions("baohan:gurtCategory:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(GurtCategory gurtCategory)
-    {
-    	List<GurtCategory> list = gurtCategoryService.selectGurtCategoryList(gurtCategory);
+    public AjaxResult export(GurtCategory gurtCategory) {
+        List<GurtCategory> list = gurtCategoryService.selectGurtCategoryList(gurtCategory);
         ExcelUtil<GurtCategory> util = new ExcelUtil<GurtCategory>(GurtCategory.class);
         return util.exportExcel(list, "gurtCategory");
     }
-	
-	/**
-	 * 新增项目基础资料
-	 */
-	@GetMapping("/add")
-	public String add()
-	{
-	    return prefix + "/add";
-	}
-	
-	/**
-	 * 新增保存项目基础资料
-	 */
-	@RequiresPermissions("baohan:gurtCategory:add")
-	@Log(title = "项目基础资料", businessType = BusinessType.INSERT)
-	@PostMapping("/add")
-	@ResponseBody
-	public AjaxResult addSave(GurtCategory gurtCategory)
-	{		
-		return toAjax(gurtCategoryService.insertGurtCategory(gurtCategory));
-	}
 
-	/**
-	 * 修改项目基础资料
-	 */
-	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Long id, ModelMap mmap)
-	{
-		GurtCategory gurtCategory = gurtCategoryService.selectGurtCategoryById(id);
-		mmap.put("gurtCategory", gurtCategory);
-	    return prefix + "/edit";
-	}
-	
-	/**
-	 * 修改保存项目基础资料
-	 */
-	@RequiresPermissions("baohan:gurtCategory:edit")
-	@Log(title = "项目基础资料", businessType = BusinessType.UPDATE)
-	@PostMapping("/edit")
-	@ResponseBody
-	public AjaxResult editSave(GurtCategory gurtCategory)
-	{		
-		return toAjax(gurtCategoryService.updateGurtCategory(gurtCategory));
-	}
-	
-	/**
-	 * 删除项目基础资料
-	 */
-	@RequiresPermissions("baohan:gurtCategory:remove")
-	@Log(title = "项目基础资料", businessType = BusinessType.DELETE)
-	@PostMapping( "/remove")
-	@ResponseBody
-	public AjaxResult remove(String ids)
-	{		
-		return toAjax(gurtCategoryService.deleteGurtCategoryByIds(ids));
-	}
-	
+    /**
+     * 新增项目基础资料
+     */
+    @GetMapping("/add")
+    public String add() {
+        return prefix + "/add";
+    }
+
+
+
+    /**
+     * 新增项目分类
+     */
+    @GetMapping("/addConf/{id}")
+    public String addConf(@PathVariable("id") Long id, ModelMap modelMap) {
+        modelMap.put("id", id);
+        return prefix + "/addConf";
+    }
+
+
+    /**
+     * 新增保存项目基础资料
+     */
+    @RequiresPermissions("baohan:gurtCategory:add")
+    @Log(title = "项目基础资料", businessType = BusinessType.INSERT)
+    @PostMapping("/add")
+    @ResponseBody
+    public AjaxResult addSave(GurtCategory gurtCategory, String[] starting_amount, String[] ending_amount,
+                              String[] single_payment_cost, String[] multiple_payment_cost,
+                              String type, String projectName) {
+        String[] result1 = type.split(",");
+        gurtCategory.setCreateUserId(1);
+        gurtCategoryService.insertGurtCategory(gurtCategory);
+        if (projectName != "")
+            gurtProjectTypeCostConfigService.insertGurtProjectTypeCostConfig(starting_amount, ending_amount, single_payment_cost, multiple_payment_cost, result1, projectName, gurtCategory.getId());
+        return toAjax(1);
+    }
+
+    /**
+     * 新增保存项目基础资料
+     */
+    @RequiresPermissions("baohan:gurtCategory:add")
+    @Log(title = "项目基础资料", businessType = BusinessType.INSERT)
+    @PostMapping("/addType")
+    @ResponseBody
+    public AjaxResult addType(
+            String[] starting_amount,
+            String[] ending_amount,
+            String[] single_payment_cost,
+            String[] multiple_payment_cost,
+            String type,
+            String projectName,
+            Integer catId
+    ) {
+        String[] result1 = type.split(",");
+        gurtProjectTypeCostConfigService.insertGurtProjectTypeCostConfig(
+                starting_amount,
+                ending_amount,
+                single_payment_cost,
+                multiple_payment_cost,
+                result1,
+                projectName,
+                catId
+        );
+        return toAjax(1);
+    }
+
+    /**
+     * 修改项目基础资料
+     */
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, ModelMap mmap) {
+        GurtCategory gurtCategory = gurtCategoryService.selectGurtCategoryAndProjectById(id);
+        if(gurtCategory==null){
+            gurtCategory=gurtCategoryService.selectGurtCategoryById(id);
+        }
+        mmap.put("gurtCategory", gurtCategory);
+        mmap.put("id", id);
+        return prefix + "/edit";
+    }
+
+    /**
+     * 查看项目基础资料
+     */
+    @GetMapping("/view/{id}")
+    public String view(@PathVariable("id") Long id, ModelMap mmap) {
+        GurtCategory gurtCategory = gurtCategoryService.selectGurtCategoryAndProjectById(id);
+        if(gurtCategory==null){
+            gurtCategory=gurtCategoryService.selectGurtCategoryById(id);
+        }
+        mmap.put("gurtCategory", gurtCategory);
+        mmap.put("id", id);
+        return prefix + "/view";
+    }
+
+    /**
+     * 修改保存项目基础资料
+     */
+    @RequiresPermissions("baohan:gurtCategory:edit")
+    @Log(title = "项目基础资料", businessType = BusinessType.UPDATE)
+    @PostMapping("/modify")
+    @ResponseBody
+    public AjaxResult editSave(GurtCategory gurtCategory) {
+        return toAjax(gurtCategoryService.updateGurtCategory(gurtCategory));
+    }
+
+    /**
+     * 删除项目基础资料
+     */
+    @RequiresPermissions("baohan:gurtCategory:remove")
+    @Log(title = "项目基础资料", businessType = BusinessType.DELETE)
+    @PostMapping("/remove")
+    @ResponseBody
+    public AjaxResult remove(String ids) {
+        gurtProjectTypeCostConfigService.deleteGurtProjectTypeCostConfigByCatId(Long.valueOf(ids));
+        gurtProjectTypeService.deleteGurtProjectTypeById1(ids);
+        return toAjax(gurtCategoryService.deleteGurtCategoryByIds(ids));
+    }
+
 }

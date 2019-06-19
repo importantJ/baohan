@@ -12,6 +12,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createTime"    column="create_time"    />
         <result property="deleted"    column="deleted"    />
     </resultMap>
+
+    <resultMap type="GurtCategory" id="GurtCategoryResult1">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="remark"    column="remark"    />
+        <result property="createUserId"    column="create_user_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="deleted"    column="deleted"    />
+        <collection property="gurtProjectTypeList" ofType="GurtProjectType">
+            <id column="proId" property="id"></id>
+            <result property="name" column="ProName"/>
+            <collection property="gurtProjectTypeCostConfigList" ofType="GurtProjectTypeCostConfig">
+                <result property="id"    column="id"    />
+                <result property="projectTypeId"    column="project_type_id"    />
+                <result property="startingAmount"    column="starting_amount"    />
+                <result property="endingAmount"    column="ending_amount"    />
+                <result property="singlePaymentCost"    column="single_payment_cost"    />
+                <result property="singlePaymentCountType"    column="single_payment_count_type"    />
+                <result property="multiplePaymentCost"    column="multiple_payment_cost"    />
+                <result property="multiplePaymentCountType"    column="multiple_payment_count_type"    />
+                <result property="categoryId"    column="category_id"    />
+            </collection>
+        </collection>
+    </resultMap>
 	
 	<sql id="selectGurtCategoryVo">
         select id, name, remark, create_user_id, create_time, deleted from gurt_category
@@ -28,13 +52,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="deleted != null "> and deleted = #{deleted}</if>
          </where>
     </select>
-    
+
     <select id="selectGurtCategoryById" parameterType="Long" resultMap="GurtCategoryResult">
         <include refid="selectGurtCategoryVo"/>
         where id = #{id}
     </select>
-        
-    <insert id="insertGurtCategory" parameterType="GurtCategory">
+    <select id="selectGurtCategoryAndProjectById" parameterType="Long" resultMap="GurtCategoryResult1">
+        SELECT *,gurt_project_type.id proId,gurt_project_type.`name` proName FROM gurt_category,gurt_project_type,`gurt_project_type_cost_config`
+where gurt_category.id=gurt_project_type_cost_config.category_id and gurt_category.id=gurt_project_type.category_id
+and gurt_project_type_cost_config.project_type_id=gurt_project_type.id
+and gurt_category.id=#{id}
+    </select>
+    <insert id="insertGurtCategory" parameterType="GurtCategory" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into gurt_category
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null  ">id,</if>
