@@ -77,7 +77,7 @@ public class 	GurtOrderController extends BaseController
 	 * 新增订单
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add(ModelMap modelMap)
 	{
 
  		SysUser currentUser = ShiroUtils.getSysUser();
