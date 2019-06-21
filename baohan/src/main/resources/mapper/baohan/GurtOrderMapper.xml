@@ -34,7 +34,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<sql id="selectGurtOrderVo">
         select id, warrantee, beneficiary, project_number, project_name, closing_time, guarantee_amount, validity_deadline, guarantee_id, bank_id, project_type_id, amount, create_user_id, create_time, bank_submission_time, status, need_invoice, company_name, tax_number, bank_name, bank_account, company_address, phone_number, invoice_file_download_url from gurt_order
     </sql>
-	
+
+
+    <select id="getAllBank" resultType="GurtBank">
+        select * from gurt_bank
+    </select>
     <select id="selectGurtOrderList" parameterType="GurtOrder" resultMap="GurtOrderResult">
         <include refid="selectGurtOrderVo"/>
         <where>  
@@ -87,7 +91,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="amount != null  ">amount,</if>
 			<if test="createUserId != null  ">create_user_id,</if>
 			<if test="createTime != null  ">create_time,</if>
-			<if test="bankSubmissionTime != null  ">bank_submission_time,</if>
 			<if test="status != null  ">status,</if>
 			<if test="needInvoice != null  ">need_invoice,</if>
 			<if test="companyName != null  and companyName != ''  ">company_name,</if>
@@ -113,7 +116,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="amount != null  ">#{amount},</if>
 			<if test="createUserId != null  ">#{createUserId},</if>
 			<if test="createTime != null  ">#{createTime},</if>
-			<if test="bankSubmissionTime != null  ">#{bankSubmissionTime},</if>
 			<if test="status != null  ">#{status},</if>
 			<if test="needInvoice != null  ">#{needInvoice},</if>
 			<if test="companyName != null  and companyName != ''  ">#{companyName},</if>

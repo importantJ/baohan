@@ -1,5 +1,6 @@
 package com.ruoyi.baohan.mapper;
 
+import com.ruoyi.baohan.domain.GurtBank;
 import com.ruoyi.baohan.domain.GurtGuarantee;
 import java.util.List;	
 
@@ -18,7 +19,9 @@ public interface GurtGuaranteeMapper
      * @return 保函信息
      */
 	public GurtGuarantee selectGurtGuaranteeById(Long id);
-	
+
+
+
 	/**
      * 查询保函列表
      * 

@@ -1,5 +1,6 @@
 package com.ruoyi.baohan.service;
 
+import com.ruoyi.baohan.domain.GurtBank;
 import com.ruoyi.baohan.domain.GurtOrder;
 import java.util.List;
 
@@ -33,8 +34,8 @@ public interface IGurtOrderService
      * @param gurtOrder 订单信息
      * @return 结果
      */
-	public int insertGurtOrder(GurtOrder gurtOrder);
-	
+	public int insertGurtOrder(GurtOrder gurtOrder,String[] fileNames,String[] fileUrls,String[] money);
+	List<GurtBank> getAllBank();
 	/**
      * 修改订单
      * 

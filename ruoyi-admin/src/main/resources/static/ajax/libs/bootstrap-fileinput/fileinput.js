@@ -5588,20 +5588,20 @@
     $.fn.fileinputLocales.zh = {
         fileSingle: '文件',
         filePlural: '个文件',
-        browseLabel: '选择 &hellip;',
-        removeLabel: '移除',
+        /*browseLabel: '选择 &hellip;',
+        removeLabel: '移除',*/
         removeTitle: '清除选中文件',
         cancelLabel: '取消',
         cancelTitle: '取消进行中的上传',
         pauseLabel: 'Pause',
         pauseTitle: 'Pause ongoing upload',
-        uploadLabel: '上传',
+        /*uploadLabel: '上传',*/
         uploadTitle: '上传选中文件',
         msgNo: '没有',
         msgNoFilesSelected: '未选择文件',
         msgPaused: 'Paused',
         msgCancelled: '取消',
-        msgPlaceholder: '选择 {files}...',
+       /* msgPlaceholder: '选择 {files}...',*/
         msgZoomModalHeading: '详细预览',
         msgFileRequired: '必须选择一个文件上传.',
         msgSizeTooSmall: '文件 "{name}" (<b>{size} KB</b>) 必须大于限定大小 <b>{minSize} KB</b>.',

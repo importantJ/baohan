@@ -1,7 +1,10 @@
 package com.ruoyi.baohan.mapper;
 
+import com.ruoyi.baohan.domain.GurtBank;
 import com.ruoyi.baohan.domain.GurtOrder;
-import java.util.List;	
+import com.ruoyi.baohan.domain.GurtOrderFile;
+
+import java.util.List;
 
 /**
  * 订单 数据层
@@ -11,6 +14,8 @@ import java.util.List;
  */
 public interface GurtOrderMapper 
 {
+
+	List<GurtBank> getAllBank();
 	/**
      * 查询订单信息
      * 
@@ -34,7 +39,12 @@ public interface GurtOrderMapper
      * @return 结果
      */
 	public int insertGurtOrder(GurtOrder gurtOrder);
-	
+
+	int insertOrderFile(GurtOrderFile orderFile);
+
+	int insertOrderRecord(Long orderId,String money);
+
+	int insertinviteCommission(Long orderId,String commissionamount);
 	/**
      * 修改订单
      * 

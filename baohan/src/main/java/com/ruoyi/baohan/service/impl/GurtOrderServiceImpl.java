@@ -1,12 +1,20 @@
 package com.ruoyi.baohan.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.baohan.domain.GurtBank;
+import com.ruoyi.baohan.domain.GurtOrderFile;
+import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.baohan.mapper.GurtOrderMapper;
 import com.ruoyi.baohan.domain.GurtOrder;
 import com.ruoyi.baohan.service.IGurtOrderService;
 import com.ruoyi.common.core.text.Convert;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 
 /**
  * 订单 服务层实现
@@ -15,9 +23,10 @@ import com.ruoyi.common.core.text.Convert;
  * @date 2019-06-14
  */
 @Service
+@Transactional
 public class GurtOrderServiceImpl implements IGurtOrderService 
 {
-	@Autowired
+	@Resource
 	private GurtOrderMapper gurtOrderMapper;
 
 	/**
@@ -51,11 +60,43 @@ public class GurtOrderServiceImpl implements IGurtOrderService
      * @return 结果
      */
 	@Override
-	public int insertGurtOrder(GurtOrder gurtOrder)
+	public int insertGurtOrder(GurtOrder gurtOrder,String[] fileNames,String[] fileUrls,String[] money)
 	{
-	    return gurtOrderMapper.insertGurtOrder(gurtOrder);
+		Long userId= ShiroUtils.getSysUser().getUserId();
+		gurtOrder.setCreateUserId(userId);
+		gurtOrderMapper.insertGurtOrder(gurtOrder);
+
+		GurtOrderFile gurtOrderFile=new GurtOrderFile();
+		gurtOrderFile.setCreateUserId(userId);
+		gurtOrderFile.setOrderId(gurtOrder.getId());
+		for(int i=0;i<fileNames.length;i++){
+
+			gurtOrderFile.setName(fileNames[i]);
+			gurtOrderFile.setFileDownLoadUrl(fileUrls[i]);
+			gurtOrderMapper.insertOrderFile(gurtOrderFile);
+
+		}
+
+		for(int i=0;i<money.length;i++){
+			if(money[i]==""||money.equals("0")){
+				break;
+			}
+			gurtOrderMapper.insertOrderRecord(gurtOrder.getId(),money[i]);
+		}
+		Integer ivId=ShiroUtils.getSysUser().getInviteUserId();
+		if(ivId!=null){
+			gurtOrderMapper.insertinviteCommission(gurtOrder.getId(),"提交金额");
+		}
+
+
+	    return 1;
 	}
-	
+
+	@Override
+	public List<GurtBank> getAllBank() {
+		return gurtOrderMapper.getAllBank();
+	}
+
 	/**
      * 修改订单
      * 

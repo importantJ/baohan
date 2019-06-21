@@ -21,13 +21,13 @@ public class SysUser extends BaseEntity
     /** 用户ID */
     @Excel(name = "用户序号", prompt = "用户编号")
     private Long userId;
-    private int catId;
+    private Integer catId;
 
-    public int getCatId() {
+    public Integer getCatId() {
         return catId;
     }
 
-    public void setCatId(int catId) {
+    public void setCatId(Integer catId) {
         this.catId = catId;
     }
 
