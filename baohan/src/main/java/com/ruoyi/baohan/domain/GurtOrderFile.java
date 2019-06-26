@@ -1,11 +1,31 @@
 package com.ruoyi.baohan.domain;
 
 public class GurtOrderFile {
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     private String name;
     private Long createUserId;
     private String createTime;
     private String fileDownLoadUrl;
     private Integer deleted;
+    private String createUserName;
+
+    public String getCreateUserName() {
+        return createUserName;
+    }
+
+    public void setCreateUserName(String createUserName) {
+        this.createUserName = createUserName;
+    }
+
     private Long orderId;
 
     public String getName() {

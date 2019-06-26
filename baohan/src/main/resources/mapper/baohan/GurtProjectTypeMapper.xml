@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertGurtProjectType" parameterType="GurtProjectType" useGeneratedKeys="true" keyProperty="id">
         insert into gurt_project_type
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="name != null  and name != ''  ">name,</if>
+			<if test="name != null  and name != ''  ">`name`,</if>
             <if test="catId != null  and catId != ''  ">category_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">

@@ -45,10 +45,15 @@ public class GurtProjectTypeCostConfigController extends BaseController
 	/**
 	 * 新增项目基础资料
 	 */
-	@GetMapping("/addProjectType/{id}")
-	public String addProjectType(@PathVariable("id")Long id,ModelMap modelMap) {
+	@GetMapping("/addProjectType")
+	public String addProjectType(Long id,ModelMap modelMap,String catId) {
 		GurtProjectTypeCostConfig gurtProjectTypeCostConfig=new GurtProjectTypeCostConfig();
 		gurtProjectTypeCostConfig.setProjectTypeId(id);
+		if(catId.equals("null")){
+			gurtProjectTypeCostConfig.setCategoryId(0);
+		}else{
+			gurtProjectTypeCostConfig.setCategoryId(Integer.valueOf(catId));
+		}
 		List<GurtProjectTypeCostConfig> gurtProjectTypeList=gurtProjectTypeCostConfigService.selectGurtProjectTypeCostConfigList(gurtProjectTypeCostConfig);
 		modelMap.put("gurtProjectTypeList",gurtProjectTypeList);
 		GurtProjectType gurtProjectType=gurtProjectTypeService.selectGurtProjectTypeById(id);

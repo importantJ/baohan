@@ -60,7 +60,6 @@ public class GurtProjectTypeCostConfigServiceImpl implements IGurtProjectTypeCos
 		gurtProjectType.setCatId(catId);
 		List<GurtProjectType> gurtProjectTypeList=gurtProjectTypeMapper.selectGurtProjectTypeList(gurtProjectType);
 		if(gurtProjectTypeList.size()==0){
-
 			gurtProjectTypeMapper.insertGurtProjectType(gurtProjectType);
 		}else{
 			gurtProjectType=gurtProjectTypeList.get(0);
@@ -108,7 +107,7 @@ public class GurtProjectTypeCostConfigServiceImpl implements IGurtProjectTypeCos
 
 	@Override
 	public int insertGurtProjectTypeCostConfig1(GurtProjectTypeCostConfig gurtProjectTypeCostConfig) {
-		return 0;
+		return gurtProjectTypeCostConfigMapper.insertGurtProjectTypeCostConfig(gurtProjectTypeCostConfig);
 	}
 
 

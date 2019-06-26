@@ -1,8 +1,7 @@
 package com.ruoyi.baohan.mapper;
 
-import com.ruoyi.baohan.domain.GurtBank;
-import com.ruoyi.baohan.domain.GurtOrder;
-import com.ruoyi.baohan.domain.GurtOrderFile;
+import com.ruoyi.baohan.domain.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -42,9 +41,16 @@ public interface GurtOrderMapper
 
 	int insertOrderFile(GurtOrderFile orderFile);
 
-	int insertOrderRecord(Long orderId,String money);
+	int insertOrderRecord(@Param("orderId")Long orderId,@Param("money")String money);
 
-	int insertinviteCommission(Long orderId,String commissionamount);
+	int insertinviteCommission(@Param("orderId")Long orderId,@Param("commissionamount")Long commissionamount);
+
+	int delorderfile(@Param("id")Integer id);
+
+	int delByOrderId(@Param("orderId")Long orderId);
+	List<GurtOrderRecord> getRecordByOrderId(@Param("orderId")Integer orderId);
+
+	List<GurtStatus> getStatus();
 	/**
      * 修改订单
      * 
@@ -68,5 +74,6 @@ public interface GurtOrderMapper
      * @return 结果
      */
 	public int deleteGurtOrderByIds(String[] ids);
-	
+
+	List<GurtOrderFile> selectOrderFile(@Param("orderId") Integer orderId);
 }

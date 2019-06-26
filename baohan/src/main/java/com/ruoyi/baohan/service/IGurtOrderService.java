@@ -1,7 +1,8 @@
 package com.ruoyi.baohan.service;
 
-import com.ruoyi.baohan.domain.GurtBank;
-import com.ruoyi.baohan.domain.GurtOrder;
+import com.ruoyi.baohan.domain.*;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -42,8 +43,9 @@ public interface IGurtOrderService
      * @param gurtOrder 订单信息
      * @return 结果
      */
-	public int updateGurtOrder(GurtOrder gurtOrder);
-		
+	int updateOrderstatus(GurtOrder gurtOrder);
+	public int updateGurtOrder(GurtOrder gurtOrder,String[] fileNames,String[] fileUrls,String[] money);
+	List<GurtStatus> getStatus();
 	/**
      * 删除订单信息
      * 
@@ -51,5 +53,12 @@ public interface IGurtOrderService
      * @return 结果
      */
 	public int deleteGurtOrderByIds(String ids);
-	
+
+	List<GurtOrderFile> selectOrderFile(Integer orderId);
+
+	int delorderfile(Integer id);
+
+	int insertinviteCommission(GurtOrder gurtOrder);
+
+	List<GurtOrderRecord> getRecordByOrderId(Integer orderId);
 }

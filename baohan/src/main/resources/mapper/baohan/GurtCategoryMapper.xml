@@ -59,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     <select id="selectGurtCategoryAndProjectById" parameterType="Long" resultMap="GurtCategoryResult1">
         SELECT *,gurt_project_type.id proId,gurt_project_type.`name` proName FROM gurt_category,gurt_project_type,`gurt_project_type_cost_config`
-where gurt_category.id=gurt_project_type_cost_config.category_id and gurt_category.id=gurt_project_type.category_id
+where gurt_category.id=gurt_project_type_cost_config.category_id
 and gurt_project_type_cost_config.project_type_id=gurt_project_type.id
 and gurt_category.id=#{id}
     </select>

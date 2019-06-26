@@ -26,11 +26,11 @@ public class GurtOrder extends BaseEntity
 	/** 项目名称 */
 	private String projectName;
 	/** 截标日期 */
-	private Date closingTime;
+	private String closingTime;
 	/** 担保金额 */
 	private Long guaranteeAmount;
 	/** 有效期 */
-	private Date validityDeadline;
+	private String validityDeadline;
 	/** 保函格式 */
 	private Long guaranteeId;
 	/** 贷款银行 */
@@ -47,6 +47,16 @@ public class GurtOrder extends BaseEntity
 	private Long status;
 	/** 是否需要开发票(0 否, 1 是) */
 	private Long needInvoice;
+	private String statusName;
+
+	public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+
 	/**  */
 	private String companyName;
 	/**  */
@@ -107,12 +117,12 @@ public class GurtOrder extends BaseEntity
 	{
 		return projectName;
 	}
-	public void setClosingTime(Date closingTime) 
+	public void setClosingTime(String closingTime)
 	{
 		this.closingTime = closingTime;
 	}
 
-	public Date getClosingTime() 
+	public String getClosingTime()
 	{
 		return closingTime;
 	}
@@ -125,12 +135,12 @@ public class GurtOrder extends BaseEntity
 	{
 		return guaranteeAmount;
 	}
-	public void setValidityDeadline(Date validityDeadline) 
+	public void setValidityDeadline(String validityDeadline)
 	{
 		this.validityDeadline = validityDeadline;
 	}
 
-	public Date getValidityDeadline() 
+	public String getValidityDeadline()
 	{
 		return validityDeadline;
 	}

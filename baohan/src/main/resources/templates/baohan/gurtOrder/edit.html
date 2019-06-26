@@ -1,156 +1,187 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-	<th:block th:include="include :: header('修改订单')" />
+
+	<th:block th:include="include :: header('新增订单')" />
+
+
+	<th:block th:include="include :: bootstrap-fileinput-css" />
+	<style type="text/css">
+		.form-group{
+			width: 550px;
+			display: inline-block;
+		}
+		.filelist span{
+			display: inline-block;
+			float: right;
+			margin-top: 7px;
+			width: 260px;
+		}
+	</style>
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-gurtOrder-edit" th:object="${gurtOrder}">
-            <input id="id" name="id" th:field="*{id}"  type="hidden">
+        <form class="form-horizontal m" id="form-gurtOrder-add">
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">被保证人：</label>
 				<div class="col-sm-8">
-					<input id="warrantee" name="warrantee" th:field="*{warrantee}" class="form-control" type="text">
+					<input type="hidden" th:value="${gurtOrder.id}" name="id"/>
+					<input id="warrantee" name="warrantee" th:value="${gurtOrder.warrantee}" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">受益人：</label>
 				<div class="col-sm-8">
-					<input id="beneficiary" name="beneficiary" th:field="*{beneficiary}" class="form-control" type="text">
+					<input id="beneficiary" name="beneficiary" th:value="${gurtOrder.beneficiary}" class="form-control" type="text">
 				</div>
 			</div>
+			<br>
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">项目编号：</label>
 				<div class="col-sm-8">
-					<input id="projectNumber" name="projectNumber" th:field="*{projectNumber}" class="form-control" type="text">
+					<input id="projectNumber" name="projectNumber" th:value="${gurtOrder.projectNumber}" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">项目名称：</label>
 				<div class="col-sm-8">
-					<input id="projectName" name="projectName" th:field="*{projectName}" class="form-control" type="text">
+					<input id="projectName" name="projectName" th:value="${gurtOrder.projectName}" class="form-control" type="text">
 				</div>
 			</div>
+			<br>
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">截标日期：</label>
 				<div class="col-sm-8">
-					<input id="closingTime" name="closingTime" th:field="*{closingTime}" class="form-control" type="text">
+					<input id="closingTime" name="closingTime" th:value="${gurtOrder.closingTime}" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">担保金额：</label>
 				<div class="col-sm-8">
-					<input id="guaranteeAmount" name="guaranteeAmount" th:field="*{guaranteeAmount}" class="form-control" type="text">
+					<input id="guaranteeAmount" onblur="getMoney()" th:value="${gurtOrder.guaranteeAmount}" name="guaranteeAmount" class="form-control" type="text">
 				</div>
 			</div>
+			<br>
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">有效期：</label>
 				<div class="col-sm-8">
-					<input id="validityDeadline" name="validityDeadline" th:field="*{validityDeadline}" class="form-control" type="text">
+					<input id="validityDeadline" name="validityDeadline" th:value="${gurtOrder.validityDeadline}" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">保函格式：</label>
 				<div class="col-sm-8">
-					<input id="guaranteeId" name="guaranteeId" th:field="*{guaranteeId}" class="form-control" type="text">
+				<select name="guaranteeId" class="form-control m-b">
+					<option  th:selected="${dict.id eq gurtOrder.guaranteeId}" th:each="dict : ${gurtGuaranteeList}" th:text="${dict.name}" th:value="${dict.id}"></option>
+				</select>
 				</div>
 			</div>
+			<br>
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">贷款银行：</label>
 				<div class="col-sm-8">
-					<input id="bankId" name="bankId" th:field="*{bankId}" class="form-control" type="text">
+					<select name="bankId" class="form-control m-b">
+						<option th:selected="${dict.id eq gurtOrder.bankId}" th:each="dict : ${bankList}" th:text="${dict.bankName}" th:value="${dict.id}"></option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">项目分类：</label>
 				<div class="col-sm-8">
-					<input id="projectTypeId" name="projectTypeId" th:field="*{projectTypeId}" class="form-control" type="text">
+					<select name="projectTypeId" onchange="getMoney()" class="form-control m-b">
+						<option th:selected="${dict.id eq gurtOrder.projectTypeId}" th:each="dict : ${gurtProjectTypeList}" th:text="${dict.name}" th:value="${dict.id}"></option>
+					</select>
 				</div>
 			</div>
-			<div class="form-group">	
+			<br>
+			<div class="form-group" style="width: 1200px">
+				<label class="font-noraml">营业执照:温馨提示：请上传营业执照、招标文件等，文件请命好名字再进行上传</label>
+				<br>
+				<div class="filelist" th:id="${file.id}" th:each="file:${fileList}" style="height: 110px;width: 270px;border: 1px solid #8D8D8D;border-radius: 5px;display: inline-block">
+				<span style="font-weight: bold" th:text="${file.name}"></span>
+					<span th:text="'上传者:'+${file.createUserName}"></span>
+					<span th:text="'上传日期:'+${file.createTime}"></span>
+					<span style="text-align: right"><a th:onclick="'delfile('+${file.id}+')'">删除</a>&nbsp;&nbsp;&nbsp;<a th:href="${file.fileDownLoadUrl}">下载</a>&nbsp;&nbsp;</span>
+				</div>
+				<div class="file-loading" style="width: 650px">
+					<input id="fileinput-demo-1" name="file" type="file" multiple>
+					<input type="hidden" name="guaranteeFilePath" value="0">
+				</div>
+			</div>
+			<br>
+			<div><a onclick="addjinespan()">添加账款</a></div>
+			<div class="form-group">
 				<label class="col-sm-3 control-label">应付金额：</label>
-				<div class="col-sm-8">
-					<input id="amount" name="amount" th:field="*{amount}" class="form-control" type="text">
+				<div class="col-sm-8" style="width:330px">
+					<input id="amount" th:value="${gurtOrder.amount}" readonly="true" name="amount" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">：</label>
-				<div class="col-sm-8">
-					<input id="createUserId" name="createUserId" th:field="*{createUserId}" class="form-control" type="text">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">已收金额：</label>
+				<div class="col-sm-8" style="width:330px">
+					<input id="paidamount" readonly="true" th:value="${sum}" name="paidamount" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">：</label>
+			<br>
+			<span id="jinespan">
+			<span th:if="${role==1}" th:each="record:${recordList}" >
+			<div class="form-group" >
+				<label class="col-sm-3 control-label">已收账款：</label>
 				<div class="col-sm-8">
-					<input id="createTime" name="createTime" th:field="*{createTime}" class="form-control" type="text">
+					<input id="money"  th:value="${record.paidamount}" name="money" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">：</label>
-				<div class="col-sm-8">
-					<input id="bankSubmissionTime" name="bankSubmissionTime" th:field="*{bankSubmissionTime}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">订单状态(0 待提交; 1 待接收; 2 待处理; 3 已提交银行; 4 已撤销)：</label>
-				<div class="col-sm-8">
-					<input id="status" name="status" th:field="*{status}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">是否需要开发票(0 否, 1 是)：</label>
-				<div class="col-sm-8">
-					<input id="needInvoice" name="needInvoice" th:field="*{needInvoice}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">：</label>
-				<div class="col-sm-8">
-					<input id="companyName" name="companyName" th:field="*{companyName}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">：</label>
-				<div class="col-sm-8">
-					<input id="taxNumber" name="taxNumber" th:field="*{taxNumber}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">：</label>
-				<div class="col-sm-8">
-					<input id="bankName" name="bankName" th:field="*{bankName}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">：</label>
-				<div class="col-sm-8">
-					<input id="bankAccount" name="bankAccount" th:field="*{bankAccount}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">：</label>
-				<div class="col-sm-8">
-					<input id="companyAddress" name="companyAddress" th:field="*{companyAddress}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">：</label>
-				<div class="col-sm-8">
-					<input id="phoneNumber" name="phoneNumber" th:field="*{phoneNumber}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">发票文件下载地址：</label>
-				<div class="col-sm-8">
-					<input id="invoiceFileDownloadUrl" name="invoiceFileDownloadUrl" th:field="*{invoiceFileDownloadUrl}" class="form-control" type="text">
-				</div>
-			</div>
+				<br>
+			</span>
+				</span>
+			<input type="hidden" name="fileUrls">
+			<input type="hidden" name="fileNames">
 		</form>
-    </div>
+	</div>
     <div th:include="include::footer"></div>
+	<th:block th:include="include :: bootstrap-fileinput-js" />
     <script type="text/javascript">
-		var prefix = ctx + "baohan/gurtOrder";
-		$("#form-gurtOrder-edit").validate({
+
+		function addjinespan() {
+			$("#jinespan").append("<div class=\"form-group\" >\n" +
+                "\t\t\t\t<label class=\"col-sm-3 control-label\">已收账款：</label>\n" +
+                "\t\t\t\t<div class=\"col-sm-8\">\n" +
+                "\t\t\t\t\t<input id=\"money\" name=\"money\" value='0' class=\"form-control\" type=\"text\">\n" +
+                "\t\t\t\t</div>\n" +
+                "\t\t\t</div>\n" +
+                "\t\t\t\t<br>");
+        }
+			var prefix = ctx + "baohan/gurtOrder"
+
+            var uploadFileName=[];
+            var uploadFileUrl=[];
+		var mon;
+		$(function () {
+            $("#jinespan").on("focus","[name=money]",function(){
+                mon=$(this).val()
+            });
+            $("#jinespan").on("blur","[name=money]",function(){
+                var monup=$(this).val()
+                var sum=$("#paidamount").val();
+                sum=parseInt(sum)+parseInt(monup)-parseInt(mon);
+                $("#paidamount").val(sum);
+            });
+        })
+        $(document).ready(function () {
+
+            $("#fileinput-demo-1").fileinput({
+                language: 'zh',
+                showPreview: false,
+                uploadUrl: ctx + 'common/upload'
+            });
+
+            $("#fileinput-demo-1").on("fileuploaded", function (event, data, previewId, index) {
+                uploadFileUrl.push(data.response.url)
+				uploadFileName.push(data.response.fileName)
+            })
+        });
+
+		$("#form-gurtOrder-add").validate({
 			rules:{
 				xxxx:{
 					required:true,
@@ -161,9 +192,23 @@
 		
 		function submitHandler() {
 	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/edit", $('#form-gurtOrder-edit').serialize());
+	                $("[name=fileNames]").val(uploadFileName)
+                    $("[name=fileUrls]").val(uploadFileUrl)
+                    $.operate.save(prefix + "/edit", $('#form-gurtOrder-add').serialize());
 	        }
 	    }
+
+	    function getMoney() {
+			$.get("/baohan/gurtOrder/money",$('#form-gurtOrder-add').serialize(),function (data) {
+				$("#amount").val(data.gurtOrder.amount);
+            },"JSON")
+        }
+        function delfile(id) {
+
+            $.post("/baohan/gurtOrder/delorderfile","id="+id+"",function (data) {
+                $("#"+id+"").remove();
+            },"TEXT")
+        }
 	</script>
 </body>
 </html>

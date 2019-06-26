@@ -1,6 +1,5 @@
 package com.ruoyi.baohan.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.ruoyi.baohan.domain.GurtProjectTypeCostConfig;
@@ -74,13 +73,7 @@ public class GurtCategoryController extends BaseController {
         return util.exportExcel(list, "gurtCategory");
     }
 
-    /**
-     * 新增项目基础资料
-     */
-    @GetMapping("/add")
-    public String add() {
-        return prefix + "/add";
-    }
+
 
 
 
@@ -101,14 +94,20 @@ public class GurtCategoryController extends BaseController {
     @Log(title = "项目基础资料", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(GurtCategory gurtCategory, String[] starting_amount, String[] ending_amount,
-                              String[] single_payment_cost, String[] multiple_payment_cost,
-                              String type, String projectName) {
-        String[] result1 = type.split(",");
+    public AjaxResult addSave(GurtCategory gurtCategory) {
         gurtCategory.setCreateUserId(1);
         gurtCategoryService.insertGurtCategory(gurtCategory);
-        if (projectName != "")
-            gurtProjectTypeCostConfigService.insertGurtProjectTypeCostConfig(starting_amount, ending_amount, single_payment_cost, multiple_payment_cost, result1, projectName, gurtCategory.getId());
+
+        GurtProjectTypeCostConfig gurtProjectTypeCostConfig=new GurtProjectTypeCostConfig();
+        gurtProjectTypeCostConfig.setCategoryId(0);
+        List<GurtProjectTypeCostConfig> list=gurtProjectTypeCostConfigService.selectGurtProjectTypeCostConfigList(gurtProjectTypeCostConfig);
+
+        for (int i=0;i<list.size();i++){
+            GurtProjectTypeCostConfig g=list.get(i);
+            g.setCategoryId(gurtCategory.getId());
+            g.setId(null);
+            gurtProjectTypeCostConfigService.insertGurtProjectTypeCostConfig1(g);
+        }
         return toAjax(1);
     }
 
@@ -153,6 +152,31 @@ public class GurtCategoryController extends BaseController {
         mmap.put("gurtCategory", gurtCategory);
         mmap.put("id", id);
         return prefix + "/edit";
+    }
+    /**
+     * 新增项目基础资料
+     */
+    @GetMapping("/add/{id}")
+    public String add(@PathVariable("id") Long id, ModelMap mmap) {
+        GurtCategory gurtCategory = gurtCategoryService.selectGurtCategoryAndProjectById(id);
+        if(gurtCategory==null){
+            gurtCategory=gurtCategoryService.selectGurtCategoryById(id);
+        }
+        mmap.put("gurtCategory", gurtCategory);
+        mmap.put("id", id);
+        return prefix + "/add";
+    }
+
+
+    @GetMapping("/shezhi/{id}")
+    public String shezhi(@PathVariable("id") Long id, ModelMap mmap) {
+        GurtCategory gurtCategory = gurtCategoryService.selectGurtCategoryAndProjectById(id);
+        if(gurtCategory==null){
+            gurtCategory=gurtCategoryService.selectGurtCategoryById(id);
+        }
+        mmap.put("gurtCategory", gurtCategory);
+        mmap.put("id", id);
+        return prefix + "/shezhi";
     }
 
     /**
