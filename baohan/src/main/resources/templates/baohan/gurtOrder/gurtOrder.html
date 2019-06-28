@@ -5,7 +5,6 @@
     <th:block th:include="include :: jasny-bootstrap-css" />
 </head>
 <body class="gray-bg">
-<form action="/baohan/gurtOrder/shangchuan" method="post">
 <div class="container-div">
     <div class="row">
         <div class="col-sm-12 search-collapse">
@@ -49,7 +48,7 @@
                shiro:hasPermission="baohan:gurtOrder:remove">
                 <i class="fa fa-remove"></i> 删除
             </a>
-            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="baohan:gurtOrder:export">
+            <!--<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="baohan:gurtOrder:export">
                 <i class="fa fa-download"></i> 导出
             </a>
             <div class="form-group" style="display: inline-block;">
@@ -63,14 +62,13 @@
             <a class="btn btn-danger btn-del btn-del disabled" onclick="shangchuan()"
                shiro:hasPermission="baohan:gurtOrder:remove">
                 <i class="fa fa-remove"></i> 点击上传
-            </a>
+            </a>-->
         </div>
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table" data-mobile-responsive="true"></table>
         </div>
     </div>
 </div>
-</form>
 <input type="hidden" name="role" th:value="${role}">
 <div th:include="include :: footer"></div>
 <th:block th:include="include :: jasny-bootstrap-js" />
@@ -81,14 +79,10 @@
     var exitFlag = [[${@permission.hasPermi('baohan:gurtOrder:exit')}]];
     var prefix = ctx + "baohan/gurtOrder";
 
-    function shangchuan() {
-        $("form").submit();
-        /*$.post("/baohan/gurtOrder/shangchuan",function () {
+   /* function shangchuan() {
+        $.operate.submit();
+    }*/
 
-            
-        },"TEXT");*/
-    }
-    
     function test() {
         $.modal.open("添加订单", "/baohan/gurtOrder/add", 1500);
     }
@@ -186,28 +180,30 @@
                         var actions = [];
                         if (role == 1) {
                             if (row.statusName == "已撤销") {
+                                actions.push('<a class="btn btn-danger btn-xs ' + submitFlag + '" href="/baohan/gurtOrder/modifystatus/' + row.id + '")"><i class="fa fa-remove"></i>提交</a>');
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/chakan/'+row.id+'"><i class="fa fa-remove"></i>查看</a>');
+                                actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="javascript:void(0)" onclick="test2(\'' + row.id + '\')"><i class="fa fa-remove"></i>编辑</a>');
                             }
                             if (row.statusName == "已提交银行") {
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/chakan/'+row.id+'"><i class="fa fa-remove"></i>查看</a>');
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/modifystatusche/' + row.id + '" onclick="$.operate.exit(\'' + row.id + '\')"><i class="fa fa-remove"></i>撤销</a>');
                             }
                             if (row.statusName == "待处理") {
-                                actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/modifystatus/' + row.id + '" onclick="$.operate.exit(\'' + row.id + '\')"><i class="fa fa-remove"></i>提交银行</a>');
-                                actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/modifystatusche/' + row.id + '" onclick="$.operate.exit(\'' + row.id + '\')"><i class="fa fa-remove"></i>撤销</a>');
+                                actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/modifystatus/' + row.id + '"><i class="fa fa-remove"></i>提交银行</a>');
+                                actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/modifystatusche/' + row.id + '"><i class="fa fa-remove"></i>撤销</a>');
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="javascript:void(0)" onclick="test2(\'' + row.id + '\')"><i class="fa fa-remove"></i>编辑</a>');
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/chakan/'+row.id+'"><i class="fa fa-remove"></i>查看</a>');
                             }
                             if (row.statusName == "待接收") {
-                                actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="/baohan/gurtOrder/modifystatus/' + row.id + '" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>接受</a>');
+                                actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="/baohan/gurtOrder/modifystatus/' + row.id + '")"><i class="fa fa-remove"></i>接受</a>');
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="javascript:void(0)" onclick="test2(\'' + row.id + '\')"><i class="fa fa-remove"></i>编辑</a>');
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/chakan/'+row.id+'"><i class="fa fa-remove"></i>查看</a>');
-                                actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/modifystatusche/' + row.id + '" onclick="$.operate.exit(\'' + row.id + '\')"><i class="fa fa-remove"></i>撤销</a>');
+                                actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/modifystatusche/' + row.id + '" ><i class="fa fa-remove"></i>撤销</a>');
                             }
                             if (row.statusName == "待提交") {
                                 actions.push('<a class="btn btn-danger btn-xs ' + submitFlag + '" href="/baohan/gurtOrder/modifystatus/' + row.id + '")"><i class="fa fa-remove"></i>提交</a>');
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/chakan/'+row.id+'"><i class="fa fa-remove"></i>查看</a>');
-                                actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/modifystatusche/' + row.id + '" onclick="$.operate.exit(\'' + row.id + '\')"><i class="fa fa-remove"></i>撤销</a>');
+                                actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/modifystatusche/' + row.id + '"><i class="fa fa-remove"></i>撤销</a>');
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="javascript:void(0)" onclick="test2(\'' + row.id + '\')"><i class="fa fa-remove"></i>编辑</a>');
                             }
                         }else if(role==0){
@@ -216,7 +212,7 @@
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/chakan/'+row.id+'"><i class="fa fa-remove"></i>查看</a>');
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="javascript:void(0)" onclick="test2(\'' + row.id + '\')"><i class="fa fa-remove"></i>编辑</a>');
                             }
-                            if (row.statusName == "已提交银行") {erate.
+                            if (row.statusName == "已提交银行") {
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/chakan/'+row.id+'"><i class="fa fa-remove"></i>查看</a>');
                             }
                             if (row.statusName == "待处理") {
@@ -225,12 +221,12 @@
                             if (row.statusName == "待接收") {
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="javascript:void(0)" onclick="test2(\'' + row.id + '\')"><i class="fa fa-remove"></i>编辑</a>');
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/chakan/'+row.id+'"><i class="fa fa-remove"></i>查看</a>');
-                                actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/modifystatusche/' + row.id + '" onclick="$.operate.exit(\'' + row.id + '\')"><i class="fa fa-remove"></i>撤销</a>');
+                                actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/modifystatusche/' + row.id + '"><i class="fa fa-remove"></i>撤销</a>');
                             }
                             if (row.statusName == "待提交") {
                                 actions.push('<a class="btn btn-danger btn-xs ' + submitFlag + '" href="/baohan/gurtOrder/modifystatus/' + row.id + '")"><i class="fa fa-remove"></i>提交</a>');
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/chakan/'+row.id+'"><i class="fa fa-remove"></i>查看</a>');
-                                actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/modifystatusche/' + row.id + '" onclick="$.operate.exit(\'' + row.id + '\')"><i class="fa fa-remove"></i>撤销</a>');
+                                actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/modifystatusche/' + row.id + '"><i class="fa fa-remove"></i>撤销</a>');
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="javascript:void(0)" onclick="test2(\'' + row.id + '\')"><i class="fa fa-remove"></i>编辑</a>');
                             }
                         }

@@ -92,6 +92,7 @@ public interface ISysUserService
      */
     public int insertUser(SysUser user);
 
+    public int insertUser1(SysUser user);
     /**
      * 保存用户信息
      * 

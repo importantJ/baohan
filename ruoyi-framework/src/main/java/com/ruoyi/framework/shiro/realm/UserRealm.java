@@ -139,4 +139,9 @@ public class UserRealm extends AuthorizingRealm
     {
         this.clearCachedAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
     }
+
+    @Override
+    public boolean supports(AuthenticationToken var1){
+        return var1 instanceof UsernamePasswordToken;
+    }
 }

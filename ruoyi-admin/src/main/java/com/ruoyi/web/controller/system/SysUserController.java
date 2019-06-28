@@ -1,15 +1,14 @@
 package com.ruoyi.web.controller.system;
 
 import java.util.List;
+import java.util.Random;
+
+import com.ruoyi.framework.web.domain.server.Sys;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
@@ -132,6 +131,34 @@ public class SysUserController extends BaseController
         user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
         user.setCreateBy(ShiroUtils.getLoginName());
         return toAjax(userService.insertUser(user));
+    }
+
+    /**
+     * 新增保存用户
+     */
+    @PostMapping("/reg")
+    @ResponseBody
+    public SysUser reg(@RequestParam("phone") String phone,@RequestParam("url") String url)
+    {
+        SysUser user=new SysUser();
+        user.setPhonenumber(phone);
+        user.setLoginName(phone);
+        user.setUserName(phone);
+        user.setPassword(phone);
+        user.setSalt(ShiroUtils.randomSalt());
+        user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
+
+
+        List<SysUser> userList=userService.selectUserList(new SysUser());
+        for (SysUser sysUser : userList) {
+            String initveurl=sysUser.getInviteurl();
+            if(initveurl!=null){
+                if(initveurl.substring(initveurl.lastIndexOf("/"),initveurl.lastIndexOf(".")).equals(url.substring(url.lastIndexOf("/"))));
+                user.setInviteUserId(sysUser.getUserId().intValue());
+            }
+        }
+        userService.insertUser1(user);
+        return user;
     }
 
     /**

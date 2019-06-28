@@ -22,6 +22,15 @@ public class SysUser extends BaseEntity
     @Excel(name = "用户序号", prompt = "用户编号")
     private Long userId;
     private Integer catId;
+    private String inviteurl;
+
+    public String getInviteurl() {
+        return inviteurl;
+    }
+
+    public void setInviteurl(String inviteurl) {
+        this.inviteurl = inviteurl;
+    }
 
     public Integer getCatId() {
         return catId;

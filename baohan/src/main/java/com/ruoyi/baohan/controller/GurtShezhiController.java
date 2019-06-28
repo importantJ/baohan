@@ -25,6 +25,6 @@ public class GurtShezhiController extends BaseController {
     @RequiresPermissions("baohan:gurtshezhi:view")
     @GetMapping()
     public String gurtCategory() {
-        return prefix + "/gurtCategory";
+        return prefix + "/view";
     }
 }

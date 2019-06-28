@@ -52,7 +52,11 @@ public interface IGurtOrderService
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-	public int deleteGurtOrderByIds(String ids);
+	int addshezhi(Gurtshezhi gurtshezhi);
+
+	int delAll();
+
+	int deleteGurtOrderByIds(String ids);
 
 	List<GurtOrderFile> selectOrderFile(Integer orderId);
 

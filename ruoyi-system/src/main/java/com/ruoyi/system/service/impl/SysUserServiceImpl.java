@@ -3,8 +3,12 @@ package com.ruoyi.system.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ruoyi.common.config.Global;
+import com.ruoyi.common.config.ServerConfig;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.system.util.QRCodeUtil;
+import com.ruoyi.system.util.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,8 @@ import com.ruoyi.system.mapper.SysRoleMapper;
 import com.ruoyi.system.mapper.SysUserMapper;
 import com.ruoyi.system.mapper.SysUserPostMapper;
 import com.ruoyi.system.mapper.SysUserRoleMapper;
+
+import javax.servlet.ServletConfig;
 
 /**
  * 用户 业务层处理
@@ -176,23 +182,58 @@ public class SysUserServiceImpl implements ISysUserService
         return userMapper.deleteUserByIds(userIds);
     }
 
+
+    @Autowired
+    ServerConfig serverConfig;
     /**
      * 新增保存用户信息
      * 
      * @param user 用户信息
      * @return 结果
      */
+
     @Override
     @Transactional
     public int insertUser(SysUser user)
     {
+        Long[] roleIds=user.getRoleIds();
+        for(int i=0;i<roleIds.length;i++){
+
+            if(roleIds[i]==1||roleIds[i]==3){
+                String url=Test.luanma();
+                String text = "http://192.168.0.80/login?"+url;
+                String filePath = Global.getUploadPath();
+                String intiviUrl=serverConfig.getUrl()+"/profile/upload/"+url+".jpg";
+                user.setInviteurl(intiviUrl);
+                try {
+                    QRCodeUtil.encode1(text,"", filePath,true,url);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         // 新增用户信息
         int rows = userMapper.insertUser(user);
         // 新增用户岗位关联
         insertUserPost(user);
         // 新增用户与角色管理
         insertUserRole(user);
+
         return rows;
+    }
+
+    @Override
+    public int insertUser1(SysUser user) {
+
+        SysUser user1=userMapper.selectUserByPhoneNumber(user.getLoginName());
+        if(user1==null) {
+            userMapper.insertUser(user);
+            int b = 2;
+            Long[] a = {Long.valueOf(b)};
+            user.setRoleIds(a);
+            insertUserRole(user);
+        }
+        return 1;
     }
 
     /**
@@ -205,6 +246,22 @@ public class SysUserServiceImpl implements ISysUserService
     @Transactional
     public int updateUser(SysUser user)
     {
+        Long[] roleIds=user.getRoleIds();
+        for(int i=0;i<roleIds.length;i++){
+
+            if(roleIds[i]==1||roleIds[i]==3){
+                String url=Test.luanma();
+                String text = "http://192.168.0.80/login?"+url;
+                String filePath = Global.getUploadPath();
+                String intiviUrl=serverConfig.getUrl()+"/profile/upload/"+url+".jpg";
+                user.setInviteurl(intiviUrl);
+                try {
+                    QRCodeUtil.encode1(text,"", filePath,true,url);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         Long userId = user.getUserId();
         // 删除用户与角色关联
         userRoleMapper.deleteUserRoleByUserId(userId);

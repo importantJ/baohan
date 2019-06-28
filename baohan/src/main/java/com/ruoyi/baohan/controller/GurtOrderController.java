@@ -1,5 +1,7 @@
 package com.ruoyi.baohan.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +53,6 @@ public class 	GurtOrderController extends BaseController
 	{
 		List<GurtStatus> statusList=gurtOrderService.getStatus();
 		modelMap.put("statusList",statusList);
-
 		int role=0;
 		List<SysRole> user=ShiroUtils.getSysUser().getRoles();
 		for (int i=0;i<user.size();i++){
@@ -75,6 +76,7 @@ public class 	GurtOrderController extends BaseController
 		if(gurtOrder.getStatus()==3){
 			//提交
 			gurtOrderService.insertinviteCommission(gurtOrder);
+			gurtOrder.setBankSubmissionTime(new Date());
 		}
 		gurtOrderService.updateOrderstatus(gurtOrder);
 		List<GurtStatus> statusList=gurtOrderService.getStatus();
@@ -116,8 +118,23 @@ public class 	GurtOrderController extends BaseController
 	@ResponseBody
 	public TableDataInfo list(GurtOrder gurtOrder,ModelMap modelMap)
 	{
+		List<GurtStatus> statusList=gurtOrderService.getStatus();
+		modelMap.put("statusList",statusList);
+		int role=0;
+		List<SysRole> user=ShiroUtils.getSysUser().getRoles();
+		for (int i=0;i<user.size();i++){
+			if(user.get(i).getRoleName().equals("管理员")||user.get(i).getRoleName().equals("客户经理"))
+				role=1;
+		}
+		modelMap.put("role",role);
 		startPage();
-        List<GurtOrder> list = gurtOrderService.selectGurtOrderList(gurtOrder);
+        List<GurtOrder> list =null;
+        if(role==1){
+        	list= gurtOrderService.selectGurtOrderList(gurtOrder);
+		}else{
+        	gurtOrder.setCreateUserId(ShiroUtils.getUserId());
+        	list=gurtOrderService.selectGurtOrderList(gurtOrder);
+		}
 		return getDataTable(list);
 	}
 	/**
@@ -324,10 +341,22 @@ public class 	GurtOrderController extends BaseController
 	 */
 	@PostMapping( "/shangchuan")
 	@ResponseBody
-	public AjaxResult shangchuan(String[] btSelectItem)
+	public AjaxResult shangchuan(String ids)
 	{
 		return toAjax(0);
 	}
 
-
+	@GetMapping("/shezhi")
+	@ResponseBody
+	public Object shezhi(String cb,String[] starttime,String[] endtime){
+		gurtOrderService.delAll();
+		Gurtshezhi gurtshezhi=new Gurtshezhi();
+		gurtshezhi.setCb(cb);
+		for(int i=0;i<starttime.length;i++){
+			gurtshezhi.setStarttime(starttime[i]);
+			gurtshezhi.setEndtime(endtime[i]);
+			gurtOrderService.addshezhi(gurtshezhi);
+		}
+		return gurtshezhi;
+	}
 }

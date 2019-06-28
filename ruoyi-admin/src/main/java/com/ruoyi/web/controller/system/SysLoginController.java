@@ -2,6 +2,8 @@ package com.ruoyi.web.controller.system;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.framework.shiro.token.SmsAuthenticationToken;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -53,6 +55,27 @@ public class SysLoginController extends BaseController
             {
                 msg = e.getMessage();
             }
+            return error(msg);
+        }
+    }
+    @PostMapping("/loginByPhone")
+    @ResponseBody
+    public AjaxResult loginByPhone(String phone)
+    {
+        SmsAuthenticationToken token=new SmsAuthenticationToken(phone);
+        Subject subject = SecurityUtils.getSubject();
+        try
+        {
+            subject.login(token);
+            return success();
+        }
+        catch (AuthenticationException e)
+        {
+            String msg = "验证码错误";
+           /* if (StringUtils.isNotEmpty(e.getMessage()))
+            {
+                msg = e.getMessage();
+            }*/
             return error(msg);
         }
     }

@@ -80,11 +80,13 @@ public class GurtOrderServiceImpl implements IGurtOrderService
 		}
 
 		//新增已付金额
-		for(int i=0;i<money.length;i++){
-			if(money[i]==""||money.equals("0")){
-				break;
+		if(money!=null){
+			for(int i=0;i<money.length;i++){
+				if(money[i]==""||money.equals("0")){
+					break;
+				}
+				gurtOrderMapper.insertOrderRecord(gurtOrder.getId(),money[i]);
 			}
-			gurtOrderMapper.insertOrderRecord(gurtOrder.getId(),money[i]);
 		}
 
 
@@ -119,7 +121,7 @@ public class GurtOrderServiceImpl implements IGurtOrderService
 	public int updateGurtOrder(GurtOrder gurtOrder,String[] fileNames,String[] fileUrls,String[] money)
 	{
 		Long userId= ShiroUtils.getSysUser().getUserId();
-		gurtOrder.setCreateUserId(userId);
+
 		Integer flag=gurtOrderMapper.updateGurtOrder(gurtOrder);
 		if(fileNames.length!=0){
 			for(int i=0;i<fileNames.length;i++){
@@ -133,11 +135,13 @@ public class GurtOrderServiceImpl implements IGurtOrderService
 		}
 
 		gurtOrderMapper.delByOrderId(gurtOrder.getId());
-		for(int i=0;i<money.length;i++){
-			if(money[i]==""||money.equals("0")){
-				break;
+		if(money!=null){
+			for(int i=0;i<money.length;i++){
+				if(money[i]==""||money.equals("0")){
+					break;
+				}
+				gurtOrderMapper.insertOrderRecord(gurtOrder.getId(),money[i]);
 			}
-			gurtOrderMapper.insertOrderRecord(gurtOrder.getId(),money[i]);
 		}
 	    return flag;
 	}
@@ -145,6 +149,15 @@ public class GurtOrderServiceImpl implements IGurtOrderService
 	@Override
 	public List<GurtStatus> getStatus() {
 		return gurtOrderMapper.getStatus();
+	}
+
+	@Override
+	public int addshezhi(Gurtshezhi gurtshezhi) {
+		return gurtOrderMapper.addshezhi(gurtshezhi);
+	}
+	@Override
+	public int delAll(){
+		return gurtOrderMapper.delAll();
 	}
 
 	/**
@@ -169,9 +182,9 @@ public class GurtOrderServiceImpl implements IGurtOrderService
 		return gurtOrderMapper.delorderfile(id);
 	}
 
-	@Autowired
+	@Resource
 	private UserMapper userMapper;
-	@Autowired
+	@Resource
 	private GurtProjectTypeCostConfigMapper gurtProjectTypeCostConfigMapper;
 	@Override
 	public int insertinviteCommission(GurtOrder gurtOrder) {
@@ -185,18 +198,22 @@ public class GurtOrderServiceImpl implements IGurtOrderService
 			if(ivUser.getCategoryId()!=null){
 				GurtProjectTypeCostConfig gurtProjectTypeCostConfig=new GurtProjectTypeCostConfig();
 				gurtProjectTypeCostConfig.setProjectTypeId(gurtOrder.getProjectTypeId());
-				gurtProjectTypeCostConfig.setCategoryId(ivUser.getCategoryId().intValue());
+				gurtProjectTypeCostConfig.setCategoryId(0);
 				List<GurtProjectTypeCostConfig> gurtProjectTypeCostConfigList=gurtProjectTypeCostConfigMapper.selectGurtProjectTypeCostConfigList(gurtProjectTypeCostConfig);
 				for (GurtProjectTypeCostConfig g1 :gurtProjectTypeCostConfigList) {
 					if(g1.getStartingAmount()<gurtOrder.getGuaranteeAmount()&&g1.getEndingAmount()>gurtOrder.getGuaranteeAmount()){
 						if(g1.getSinglePaymentCountType()==0) {
-							money=g1.getSinglePaymentCost();
+							money=gurtOrder.getGuaranteeAmount()-g1.getSinglePaymentCost();
 						}else{
 							money=(gurtOrder.getGuaranteeAmount()*g1.getSinglePaymentCost()/100);
 						}
 					}
 				}
-				gurtOrderMapper.insertinviteCommission(gurtOrder.getId(),money/2);
+				double cb=gurtOrderMapper.getcb();
+				int ticheng=(int)(cb*money);
+				gurtOrderMapper.delticheng(gurtOrder.getId());
+				gurtOrderMapper.insertinviteCommission(gurtOrder.getId(),ticheng);
+
 			}
 		}
 		return 1;

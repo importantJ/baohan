@@ -19,6 +19,8 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
+
+
         <!-- 通用工具-->
         <dependency>
             <groupId>com.ruoyi</groupId>

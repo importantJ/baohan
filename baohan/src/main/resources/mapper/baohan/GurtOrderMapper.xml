@@ -34,8 +34,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<sql id="selectGurtOrderVo">
         select id, warrantee, beneficiary, project_number, project_name, closing_time, guarantee_amount, validity_deadline, guarantee_id, bank_id, project_type_id, amount, create_user_id, create_time, bank_submission_time, status, need_invoice, company_name, tax_number, bank_name, bank_account, company_address, phone_number, invoice_file_download_url from gurt_order
     </sql>
-
-
+    <delete id="delticheng">
+        delete from gurt_invite_commission where order_id=#{orderId}
+    </delete>
+    <insert id="addshezhi">
+        insert into gurt_shezhi(cb,starttime,endtime) value(#{cb},#{starttime},#{endtime})
+    </insert>
+    <select id="getcb" resultType="double">
+        select MAX(cb) from gurt_shezhi
+    </select>
+    <delete id="delAll">
+        delete from gurt_shezhi
+    </delete>
     <select id="getAllBank" resultType="GurtBank">
         select * from gurt_bank
     </select>

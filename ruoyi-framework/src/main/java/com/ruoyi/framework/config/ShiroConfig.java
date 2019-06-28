@@ -3,15 +3,24 @@ package com.ruoyi.framework.config;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.Filter;
+
+import com.ruoyi.framework.shiro.realm.SmsRealm;
+import com.ruoyi.framework.shiro.token.SmsAuthenticationToken;
 import org.apache.commons.io.IOUtils;
+import org.apache.shiro.authc.AbstractAuthenticator;
+import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
+import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.config.ConfigurationException;
 import org.apache.shiro.io.ResourceUtils;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
@@ -148,6 +157,28 @@ public class ShiroConfig
         userRealm.setCacheManager(cacheManager);
         return userRealm;
     }
+    @Bean
+    public SmsRealm smsRealm(EhCacheManager cacheManager){
+        SmsRealm smsRealm = new SmsRealm();
+        smsRealm.setCacheManager(cacheManager);
+        return smsRealm;
+    }
+    /**
+     * 认证器
+     */
+    /*@Bean
+    public AbstractAuthenticator abstractAuthenticator(UserRealm userRealm, SmsRealm smsRealm){
+        // 自定义模块化认证器，用于解决多realm抛出异常问题
+        ModularRealmAuthenticator authenticator = new CustomModularRealmAuthenticator();
+        // 认证策略：AtLeastOneSuccessfulStrategy(默认)，AllSuccessfulStrategy，FirstSuccessfulStrategy
+        authenticator.setAuthenticationStrategy(new AtLeastOneSuccessfulStrategy());
+        // 加入realms
+        List<Realm> realms = new ArrayList<>();
+        realms.add(userRealm);
+        realms.add(smsRealm);
+        authenticator.setRealms(realms);
+        return authenticator;
+    }*/
 
     /**
      * 自定义sessionDAO会话
@@ -199,11 +230,15 @@ public class ShiroConfig
      * 安全管理器
      */
     @Bean
-    public SecurityManager securityManager(UserRealm userRealm, SpringSessionValidationScheduler springSessionValidationScheduler)
+    public SecurityManager securityManager(UserRealm userRealm,SmsRealm smsRealm, SpringSessionValidationScheduler springSessionValidationScheduler)
     {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置realm.
-        securityManager.setRealm(userRealm);
+        List<Realm> realms = new ArrayList<>();
+        realms.add(userRealm);
+        realms.add(smsRealm);
+        securityManager.setRealms(realms);
+
         // 记住我
         securityManager.setRememberMeManager(rememberMeManager());
         // 注入缓存管理器;
@@ -240,6 +275,7 @@ public class ShiroConfig
         // Shiro连接约束配置，即过滤链的定义
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 对静态资源设置匿名访问
+        filterChainDefinitionMap.put("/system/user/**", "anon");
         filterChainDefinitionMap.put("/favicon.ico**", "anon");
         filterChainDefinitionMap.put("/ruoyi.png**", "anon");
         filterChainDefinitionMap.put("/css/**", "anon");
@@ -255,6 +291,7 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/loginByPhone", "anon,captchaValidate");
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 

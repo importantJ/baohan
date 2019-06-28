@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title>若依介绍</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+    <style type="text/css">
+        #base div {
+            text-align: left;
+        }
+
+        div {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+
+        div span {
+            font-size: 14px;
+            font-weight: 100;
+            color: red;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+<div style="height: 900px;text-align: center" class="row  border-bottom white-bg dashboard-header">
+
+
+    <div id="base" class="">
+        <form id="form">
+            <div>邀请提成计算公式：
+                <span>注:此公式可计算邀请人的提成</span>
+            </div>
+            <div>
+                应付金额-邀请人项目成本*
+                <input type="text" value="0.5" name="cb"/>
+                =邀请提成
+            </div>
+            <hr>
+            <div>
+                提交银行时间段设置:<span>
+                    注:设置每天时间段,想通订单在每天此时间段提交
+                    都计算为多笔(时间格式:24小时制)
+                </span>
+            </div>
+            <div>
+                阶段一 开始时间: <input type="text" value="08:00:00" name="starttime"/> 结束时间:
+                <input type="text" value="10:00:00" name="endtime"/>
+            </div>
+            <div>
+                阶段二 开始时间: <input type="text" value="14:00:00" name="starttime"/> 结束时间:
+                <input type="text" value="16:00:00" name="endtime"/>
+            </div>
+            <div>
+                阶段三 开始时间: <input type="text" value="" name="starttime"/> 结束时间:
+                <input type="text" value="" name="endtime"/>
+            </div>
+            <hr>
+            <div>
+                客服联系方式设置
+            </div>
+            <div>
+                联系方式:<input type="text" value="0755-1234564789" name="phone"/>
+            </div>
+            <hr>
+            <div>
+                对公转账设置
+            </div>
+            <div>
+                公司名称:<input type="text" value="深圳市XX有限公司" name="gongsi"/>
+                账户:<input type="text" value="0755-1234564789" name="zhanghu"/>
+                开户行:<input type="text" value="中国建设银行" name="kaihu"/>
+            </div>
+            <br>
+            <a onclick="add()">保存设置</a>
+        </form>
+    </div></div>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+    <script type="text/javascript">
+        $('#pay-qrcode').click(function () {
+            var html = $(this).html();
+            parent.layer.open({
+                title: false,
+                type: 1,
+                closeBtn: false,
+                shadeClose: true,
+                area: ['600px', 'auto'],
+                content: html
+            });
+        });
+        function add() {
+            $.get("/baohan/gurtOrder/shezhi",$("form").serialize(),function (data) {
+                alert('更改设置成功')
+            })
+        }
+    </script>
+</body>
+</html>

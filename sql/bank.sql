@@ -11,7 +11,7 @@
  Target Server Version : 50642
  File Encoding         : 65001
 
- Date: 21/06/2019 18:41:00
+ Date: 28/06/2019 18:33:33
 */
 
 SET NAMES utf8mb4;
@@ -45,15 +45,13 @@ CREATE TABLE `gurt_category`  (
   `create_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除(0 否; 1 是)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '项目基础资料' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '项目基础资料' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of gurt_category
 -- ----------------------------
-INSERT INTO `gurt_category` VALUES (1, 'A01', 'C端客户使用', 1, NULL, 0);
-INSERT INTO `gurt_category` VALUES (17, 'A10', '项目经理101', 1, '2019-06-19 10:45:12', 0);
-INSERT INTO `gurt_category` VALUES (20, '1123', '项目经理101', 1, NULL, 0);
-INSERT INTO `gurt_category` VALUES (21, 'A111', 'beizhu1', 1, '2019-06-21 09:18:50', 0);
+INSERT INTO `gurt_category` VALUES (0, '默认', '默认使用', 1, '2019-06-24 14:38:22', 0);
+INSERT INTO `gurt_category` VALUES (34, '测试类目1', NULL, 1, NULL, 0);
 
 -- ----------------------------
 -- Table structure for gurt_guarantee
@@ -87,12 +85,14 @@ CREATE TABLE `gurt_invite_commission`  (
   `status` bigint(20) NOT NULL DEFAULT 0 COMMENT '状态(0 未支付; 1 已支付)',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_gurt_invite_commission_gurt_order_1`(`order_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '邀请提成' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '邀请提成' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of gurt_invite_commission
 -- ----------------------------
 INSERT INTO `gurt_invite_commission` VALUES (1, 1, 30, 0);
+INSERT INTO `gurt_invite_commission` VALUES (20, 30, 2400, 0);
+INSERT INTO `gurt_invite_commission` VALUES (21, 18, 5850, 0);
 
 -- ----------------------------
 -- Table structure for gurt_order
@@ -126,14 +126,19 @@ CREATE TABLE `gurt_order`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_gurt_order_gurt_guarantee_1`(`guarantee_id`) USING BTREE,
   INDEX `ab`(`project_type_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of gurt_order
 -- ----------------------------
-INSERT INTO `gurt_order` VALUES (1, '张三1123', '李四', 'A', 'A', '2019-06-13 14:49:24', 200, '2019-06-19 14:50:20.000000', 1, 1, 1, 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `gurt_order` VALUES (2, '啊', '1', '23', '3', '0000-00-00 00:00:00', 11, '0000-00-00 00:00:00.000000', 1, 1, 1, 1, 1, '2019-06-21 16:01:31', '0000-00-00 00:00:00', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `gurt_order` VALUES (3, '被保证人：', '受益人：', '项目编号：', '项目名称：', '2012-01-01 00:00:00', 2131, '2122-01-01 00:00:00.000000', 1, 1, 20, 400, 1, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `gurt_order` VALUES (18, '测试客户1有邀请人1提成', '测试', '测试', '测试', '2012-01-01 00:00:00', 21000, '2012-02-01 00:00:00.000000', 1, 1, 10, 1500, 2, '2019-06-28 18:23:29', '2019-06-28 18:33:08', 3, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `gurt_order` VALUES (19, '测试客户1有邀请人1无提成	', '测试', '测试', '测试', '2012-01-01 00:00:00', 1000, '2012-02-01 00:00:00.000000', 1, 1, 10, 1000, 1, '2019-06-28 18:03:04', '2019-06-28 18:04:26', 3, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `gurt_order` VALUES (23, '文件', '文件1', '文件', '文件', '2012-01-01 00:00:00', 1000, '2012-02-01 00:00:00.000000', 2, 2, 10, 1000, 1, '2019-06-28 16:04:28', '2019-06-28 16:04:40', 3, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `gurt_order` VALUES (24, '123', '231', '123', '213', '2012-01-01 00:00:00', 1000, '2012-02-01 00:00:00.000000', 1, 1, 10, 1000, 1, '2019-06-28 16:04:28', '2019-06-28 16:04:41', 3, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `gurt_order` VALUES (25, '测试文件', '测试文件', '文件', '测试文件', '2012-01-01 00:00:00', 10001, '2012-02-01 00:00:00.000000', 1, 1, 10, 800, 1, '2019-06-28 16:04:28', '2019-06-28 16:04:41', 3, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `gurt_order` VALUES (26, '已收金额测试', '已收金额测试', '已收金额测试', '已收金额测试', '2012-01-01 00:00:00', 20001, '2012-02-01 00:00:00.000000', 3, 2, 11, 450, 1, '2019-06-28 16:04:29', '2019-06-28 16:04:42', 3, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `gurt_order` VALUES (29, '测试152', '测试152', '测试152', '测试152', '2012-01-01 00:00:00', 1000, '2012-02-01 00:00:00.000000', 1, 1, 10, 1000, 98, '2019-06-28 16:04:29', '2019-06-28 16:04:42', 3, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `gurt_order` VALUES (30, '123', '123', '123', '123', '2012-01-01 00:00:00', 9000, '2012-02-01 00:00:00.000000', 2, 1, 10, 1000, 98, '2019-06-28 18:32:39', '2019-06-28 18:32:50', 3, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for gurt_order_file
@@ -149,7 +154,45 @@ CREATE TABLE `gurt_order_file`  (
   `order_id` bigint(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_gurt_order_file_gurt_order_1`(`order_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 76 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of gurt_order_file
+-- ----------------------------
+INSERT INTO `gurt_order_file` VALUES (9, '2019/06/24/3e75a4ba51136c5ac996b70668c78eff.docx', 1, NULL, 'http://localhost/profile/upload/2019/06/24/3e75a4ba51136c5ac996b70668c78eff.docx', 0, 12);
+INSERT INTO `gurt_order_file` VALUES (10, '2019/06/24/0135a08dd7721e49313cde0a4fb694c5.docx', 1, NULL, 'http://localhost/profile/upload/2019/06/24/0135a08dd7721e49313cde0a4fb694c5.docx', 0, 12);
+INSERT INTO `gurt_order_file` VALUES (11, '2019/06/25/fef651dad4c66416a1cd0eb81c499b62.png', 1, NULL, 'http://localhost/profile/upload/2019/06/25/fef651dad4c66416a1cd0eb81c499b62.png', 0, 13);
+INSERT INTO `gurt_order_file` VALUES (12, '2019/06/25/41fa36fd47167d526a0bbaa3f0666c62.xls', 1, NULL, 'http://localhost/profile/upload/2019/06/25/41fa36fd47167d526a0bbaa3f0666c62.xls', 0, 14);
+INSERT INTO `gurt_order_file` VALUES (13, '2019/06/25/31c8dc5b2e4ea9f2cfeebbf72838d95a.png', 1, NULL, 'http://localhost/profile/upload/2019/06/25/31c8dc5b2e4ea9f2cfeebbf72838d95a.png', 0, 15);
+INSERT INTO `gurt_order_file` VALUES (14, '2019/06/25/5fc982b066a5cd58176ff9625bc01011.png', 1, NULL, 'http://localhost/profile/upload/2019/06/25/5fc982b066a5cd58176ff9625bc01011.png', 0, 16);
+INSERT INTO `gurt_order_file` VALUES (15, '2019/06/25/07e50ba9bea0e157103923feb4bae8d1.png', 1, NULL, 'http://localhost/profile/upload/2019/06/25/07e50ba9bea0e157103923feb4bae8d1.png', 0, 17);
+INSERT INTO `gurt_order_file` VALUES (16, '2019/06/25/eb7b6641b365cd9fa7d4e51289c77d26.docx', 1, NULL, 'http://localhost/profile/upload/2019/06/25/eb7b6641b365cd9fa7d4e51289c77d26.docx', 0, 17);
+INSERT INTO `gurt_order_file` VALUES (17, '2019/06/25/b334bc6acd9a8d2bb7459dfbd0fef43b.xls', 1, NULL, 'http://localhost/profile/upload/2019/06/25/b334bc6acd9a8d2bb7459dfbd0fef43b.xls', 0, 17);
+INSERT INTO `gurt_order_file` VALUES (19, '2019/06/25/24d299e5bda6daee51a316c8d146e570.png', 2, NULL, 'http://localhost/profile/upload/2019/06/25/24d299e5bda6daee51a316c8d146e570.png', 0, 18);
+INSERT INTO `gurt_order_file` VALUES (20, '2019/06/25/4e8d0633c8bd332153184359ca5373ba.docx', 1, NULL, 'http://localhost/profile/upload/2019/06/25/4e8d0633c8bd332153184359ca5373ba.docx', 0, 19);
+INSERT INTO `gurt_order_file` VALUES (21, 'file', 1, NULL, 'http://localhost/profile/upload/2019/06/26/d5b116500a79bbcdd8ed69ba9ff5195b.xlsx', 0, 20);
+INSERT INTO `gurt_order_file` VALUES (22, 'file', 1, NULL, 'http://localhost/profile/upload/2019/06/26/8f609649a0a98bfb9805576a0af61901.png', 0, 21);
+INSERT INTO `gurt_order_file` VALUES (23, 'file', 1, NULL, 'http://localhost/profile/upload/2019/06/26/e9259d2bef235ec71da0ff075f361ee7.xls', 0, 21);
+INSERT INTO `gurt_order_file` VALUES (24, '加班申请及打卡规则.docx', 1, NULL, 'http://localhost/profile/upload/2019/06/26/2d8a11ace46a312b5d4f9e6107fb7701.docx', 0, 21);
+INSERT INTO `gurt_order_file` VALUES (25, '问题.xlsx', 1, NULL, 'http://localhost/profile/upload/2019/06/26/7b2cb73359e6d5b58f7eff4f74d057cf.xlsx', 0, 22);
+INSERT INTO `gurt_order_file` VALUES (26, '名片-0626_画板 1 副本.png', 1, NULL, 'http://localhost/profile/upload/2019/06/26/ee1c5b337b6559dd0d7471a1e1107cfd.png', 0, 22);
+INSERT INTO `gurt_order_file` VALUES (27, '保函格式十三份_2_.docx', 1, NULL, 'http://localhost/profile/upload/2019/06/26/2c9faa22ee545a9626dc5a25467d1507.docx', 0, 23);
+INSERT INTO `gurt_order_file` VALUES (28, '1', 1, NULL, '1', 0, 0);
+INSERT INTO `gurt_order_file` VALUES (29, '', 0, NULL, '', 0, 0);
+INSERT INTO `gurt_order_file` VALUES (30, '#{name}', 0, '2019-06-26 09:40:08', '#{fileDownLoadUrl}', 0, 0);
+INSERT INTO `gurt_order_file` VALUES (31, '个人所得税通知.docx', 1, '2019-06-26 09:41:24', 'http://localhost/profile/upload/2019/06/26/50898428a10fa12ad3eeb424a88cec73.docx', 0, 24);
+INSERT INTO `gurt_order_file` VALUES (45, '加班申请及打卡规则.docx', 1, '2019-06-26 16:25:25', 'http://localhost/profile/upload/2019/06/26/ce11dde8fd4673009fbc7e13b9fa9b0a.docx', 0, 26);
+INSERT INTO `gurt_order_file` VALUES (46, '名片-0626_画板 1 副本.png', 1, '2019-06-26 16:25:38', 'http://localhost/profile/upload/2019/06/26/0b11cf70b58b552d07f1d8fe83d5ebe3.png', 0, 26);
+INSERT INTO `gurt_order_file` VALUES (47, '问题.xlsx', 1, '2019-06-26 16:25:38', 'http://localhost/profile/upload/2019/06/26/d92bae45bd27a42f5a6983b7297ef18a.xlsx', 0, 26);
+INSERT INTO `gurt_order_file` VALUES (62, '名片-0626_画板 1 副本.png', 1, '2019-06-27 09:43:06', 'http://localhost/profile/upload/2019/06/27/6e57e0e0dc27010f9b5a016bfe6add1b.png', 0, 25);
+INSERT INTO `gurt_order_file` VALUES (63, '后台样式0516.xls', 1, '2019-06-27 09:43:06', 'http://localhost/profile/upload/2019/06/27/8b41ff451bbe9e4c93741897b8caa84e.xls', 0, 25);
+INSERT INTO `gurt_order_file` VALUES (64, '问题.xlsx', 1, '2019-06-27 09:43:06', 'http://localhost/profile/upload/2019/06/27/a2a164a3b14ffa6c724221c88e224a84.xlsx', 0, 25);
+INSERT INTO `gurt_order_file` VALUES (65, '个人所得税通知.docx', 1, '2019-06-27 09:43:06', 'http://localhost/profile/upload/2019/06/27/2fa9483c3612d819ebacf23439d17868.docx', 0, 25);
+INSERT INTO `gurt_order_file` VALUES (71, '后台样式0516.xls', 98, '2019-06-28 14:46:16', 'http://localhost/profile/upload/2019/06/28/047249863c4ad228f0fd05044c4465cb.xls', 0, 29);
+INSERT INTO `gurt_order_file` VALUES (72, '名片-0626_画板 1 副本.png', 98, '2019-06-28 14:46:16', 'http://localhost/profile/upload/2019/06/28/a2534a3240270f46906e41bcddafa2a1.png', 0, 29);
+INSERT INTO `gurt_order_file` VALUES (73, '问题.xlsx', 98, '2019-06-28 14:46:16', 'http://localhost/profile/upload/2019/06/28/59c252c2374e6df4edd2aaee14a3a5e3.xlsx', 0, 29);
+INSERT INTO `gurt_order_file` VALUES (74, '加班申请及打卡规则.docx', 98, '2019-06-28 14:46:16', 'http://localhost/profile/upload/2019/06/28/b1b48fb446f844941471ccbd5c463d90.docx', 0, 29);
+INSERT INTO `gurt_order_file` VALUES (75, '问题.xlsx', 98, '2019-06-28 18:29:51', 'http://localhost/profile/upload/2019/06/28/e54eb38fefb80ba68817e47832e1b37c.xlsx', 0, 30);
 
 -- ----------------------------
 -- Table structure for gurt_order_payment_record
@@ -161,7 +204,24 @@ CREATE TABLE `gurt_order_payment_record`  (
   `paid_amount` bigint(255) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_gurt_order_payment_record_gurt_order_1`(`order_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of gurt_order_payment_record
+-- ----------------------------
+INSERT INTO `gurt_order_payment_record` VALUES (1, 12, 100);
+INSERT INTO `gurt_order_payment_record` VALUES (2, 13, 11);
+INSERT INTO `gurt_order_payment_record` VALUES (3, 14, 3);
+INSERT INTO `gurt_order_payment_record` VALUES (4, 15, 1);
+INSERT INTO `gurt_order_payment_record` VALUES (5, 16, 1111);
+INSERT INTO `gurt_order_payment_record` VALUES (6, 17, 100);
+INSERT INTO `gurt_order_payment_record` VALUES (39, 26, 1000);
+INSERT INTO `gurt_order_payment_record` VALUES (40, 26, 2000);
+INSERT INTO `gurt_order_payment_record` VALUES (41, 26, 300);
+INSERT INTO `gurt_order_payment_record` VALUES (42, 26, 400);
+INSERT INTO `gurt_order_payment_record` VALUES (43, 25, 100);
+INSERT INTO `gurt_order_payment_record` VALUES (44, 18, 100);
+INSERT INTO `gurt_order_payment_record` VALUES (45, 18, 200);
 
 -- ----------------------------
 -- Table structure for gurt_project_type
@@ -170,24 +230,17 @@ DROP TABLE IF EXISTS `gurt_project_type`;
 CREATE TABLE `gurt_project_type`  (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类目名称',
-  `category_id` bigint(11) NOT NULL,
+  `category_id` bigint(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `asdass`(`category_id`) USING BTREE,
   CONSTRAINT `asdass` FOREIGN KEY (`category_id`) REFERENCES `gurt_category` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '项目名称' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '项目名称' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of gurt_project_type
 -- ----------------------------
-INSERT INTO `gurt_project_type` VALUES (1, '项目1', 17);
-INSERT INTO `gurt_project_type` VALUES (11, '市政', 17);
-INSERT INTO `gurt_project_type` VALUES (16, '市政1', 17);
-INSERT INTO `gurt_project_type` VALUES (17, '3', 17);
-INSERT INTO `gurt_project_type` VALUES (18, '市政3', 17);
-INSERT INTO `gurt_project_type` VALUES (19, '市政1', 20);
-INSERT INTO `gurt_project_type` VALUES (20, '市政', 1);
-INSERT INTO `gurt_project_type` VALUES (21, '市政1', 1);
-INSERT INTO `gurt_project_type` VALUES (22, '市政', 21);
+INSERT INTO `gurt_project_type` VALUES (10, '市政', 0);
+INSERT INTO `gurt_project_type` VALUES (11, '交通', 0);
 
 -- ----------------------------
 -- Table structure for gurt_project_type_cost_config
@@ -208,28 +261,59 @@ CREATE TABLE `gurt_project_type_cost_config`  (
   INDEX `b`(`project_type_id`) USING BTREE,
   CONSTRAINT `a` FOREIGN KEY (`category_id`) REFERENCES `gurt_category` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `b` FOREIGN KEY (`project_type_id`) REFERENCES `gurt_project_type` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '项目分类' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '项目分类' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of gurt_project_type_cost_config
 -- ----------------------------
-INSERT INTO `gurt_project_type_cost_config` VALUES (9, 11, 0, 1000000, 400, 0, 350, 0, 17);
-INSERT INTO `gurt_project_type_cost_config` VALUES (10, 11, 1000000, 2000000, 450, 0, 400, 0, 17);
-INSERT INTO `gurt_project_type_cost_config` VALUES (11, 11, 1000000, 20000000, 1000, 0, 500, 0, 17);
-INSERT INTO `gurt_project_type_cost_config` VALUES (12, 11, 200000000, 2000000000, 5, 1, 3, 1, 17);
-INSERT INTO `gurt_project_type_cost_config` VALUES (18, 11, 1000000, 20000000, 450, 1, 350, 0, 17);
-INSERT INTO `gurt_project_type_cost_config` VALUES (19, 11, 0, 1000000000, 400, 1, 350, 1, 17);
-INSERT INTO `gurt_project_type_cost_config` VALUES (20, 11, 1000000, 10000000, 450, 1, 50, 1, 17);
-INSERT INTO `gurt_project_type_cost_config` VALUES (23, 16, 0, 100000, 1000, 0, 50, 0, 17);
-INSERT INTO `gurt_project_type_cost_config` VALUES (24, 17, 1000000, 2000000, 1000, 0, 50, 0, 17);
-INSERT INTO `gurt_project_type_cost_config` VALUES (25, 18, 1, 2000000, 1000, 0, 350, 0, 17);
-INSERT INTO `gurt_project_type_cost_config` VALUES (26, 19, 0, 1000, 1000, 0, 1, 0, 20);
-INSERT INTO `gurt_project_type_cost_config` VALUES (27, 20, 0, 1000000, 400, 0, 350, 0, 1);
-INSERT INTO `gurt_project_type_cost_config` VALUES (28, 21, 0, 1000, 450, 0, 1, 0, 1);
-INSERT INTO `gurt_project_type_cost_config` VALUES (29, 21, 10000, 1000000, 2, 1, 2, 1, 1);
-INSERT INTO `gurt_project_type_cost_config` VALUES (30, 22, 0, 1000000, 400, 0, 50, 0, 21);
-INSERT INTO `gurt_project_type_cost_config` VALUES (31, 22, 1000000, 20000000, 1000, 0, 350, 0, 21);
-INSERT INTO `gurt_project_type_cost_config` VALUES (32, 22, 1000000, 1000000, 1000, 0, 350, 0, 21);
+INSERT INTO `gurt_project_type_cost_config` VALUES (22, 10, 0, 10000, 1000, 0, 350, 0, 0);
+INSERT INTO `gurt_project_type_cost_config` VALUES (23, 11, 0, 10000, 400, 0, 350, 0, 0);
+INSERT INTO `gurt_project_type_cost_config` VALUES (24, 11, 20000, 30000, 450, 0, 400, 0, 0);
+INSERT INTO `gurt_project_type_cost_config` VALUES (25, 11, 30000, 40000, 500, 0, 450, 0, 0);
+INSERT INTO `gurt_project_type_cost_config` VALUES (26, 10, 0, 10000, 500, 0, 350, 0, 34);
+INSERT INTO `gurt_project_type_cost_config` VALUES (27, 11, 0, 10000, 400, 0, 350, 0, 34);
+INSERT INTO `gurt_project_type_cost_config` VALUES (28, 11, 20000, 30000, 450, 0, 400, 0, 34);
+INSERT INTO `gurt_project_type_cost_config` VALUES (29, 11, 30000, 40000, 500, 0, 450, 0, 34);
+INSERT INTO `gurt_project_type_cost_config` VALUES (30, 10, 20000, 30000, 1500, 0, 1000, 0, 0);
+INSERT INTO `gurt_project_type_cost_config` VALUES (31, 10, 10000, 20000, 800, 0, 700, 0, 0);
+
+-- ----------------------------
+-- Table structure for gurt_shezhi
+-- ----------------------------
+DROP TABLE IF EXISTS `gurt_shezhi`;
+CREATE TABLE `gurt_shezhi`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cb` double(11, 1) NULL DEFAULT NULL,
+  `starttime` datetime(0) NULL DEFAULT NULL,
+  `endtime` datetime(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of gurt_shezhi
+-- ----------------------------
+INSERT INTO `gurt_shezhi` VALUES (13, 0.3, '0000-00-00 08:00:00', '0000-00-00 10:00:00');
+INSERT INTO `gurt_shezhi` VALUES (14, 0.3, '0000-00-00 14:00:00', '0000-00-00 16:00:00');
+INSERT INTO `gurt_shezhi` VALUES (15, 0.3, '0000-00-00 18:00:00', '0000-00-00 22:00:00');
+
+-- ----------------------------
+-- Table structure for gurt_status
+-- ----------------------------
+DROP TABLE IF EXISTS `gurt_status`;
+CREATE TABLE `gurt_status`  (
+  `id` int(11) NOT NULL,
+  `statusName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of gurt_status
+-- ----------------------------
+INSERT INTO `gurt_status` VALUES (0, '待提交');
+INSERT INTO `gurt_status` VALUES (1, '待接收');
+INSERT INTO `gurt_status` VALUES (2, '待处理');
+INSERT INTO `gurt_status` VALUES (3, '已提交银行');
+INSERT INTO `gurt_status` VALUES (4, '已撤销');
 
 -- ----------------------------
 -- Table structure for qrtz_blob_triggers
@@ -361,7 +445,7 @@ CREATE TABLE `qrtz_scheduler_state`  (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('RuoyiScheduler', 'SC-2019013111271561111898680', 1561112774885, 15000);
+INSERT INTO `qrtz_scheduler_state` VALUES ('RuoyiScheduler', 'SC-2019013111271561717859467', 1561718001590, 15000);
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -430,8 +514,8 @@ CREATE TABLE `qrtz_triggers`  (
 -- ----------------------------
 -- Records of qrtz_triggers
 -- ----------------------------
-INSERT INTO `qrtz_triggers` VALUES ('RuoyiScheduler', 'TASK_CLASS_NAME1', 'DEFAULT', 'TASK_CLASS_NAME1', 'DEFAULT', NULL, 1561111900000, -1, 5, 'PAUSED', 'CRON', 1561111898000, 0, NULL, 2, '');
-INSERT INTO `qrtz_triggers` VALUES ('RuoyiScheduler', 'TASK_CLASS_NAME2', 'DEFAULT', 'TASK_CLASS_NAME2', 'DEFAULT', NULL, 1561111900000, -1, 5, 'PAUSED', 'CRON', 1561111899000, 0, NULL, 2, '');
+INSERT INTO `qrtz_triggers` VALUES ('RuoyiScheduler', 'TASK_CLASS_NAME1', 'DEFAULT', 'TASK_CLASS_NAME1', 'DEFAULT', NULL, 1561717860000, -1, 5, 'PAUSED', 'CRON', 1561717859000, 0, NULL, 2, '');
+INSERT INTO `qrtz_triggers` VALUES ('RuoyiScheduler', 'TASK_CLASS_NAME2', 'DEFAULT', 'TASK_CLASS_NAME2', 'DEFAULT', NULL, 1561717860000, -1, 5, 'PAUSED', 'CRON', 1561717859000, 0, NULL, 2, '');
 
 -- ----------------------------
 -- Table structure for sys_config
@@ -636,142 +720,557 @@ CREATE TABLE `sys_logininfor`  (
   `msg` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '提示消息',
   `login_time` datetime(0) NULL DEFAULT NULL COMMENT '访问时间',
   PRIMARY KEY (`info_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 231 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 547 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_logininfor
 -- ----------------------------
-INSERT INTO `sys_logininfor` VALUES (100, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-14 11:19:27');
-INSERT INTO `sys_logininfor` VALUES (101, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-14 11:19:30');
-INSERT INTO `sys_logininfor` VALUES (102, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-14 11:19:34');
-INSERT INTO `sys_logininfor` VALUES (103, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-14 11:19:37');
-INSERT INTO `sys_logininfor` VALUES (104, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-14 15:11:49');
-INSERT INTO `sys_logininfor` VALUES (105, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-14 15:11:54');
-INSERT INTO `sys_logininfor` VALUES (106, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-14 15:11:56');
-INSERT INTO `sys_logininfor` VALUES (107, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-14 15:11:59');
-INSERT INTO `sys_logininfor` VALUES (108, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-14 15:12:03');
-INSERT INTO `sys_logininfor` VALUES (109, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误1次', '2019-06-14 15:12:06');
-INSERT INTO `sys_logininfor` VALUES (110, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-14 15:12:11');
-INSERT INTO `sys_logininfor` VALUES (111, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-14 15:12:14');
-INSERT INTO `sys_logininfor` VALUES (112, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-14 15:12:16');
-INSERT INTO `sys_logininfor` VALUES (113, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-14 15:15:57');
-INSERT INTO `sys_logininfor` VALUES (114, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-14 15:16:00');
-INSERT INTO `sys_logininfor` VALUES (115, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-14 15:16:37');
-INSERT INTO `sys_logininfor` VALUES (116, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-14 15:20:07');
-INSERT INTO `sys_logininfor` VALUES (117, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-14 15:21:02');
-INSERT INTO `sys_logininfor` VALUES (118, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-14 15:28:56');
-INSERT INTO `sys_logininfor` VALUES (119, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-14 15:46:05');
-INSERT INTO `sys_logininfor` VALUES (120, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-14 16:02:32');
-INSERT INTO `sys_logininfor` VALUES (121, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-14 16:04:10');
-INSERT INTO `sys_logininfor` VALUES (122, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-17 19:26:32');
-INSERT INTO `sys_logininfor` VALUES (123, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-17 19:26:37');
-INSERT INTO `sys_logininfor` VALUES (124, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 11:32:12');
-INSERT INTO `sys_logininfor` VALUES (125, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 11:32:20');
-INSERT INTO `sys_logininfor` VALUES (126, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 11:32:30');
-INSERT INTO `sys_logininfor` VALUES (127, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 11:32:33');
-INSERT INTO `sys_logininfor` VALUES (128, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 11:32:38');
-INSERT INTO `sys_logininfor` VALUES (129, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 11:32:41');
-INSERT INTO `sys_logininfor` VALUES (130, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 11:32:46');
-INSERT INTO `sys_logininfor` VALUES (131, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 11:36:48');
-INSERT INTO `sys_logininfor` VALUES (132, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 11:36:56');
-INSERT INTO `sys_logininfor` VALUES (133, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 11:36:58');
-INSERT INTO `sys_logininfor` VALUES (134, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 11:38:48');
-INSERT INTO `sys_logininfor` VALUES (135, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 11:38:51');
-INSERT INTO `sys_logininfor` VALUES (136, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 11:38:54');
-INSERT INTO `sys_logininfor` VALUES (137, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 11:46:51');
-INSERT INTO `sys_logininfor` VALUES (138, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 11:46:55');
-INSERT INTO `sys_logininfor` VALUES (139, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 11:46:58');
-INSERT INTO `sys_logininfor` VALUES (140, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 11:49:36');
-INSERT INTO `sys_logininfor` VALUES (141, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 11:49:39');
-INSERT INTO `sys_logininfor` VALUES (142, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 11:49:43');
-INSERT INTO `sys_logininfor` VALUES (143, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 11:49:50');
-INSERT INTO `sys_logininfor` VALUES (144, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 11:50:58');
-INSERT INTO `sys_logininfor` VALUES (145, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 11:51:02');
-INSERT INTO `sys_logininfor` VALUES (146, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 11:53:50');
-INSERT INTO `sys_logininfor` VALUES (147, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 11:54:00');
-INSERT INTO `sys_logininfor` VALUES (148, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 11:54:03');
-INSERT INTO `sys_logininfor` VALUES (149, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 11:54:07');
-INSERT INTO `sys_logininfor` VALUES (150, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 11:54:11');
-INSERT INTO `sys_logininfor` VALUES (151, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 11:54:14');
-INSERT INTO `sys_logininfor` VALUES (152, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 13:54:32');
-INSERT INTO `sys_logininfor` VALUES (153, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 13:54:44');
-INSERT INTO `sys_logininfor` VALUES (154, 'aicheng', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误1次', '2019-06-19 13:57:46');
-INSERT INTO `sys_logininfor` VALUES (155, 'aicheng', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误2次', '2019-06-19 13:58:02');
-INSERT INTO `sys_logininfor` VALUES (156, 'aicheng', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-19 13:58:18');
-INSERT INTO `sys_logininfor` VALUES (157, 'aicheng', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 13:58:46');
-INSERT INTO `sys_logininfor` VALUES (158, 'aicheng', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误1次', '2019-06-19 13:58:48');
-INSERT INTO `sys_logininfor` VALUES (159, 'aicheng', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误2次', '2019-06-19 13:58:50');
-INSERT INTO `sys_logininfor` VALUES (160, 'aicheng', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误3次', '2019-06-19 13:59:00');
-INSERT INTO `sys_logininfor` VALUES (161, 'aicheng', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 13:59:45');
-INSERT INTO `sys_logininfor` VALUES (162, 'aicheng', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 13:59:47');
-INSERT INTO `sys_logininfor` VALUES (163, 'aicheng', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误4次', '2019-06-19 13:59:49');
-INSERT INTO `sys_logininfor` VALUES (164, 'aicheng', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误5次', '2019-06-19 13:59:57');
-INSERT INTO `sys_logininfor` VALUES (165, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 14:00:49');
-INSERT INTO `sys_logininfor` VALUES (166, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 14:00:51');
-INSERT INTO `sys_logininfor` VALUES (167, 'aicheng', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误5次，帐户锁定10分钟', '2019-06-19 14:00:55');
-INSERT INTO `sys_logininfor` VALUES (168, 'aicheng', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 14:01:03');
-INSERT INTO `sys_logininfor` VALUES (169, 'aicheng', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误5次，帐户锁定10分钟', '2019-06-19 14:01:07');
-INSERT INTO `sys_logininfor` VALUES (170, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误1次', '2019-06-19 14:01:44');
-INSERT INTO `sys_logininfor` VALUES (171, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 14:01:55');
-INSERT INTO `sys_logininfor` VALUES (172, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 14:04:51');
-INSERT INTO `sys_logininfor` VALUES (173, 'ac', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 14:04:55');
-INSERT INTO `sys_logininfor` VALUES (174, 'ac', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 14:07:44');
-INSERT INTO `sys_logininfor` VALUES (175, 'ac', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 14:07:48');
-INSERT INTO `sys_logininfor` VALUES (176, 'ac', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误1次', '2019-06-19 14:07:51');
-INSERT INTO `sys_logininfor` VALUES (177, 'ac', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 14:07:57');
-INSERT INTO `sys_logininfor` VALUES (178, 'ac', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 14:08:39');
-INSERT INTO `sys_logininfor` VALUES (179, 'ac', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 14:08:46');
-INSERT INTO `sys_logininfor` VALUES (180, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 14:09:50');
-INSERT INTO `sys_logininfor` VALUES (181, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 14:09:55');
-INSERT INTO `sys_logininfor` VALUES (182, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 14:10:02');
-INSERT INTO `sys_logininfor` VALUES (183, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 14:10:05');
-INSERT INTO `sys_logininfor` VALUES (184, 'ac', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 14:10:13');
-INSERT INTO `sys_logininfor` VALUES (185, 'ac', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 14:10:29');
-INSERT INTO `sys_logininfor` VALUES (186, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 14:10:32');
-INSERT INTO `sys_logininfor` VALUES (187, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 14:11:27');
-INSERT INTO `sys_logininfor` VALUES (188, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 14:14:33');
-INSERT INTO `sys_logininfor` VALUES (189, 'ac', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 14:14:54');
-INSERT INTO `sys_logininfor` VALUES (190, 'ac', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 14:15:02');
-INSERT INTO `sys_logininfor` VALUES (191, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 14:15:05');
-INSERT INTO `sys_logininfor` VALUES (192, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 14:15:49');
-INSERT INTO `sys_logininfor` VALUES (193, 'ac', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 14:15:56');
-INSERT INTO `sys_logininfor` VALUES (194, 'ac', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 14:15:59');
-INSERT INTO `sys_logininfor` VALUES (195, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 14:45:49');
-INSERT INTO `sys_logininfor` VALUES (196, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 14:47:43');
-INSERT INTO `sys_logininfor` VALUES (197, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 16:00:15');
-INSERT INTO `sys_logininfor` VALUES (198, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 16:00:18');
-INSERT INTO `sys_logininfor` VALUES (199, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 16:00:53');
-INSERT INTO `sys_logininfor` VALUES (200, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误1次', '2019-06-19 16:00:59');
-INSERT INTO `sys_logininfor` VALUES (201, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-19 16:01:09');
-INSERT INTO `sys_logininfor` VALUES (202, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误2次', '2019-06-19 16:01:38');
-INSERT INTO `sys_logininfor` VALUES (203, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误3次', '2019-06-19 16:01:43');
-INSERT INTO `sys_logininfor` VALUES (204, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 16:01:57');
-INSERT INTO `sys_logininfor` VALUES (205, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 16:09:10');
-INSERT INTO `sys_logininfor` VALUES (206, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 16:10:22');
-INSERT INTO `sys_logininfor` VALUES (207, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 16:10:25');
-INSERT INTO `sys_logininfor` VALUES (208, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 16:10:27');
-INSERT INTO `sys_logininfor` VALUES (209, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 16:15:59');
-INSERT INTO `sys_logininfor` VALUES (210, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-19 16:16:19');
-INSERT INTO `sys_logininfor` VALUES (211, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 16:16:26');
-INSERT INTO `sys_logininfor` VALUES (212, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 16:16:28');
-INSERT INTO `sys_logininfor` VALUES (213, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 16:19:42');
-INSERT INTO `sys_logininfor` VALUES (214, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 16:43:56');
-INSERT INTO `sys_logininfor` VALUES (215, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-19 16:57:34');
-INSERT INTO `sys_logininfor` VALUES (216, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 16:57:38');
-INSERT INTO `sys_logininfor` VALUES (217, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-19 17:48:52');
-INSERT INTO `sys_logininfor` VALUES (218, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-20 09:19:51');
-INSERT INTO `sys_logininfor` VALUES (219, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-20 09:31:49');
-INSERT INTO `sys_logininfor` VALUES (220, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-20 09:31:56');
-INSERT INTO `sys_logininfor` VALUES (221, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-20 09:38:40');
-INSERT INTO `sys_logininfor` VALUES (222, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-20 09:45:33');
-INSERT INTO `sys_logininfor` VALUES (223, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-20 09:48:50');
-INSERT INTO `sys_logininfor` VALUES (224, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-20 09:48:54');
-INSERT INTO `sys_logininfor` VALUES (225, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-21 10:58:30');
-INSERT INTO `sys_logininfor` VALUES (226, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-21 10:58:36');
-INSERT INTO `sys_logininfor` VALUES (227, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-21 10:58:38');
-INSERT INTO `sys_logininfor` VALUES (228, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-21 10:58:40');
-INSERT INTO `sys_logininfor` VALUES (229, 'ry', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-21 10:58:50');
-INSERT INTO `sys_logininfor` VALUES (230, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-21 10:58:59');
+INSERT INTO `sys_logininfor` VALUES (1, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-26 17:46:37');
+INSERT INTO `sys_logininfor` VALUES (2, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-26 17:58:59');
+INSERT INTO `sys_logininfor` VALUES (3, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-26 17:59:03');
+INSERT INTO `sys_logininfor` VALUES (4, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-26 18:00:38');
+INSERT INTO `sys_logininfor` VALUES (5, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-26 18:03:28');
+INSERT INTO `sys_logininfor` VALUES (6, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-26 18:09:10');
+INSERT INTO `sys_logininfor` VALUES (7, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-26 18:16:15');
+INSERT INTO `sys_logininfor` VALUES (8, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-26 18:16:17');
+INSERT INTO `sys_logininfor` VALUES (9, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-26 18:48:24');
+INSERT INTO `sys_logininfor` VALUES (10, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-26 18:50:49');
+INSERT INTO `sys_logininfor` VALUES (11, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-26 18:50:53');
+INSERT INTO `sys_logininfor` VALUES (12, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 09:08:12');
+INSERT INTO `sys_logininfor` VALUES (13, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 09:08:21');
+INSERT INTO `sys_logininfor` VALUES (14, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 09:12:11');
+INSERT INTO `sys_logininfor` VALUES (15, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 09:12:12');
+INSERT INTO `sys_logininfor` VALUES (16, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 09:12:13');
+INSERT INTO `sys_logininfor` VALUES (17, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 09:12:15');
+INSERT INTO `sys_logininfor` VALUES (18, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 09:12:20');
+INSERT INTO `sys_logininfor` VALUES (19, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 09:12:25');
+INSERT INTO `sys_logininfor` VALUES (20, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 09:12:26');
+INSERT INTO `sys_logininfor` VALUES (21, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 09:40:30');
+INSERT INTO `sys_logininfor` VALUES (22, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 09:40:33');
+INSERT INTO `sys_logininfor` VALUES (23, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 09:55:07');
+INSERT INTO `sys_logininfor` VALUES (24, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 09:55:10');
+INSERT INTO `sys_logininfor` VALUES (25, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 09:55:12');
+INSERT INTO `sys_logininfor` VALUES (26, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 09:56:01');
+INSERT INTO `sys_logininfor` VALUES (27, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 09:56:04');
+INSERT INTO `sys_logininfor` VALUES (28, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 09:56:08');
+INSERT INTO `sys_logininfor` VALUES (29, 'admin', '192.168.43.1', '内网IP', 'Chrome Mobile', 'Android Mobile', '0', '登录成功', '2019-06-27 10:13:54');
+INSERT INTO `sys_logininfor` VALUES (30, 'admin', '192.168.43.1', '内网IP', 'Chrome Mobile', 'Android Mobile', '0', '退出成功', '2019-06-27 10:14:29');
+INSERT INTO `sys_logininfor` VALUES (31, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 10:15:32');
+INSERT INTO `sys_logininfor` VALUES (32, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 10:15:35');
+INSERT INTO `sys_logininfor` VALUES (33, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 10:22:25');
+INSERT INTO `sys_logininfor` VALUES (34, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 11:07:05');
+INSERT INTO `sys_logininfor` VALUES (35, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 11:16:20');
+INSERT INTO `sys_logininfor` VALUES (36, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 11:16:23');
+INSERT INTO `sys_logininfor` VALUES (37, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 11:17:40');
+INSERT INTO `sys_logininfor` VALUES (38, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 11:17:41');
+INSERT INTO `sys_logininfor` VALUES (39, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 11:19:58');
+INSERT INTO `sys_logininfor` VALUES (40, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 11:20:03');
+INSERT INTO `sys_logininfor` VALUES (41, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 11:26:17');
+INSERT INTO `sys_logininfor` VALUES (42, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 11:36:59');
+INSERT INTO `sys_logininfor` VALUES (43, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 11:37:01');
+INSERT INTO `sys_logininfor` VALUES (44, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 11:37:42');
+INSERT INTO `sys_logininfor` VALUES (45, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 11:37:44');
+INSERT INTO `sys_logininfor` VALUES (46, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 11:40:34');
+INSERT INTO `sys_logininfor` VALUES (47, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 11:40:37');
+INSERT INTO `sys_logininfor` VALUES (48, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 11:40:39');
+INSERT INTO `sys_logininfor` VALUES (49, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 11:40:41');
+INSERT INTO `sys_logininfor` VALUES (50, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 11:42:21');
+INSERT INTO `sys_logininfor` VALUES (51, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 11:42:23');
+INSERT INTO `sys_logininfor` VALUES (52, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 13:44:23');
+INSERT INTO `sys_logininfor` VALUES (53, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 13:46:20');
+INSERT INTO `sys_logininfor` VALUES (54, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 13:47:09');
+INSERT INTO `sys_logininfor` VALUES (55, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 13:47:17');
+INSERT INTO `sys_logininfor` VALUES (56, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 13:47:21');
+INSERT INTO `sys_logininfor` VALUES (57, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 13:47:24');
+INSERT INTO `sys_logininfor` VALUES (58, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 13:47:46');
+INSERT INTO `sys_logininfor` VALUES (59, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 13:48:18');
+INSERT INTO `sys_logininfor` VALUES (60, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 13:48:23');
+INSERT INTO `sys_logininfor` VALUES (61, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 13:49:40');
+INSERT INTO `sys_logininfor` VALUES (62, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 13:49:41');
+INSERT INTO `sys_logininfor` VALUES (63, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 13:49:53');
+INSERT INTO `sys_logininfor` VALUES (64, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 13:49:58');
+INSERT INTO `sys_logininfor` VALUES (65, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 13:50:36');
+INSERT INTO `sys_logininfor` VALUES (66, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 13:53:56');
+INSERT INTO `sys_logininfor` VALUES (67, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 14:02:48');
+INSERT INTO `sys_logininfor` VALUES (68, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 14:02:50');
+INSERT INTO `sys_logininfor` VALUES (69, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 14:04:10');
+INSERT INTO `sys_logininfor` VALUES (70, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 14:04:24');
+INSERT INTO `sys_logininfor` VALUES (71, 'admin', '192.168.43.60', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 14:12:04');
+INSERT INTO `sys_logininfor` VALUES (72, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 14:13:51');
+INSERT INTO `sys_logininfor` VALUES (73, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 14:28:07');
+INSERT INTO `sys_logininfor` VALUES (74, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 14:34:52');
+INSERT INTO `sys_logininfor` VALUES (75, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:36:54');
+INSERT INTO `sys_logininfor` VALUES (76, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 14:36:55');
+INSERT INTO `sys_logininfor` VALUES (77, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 14:38:29');
+INSERT INTO `sys_logininfor` VALUES (78, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:38:31');
+INSERT INTO `sys_logininfor` VALUES (79, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:40:54');
+INSERT INTO `sys_logininfor` VALUES (80, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:46:31');
+INSERT INTO `sys_logininfor` VALUES (81, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:46:56');
+INSERT INTO `sys_logininfor` VALUES (82, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:47:24');
+INSERT INTO `sys_logininfor` VALUES (83, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:47:24');
+INSERT INTO `sys_logininfor` VALUES (84, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:47:25');
+INSERT INTO `sys_logininfor` VALUES (85, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:47:28');
+INSERT INTO `sys_logininfor` VALUES (86, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:47:31');
+INSERT INTO `sys_logininfor` VALUES (87, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:47:34');
+INSERT INTO `sys_logininfor` VALUES (88, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 14:47:37');
+INSERT INTO `sys_logininfor` VALUES (89, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 14:47:49');
+INSERT INTO `sys_logininfor` VALUES (90, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 14:47:56');
+INSERT INTO `sys_logininfor` VALUES (91, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:48:12');
+INSERT INTO `sys_logininfor` VALUES (92, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 14:48:15');
+INSERT INTO `sys_logininfor` VALUES (93, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 14:48:28');
+INSERT INTO `sys_logininfor` VALUES (94, '1', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:48:38');
+INSERT INTO `sys_logininfor` VALUES (95, '1', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:48:41');
+INSERT INTO `sys_logininfor` VALUES (96, '1', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:48:43');
+INSERT INTO `sys_logininfor` VALUES (97, '1', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 14:48:44');
+INSERT INTO `sys_logininfor` VALUES (98, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:49:39');
+INSERT INTO `sys_logininfor` VALUES (99, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 14:49:41');
+INSERT INTO `sys_logininfor` VALUES (100, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 14:49:43');
+INSERT INTO `sys_logininfor` VALUES (101, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 14:50:40');
+INSERT INTO `sys_logininfor` VALUES (102, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 14:50:42');
+INSERT INTO `sys_logininfor` VALUES (103, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误1次', '2019-06-27 14:50:48');
+INSERT INTO `sys_logininfor` VALUES (104, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:52:39');
+INSERT INTO `sys_logininfor` VALUES (105, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:52:40');
+INSERT INTO `sys_logininfor` VALUES (106, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 14:52:42');
+INSERT INTO `sys_logininfor` VALUES (107, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 14:52:44');
+INSERT INTO `sys_logininfor` VALUES (108, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:53:01');
+INSERT INTO `sys_logininfor` VALUES (109, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 14:53:04');
+INSERT INTO `sys_logininfor` VALUES (110, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 14:53:17');
+INSERT INTO `sys_logininfor` VALUES (111, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 14:53:24');
+INSERT INTO `sys_logininfor` VALUES (112, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 14:53:44');
+INSERT INTO `sys_logininfor` VALUES (113, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 14:53:47');
+INSERT INTO `sys_logininfor` VALUES (114, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 14:53:54');
+INSERT INTO `sys_logininfor` VALUES (115, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:54:18');
+INSERT INTO `sys_logininfor` VALUES (116, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:54:25');
+INSERT INTO `sys_logininfor` VALUES (117, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:54:27');
+INSERT INTO `sys_logininfor` VALUES (118, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 14:59:27');
+INSERT INTO `sys_logininfor` VALUES (119, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 15:01:46');
+INSERT INTO `sys_logininfor` VALUES (120, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 15:03:47');
+INSERT INTO `sys_logininfor` VALUES (121, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '验证码错误', '2019-06-27 15:10:54');
+INSERT INTO `sys_logininfor` VALUES (122, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:14:24');
+INSERT INTO `sys_logininfor` VALUES (123, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:20:53');
+INSERT INTO `sys_logininfor` VALUES (124, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:21:00');
+INSERT INTO `sys_logininfor` VALUES (125, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:21:07');
+INSERT INTO `sys_logininfor` VALUES (126, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误1次', '2019-06-27 15:21:10');
+INSERT INTO `sys_logininfor` VALUES (127, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误2次', '2019-06-27 15:21:12');
+INSERT INTO `sys_logininfor` VALUES (128, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:21:14');
+INSERT INTO `sys_logininfor` VALUES (129, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:21:36');
+INSERT INTO `sys_logininfor` VALUES (130, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 15:23:04');
+INSERT INTO `sys_logininfor` VALUES (131, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:25:03');
+INSERT INTO `sys_logininfor` VALUES (132, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:32:43');
+INSERT INTO `sys_logininfor` VALUES (133, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:33:27');
+INSERT INTO `sys_logininfor` VALUES (134, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:33:31');
+INSERT INTO `sys_logininfor` VALUES (135, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:35:07');
+INSERT INTO `sys_logininfor` VALUES (136, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:35:14');
+INSERT INTO `sys_logininfor` VALUES (137, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:38:12');
+INSERT INTO `sys_logininfor` VALUES (138, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:38:52');
+INSERT INTO `sys_logininfor` VALUES (139, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:39:01');
+INSERT INTO `sys_logininfor` VALUES (140, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:39:03');
+INSERT INTO `sys_logininfor` VALUES (141, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:41:13');
+INSERT INTO `sys_logininfor` VALUES (142, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:41:19');
+INSERT INTO `sys_logininfor` VALUES (143, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:41:21');
+INSERT INTO `sys_logininfor` VALUES (144, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:41:43');
+INSERT INTO `sys_logininfor` VALUES (145, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:42:13');
+INSERT INTO `sys_logininfor` VALUES (146, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:42:28');
+INSERT INTO `sys_logininfor` VALUES (147, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:42:32');
+INSERT INTO `sys_logininfor` VALUES (148, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:42:38');
+INSERT INTO `sys_logininfor` VALUES (149, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:42:49');
+INSERT INTO `sys_logininfor` VALUES (150, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:43:36');
+INSERT INTO `sys_logininfor` VALUES (151, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:43:40');
+INSERT INTO `sys_logininfor` VALUES (152, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:43:42');
+INSERT INTO `sys_logininfor` VALUES (153, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:43:48');
+INSERT INTO `sys_logininfor` VALUES (154, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:44:30');
+INSERT INTO `sys_logininfor` VALUES (155, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:48:01');
+INSERT INTO `sys_logininfor` VALUES (156, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:48:07');
+INSERT INTO `sys_logininfor` VALUES (157, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:48:15');
+INSERT INTO `sys_logininfor` VALUES (158, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:49:48');
+INSERT INTO `sys_logininfor` VALUES (159, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:49:57');
+INSERT INTO `sys_logininfor` VALUES (160, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:50:04');
+INSERT INTO `sys_logininfor` VALUES (161, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:50:48');
+INSERT INTO `sys_logininfor` VALUES (162, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:51:27');
+INSERT INTO `sys_logininfor` VALUES (163, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:51:31');
+INSERT INTO `sys_logininfor` VALUES (164, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:51:34');
+INSERT INTO `sys_logininfor` VALUES (165, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:51:42');
+INSERT INTO `sys_logininfor` VALUES (166, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:51:50');
+INSERT INTO `sys_logininfor` VALUES (167, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:52:09');
+INSERT INTO `sys_logininfor` VALUES (168, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:52:45');
+INSERT INTO `sys_logininfor` VALUES (169, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:53:04');
+INSERT INTO `sys_logininfor` VALUES (170, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:53:54');
+INSERT INTO `sys_logininfor` VALUES (171, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:54:29');
+INSERT INTO `sys_logininfor` VALUES (172, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:54:35');
+INSERT INTO `sys_logininfor` VALUES (173, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:55:02');
+INSERT INTO `sys_logininfor` VALUES (174, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:55:18');
+INSERT INTO `sys_logininfor` VALUES (175, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误1次', '2019-06-27 15:55:32');
+INSERT INTO `sys_logininfor` VALUES (176, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:56:03');
+INSERT INTO `sys_logininfor` VALUES (177, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:56:11');
+INSERT INTO `sys_logininfor` VALUES (178, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:57:26');
+INSERT INTO `sys_logininfor` VALUES (179, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 15:57:45');
+INSERT INTO `sys_logininfor` VALUES (180, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:58:07');
+INSERT INTO `sys_logininfor` VALUES (181, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 15:58:24');
+INSERT INTO `sys_logininfor` VALUES (182, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:58:33');
+INSERT INTO `sys_logininfor` VALUES (183, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 15:59:50');
+INSERT INTO `sys_logininfor` VALUES (184, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 15:59:53');
+INSERT INTO `sys_logininfor` VALUES (185, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误1次', '2019-06-27 15:59:55');
+INSERT INTO `sys_logininfor` VALUES (186, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误2次', '2019-06-27 15:59:56');
+INSERT INTO `sys_logininfor` VALUES (187, 'admin3', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 15:59:58');
+INSERT INTO `sys_logininfor` VALUES (188, 'admin3', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 16:00:00');
+INSERT INTO `sys_logininfor` VALUES (189, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 16:00:32');
+INSERT INTO `sys_logininfor` VALUES (190, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 16:04:04');
+INSERT INTO `sys_logininfor` VALUES (191, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 16:04:07');
+INSERT INTO `sys_logininfor` VALUES (192, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 16:04:11');
+INSERT INTO `sys_logininfor` VALUES (193, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 16:04:12');
+INSERT INTO `sys_logininfor` VALUES (194, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 16:09:54');
+INSERT INTO `sys_logininfor` VALUES (195, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 16:14:31');
+INSERT INTO `sys_logininfor` VALUES (196, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 16:15:23');
+INSERT INTO `sys_logininfor` VALUES (197, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 16:17:41');
+INSERT INTO `sys_logininfor` VALUES (198, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 16:19:29');
+INSERT INTO `sys_logininfor` VALUES (199, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 16:23:16');
+INSERT INTO `sys_logininfor` VALUES (200, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:12:26');
+INSERT INTO `sys_logininfor` VALUES (201, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:13:55');
+INSERT INTO `sys_logininfor` VALUES (202, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:14:01');
+INSERT INTO `sys_logininfor` VALUES (203, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:14:14');
+INSERT INTO `sys_logininfor` VALUES (204, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:14:35');
+INSERT INTO `sys_logininfor` VALUES (205, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:14:40');
+INSERT INTO `sys_logininfor` VALUES (206, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:15:25');
+INSERT INTO `sys_logininfor` VALUES (207, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:15:27');
+INSERT INTO `sys_logininfor` VALUES (208, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:15:34');
+INSERT INTO `sys_logininfor` VALUES (209, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:16:05');
+INSERT INTO `sys_logininfor` VALUES (210, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:16:07');
+INSERT INTO `sys_logininfor` VALUES (211, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:16:12');
+INSERT INTO `sys_logininfor` VALUES (212, 'manager', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:16:16');
+INSERT INTO `sys_logininfor` VALUES (213, 'manager', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:16:20');
+INSERT INTO `sys_logininfor` VALUES (214, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:16:26');
+INSERT INTO `sys_logininfor` VALUES (215, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:17:00');
+INSERT INTO `sys_logininfor` VALUES (216, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:17:03');
+INSERT INTO `sys_logininfor` VALUES (217, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:19:35');
+INSERT INTO `sys_logininfor` VALUES (218, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:19:38');
+INSERT INTO `sys_logininfor` VALUES (219, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:19:57');
+INSERT INTO `sys_logininfor` VALUES (220, 'ry', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:19:59');
+INSERT INTO `sys_logininfor` VALUES (221, 'ry', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:20:09');
+INSERT INTO `sys_logininfor` VALUES (222, 'ma', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 17:20:12');
+INSERT INTO `sys_logininfor` VALUES (223, 'manager', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:20:14');
+INSERT INTO `sys_logininfor` VALUES (224, 'manager', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:20:19');
+INSERT INTO `sys_logininfor` VALUES (225, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:20:22');
+INSERT INTO `sys_logininfor` VALUES (226, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:21:27');
+INSERT INTO `sys_logininfor` VALUES (227, 'manager', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:21:31');
+INSERT INTO `sys_logininfor` VALUES (228, 'manager', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:21:37');
+INSERT INTO `sys_logininfor` VALUES (229, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:21:43');
+INSERT INTO `sys_logininfor` VALUES (230, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:21:50');
+INSERT INTO `sys_logininfor` VALUES (231, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:21:53');
+INSERT INTO `sys_logininfor` VALUES (232, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:24:29');
+INSERT INTO `sys_logininfor` VALUES (233, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:24:40');
+INSERT INTO `sys_logininfor` VALUES (234, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:24:43');
+INSERT INTO `sys_logininfor` VALUES (235, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:27:02');
+INSERT INTO `sys_logininfor` VALUES (236, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:27:36');
+INSERT INTO `sys_logininfor` VALUES (237, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:27:48');
+INSERT INTO `sys_logininfor` VALUES (238, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:27:51');
+INSERT INTO `sys_logininfor` VALUES (239, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:31:57');
+INSERT INTO `sys_logininfor` VALUES (240, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:32:16');
+INSERT INTO `sys_logininfor` VALUES (241, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:32:22');
+INSERT INTO `sys_logininfor` VALUES (242, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:32:25');
+INSERT INTO `sys_logininfor` VALUES (243, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:32:32');
+INSERT INTO `sys_logininfor` VALUES (244, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:38:28');
+INSERT INTO `sys_logininfor` VALUES (245, '444', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 17:38:39');
+INSERT INTO `sys_logininfor` VALUES (246, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:39:07');
+INSERT INTO `sys_logininfor` VALUES (247, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:39:09');
+INSERT INTO `sys_logininfor` VALUES (248, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:39:34');
+INSERT INTO `sys_logininfor` VALUES (249, '123123', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:39:41');
+INSERT INTO `sys_logininfor` VALUES (250, '123123', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:40:08');
+INSERT INTO `sys_logininfor` VALUES (251, '111111', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:40:27');
+INSERT INTO `sys_logininfor` VALUES (252, '111111', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:40:30');
+INSERT INTO `sys_logininfor` VALUES (253, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:41:13');
+INSERT INTO `sys_logininfor` VALUES (254, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:43:45');
+INSERT INTO `sys_logininfor` VALUES (255, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:45:09');
+INSERT INTO `sys_logininfor` VALUES (256, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:45:22');
+INSERT INTO `sys_logininfor` VALUES (257, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:49:32');
+INSERT INTO `sys_logininfor` VALUES (258, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:49:43');
+INSERT INTO `sys_logininfor` VALUES (259, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:49:50');
+INSERT INTO `sys_logininfor` VALUES (260, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:49:55');
+INSERT INTO `sys_logininfor` VALUES (261, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:50:00');
+INSERT INTO `sys_logininfor` VALUES (262, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 17:50:03');
+INSERT INTO `sys_logininfor` VALUES (263, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:50:20');
+INSERT INTO `sys_logininfor` VALUES (264, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:51:03');
+INSERT INTO `sys_logininfor` VALUES (265, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:51:34');
+INSERT INTO `sys_logininfor` VALUES (266, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:52:25');
+INSERT INTO `sys_logininfor` VALUES (267, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:52:58');
+INSERT INTO `sys_logininfor` VALUES (268, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:58:57');
+INSERT INTO `sys_logininfor` VALUES (269, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 17:59:42');
+INSERT INTO `sys_logininfor` VALUES (270, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:01:04');
+INSERT INTO `sys_logininfor` VALUES (271, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:01:10');
+INSERT INTO `sys_logininfor` VALUES (272, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:02:40');
+INSERT INTO `sys_logininfor` VALUES (273, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:03:05');
+INSERT INTO `sys_logininfor` VALUES (274, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:03:18');
+INSERT INTO `sys_logininfor` VALUES (275, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:05:32');
+INSERT INTO `sys_logininfor` VALUES (276, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:06:00');
+INSERT INTO `sys_logininfor` VALUES (277, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:06:18');
+INSERT INTO `sys_logininfor` VALUES (278, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:06:24');
+INSERT INTO `sys_logininfor` VALUES (279, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:06:54');
+INSERT INTO `sys_logininfor` VALUES (280, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:07:03');
+INSERT INTO `sys_logininfor` VALUES (281, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:07:11');
+INSERT INTO `sys_logininfor` VALUES (282, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:07:31');
+INSERT INTO `sys_logininfor` VALUES (283, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:07:39');
+INSERT INTO `sys_logininfor` VALUES (284, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:07:41');
+INSERT INTO `sys_logininfor` VALUES (285, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:08:08');
+INSERT INTO `sys_logininfor` VALUES (286, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:09:02');
+INSERT INTO `sys_logininfor` VALUES (287, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:09:26');
+INSERT INTO `sys_logininfor` VALUES (288, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:09:30');
+INSERT INTO `sys_logininfor` VALUES (289, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:10:14');
+INSERT INTO `sys_logininfor` VALUES (290, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:10:41');
+INSERT INTO `sys_logininfor` VALUES (291, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:10:48');
+INSERT INTO `sys_logininfor` VALUES (292, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:10:59');
+INSERT INTO `sys_logininfor` VALUES (293, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:11:18');
+INSERT INTO `sys_logininfor` VALUES (294, '123123', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:11:25');
+INSERT INTO `sys_logininfor` VALUES (295, '123123', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:11:30');
+INSERT INTO `sys_logininfor` VALUES (296, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:11:35');
+INSERT INTO `sys_logininfor` VALUES (297, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:11:39');
+INSERT INTO `sys_logininfor` VALUES (298, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 18:18:39');
+INSERT INTO `sys_logininfor` VALUES (299, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:19:27');
+INSERT INTO `sys_logininfor` VALUES (300, '123123', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:20:07');
+INSERT INTO `sys_logininfor` VALUES (301, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:21:27');
+INSERT INTO `sys_logininfor` VALUES (302, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:22:45');
+INSERT INTO `sys_logininfor` VALUES (303, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:22:50');
+INSERT INTO `sys_logininfor` VALUES (304, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:23:20');
+INSERT INTO `sys_logininfor` VALUES (305, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 18:24:13');
+INSERT INTO `sys_logininfor` VALUES (306, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:24:54');
+INSERT INTO `sys_logininfor` VALUES (307, '123123', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:25:06');
+INSERT INTO `sys_logininfor` VALUES (308, '123123', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:25:10');
+INSERT INTO `sys_logininfor` VALUES (309, '4555555', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:25:22');
+INSERT INTO `sys_logininfor` VALUES (310, '121414124', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:25:37');
+INSERT INTO `sys_logininfor` VALUES (311, '6666666666666', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:26:11');
+INSERT INTO `sys_logininfor` VALUES (312, '123123123', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:26:47');
+INSERT INTO `sys_logininfor` VALUES (313, '54645656', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:27:01');
+INSERT INTO `sys_logininfor` VALUES (314, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:46:01');
+INSERT INTO `sys_logininfor` VALUES (315, '123123', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:46:21');
+INSERT INTO `sys_logininfor` VALUES (316, '1412412', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:46:31');
+INSERT INTO `sys_logininfor` VALUES (317, '12312344', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:46:44');
+INSERT INTO `sys_logininfor` VALUES (318, '444444', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:47:40');
+INSERT INTO `sys_logininfor` VALUES (319, '1214342', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:47:55');
+INSERT INTO `sys_logininfor` VALUES (320, '1214342', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:48:05');
+INSERT INTO `sys_logininfor` VALUES (321, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:54:20');
+INSERT INTO `sys_logininfor` VALUES (322, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:54:30');
+INSERT INTO `sys_logininfor` VALUES (323, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:54:42');
+INSERT INTO `sys_logininfor` VALUES (324, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:54:53');
+INSERT INTO `sys_logininfor` VALUES (325, '123123', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:54:57');
+INSERT INTO `sys_logininfor` VALUES (326, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '* 必须填写', '2019-06-27 18:54:59');
+INSERT INTO `sys_logininfor` VALUES (327, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:55:18');
+INSERT INTO `sys_logininfor` VALUES (328, '421412412', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:55:25');
+INSERT INTO `sys_logininfor` VALUES (329, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:56:23');
+INSERT INTO `sys_logininfor` VALUES (330, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:56:52');
+INSERT INTO `sys_logininfor` VALUES (331, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:57:11');
+INSERT INTO `sys_logininfor` VALUES (332, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:57:28');
+INSERT INTO `sys_logininfor` VALUES (333, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:57:31');
+INSERT INTO `sys_logininfor` VALUES (334, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:57:35');
+INSERT INTO `sys_logininfor` VALUES (335, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:57:37');
+INSERT INTO `sys_logininfor` VALUES (336, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:57:39');
+INSERT INTO `sys_logininfor` VALUES (337, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:57:43');
+INSERT INTO `sys_logininfor` VALUES (338, '666666', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:58:26');
+INSERT INTO `sys_logininfor` VALUES (339, '666666', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:58:29');
+INSERT INTO `sys_logininfor` VALUES (340, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:58:34');
+INSERT INTO `sys_logininfor` VALUES (341, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:58:36');
+INSERT INTO `sys_logininfor` VALUES (342, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 18:58:44');
+INSERT INTO `sys_logininfor` VALUES (343, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 18:58:50');
+INSERT INTO `sys_logininfor` VALUES (344, '15273011111', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:00:20');
+INSERT INTO `sys_logininfor` VALUES (345, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:00:41');
+INSERT INTO `sys_logininfor` VALUES (346, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:00:43');
+INSERT INTO `sys_logininfor` VALUES (347, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:00:46');
+INSERT INTO `sys_logininfor` VALUES (348, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '* 必须填写', '2019-06-27 19:00:49');
+INSERT INTO `sys_logininfor` VALUES (349, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:00:51');
+INSERT INTO `sys_logininfor` VALUES (350, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:00:56');
+INSERT INTO `sys_logininfor` VALUES (351, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:01:04');
+INSERT INTO `sys_logininfor` VALUES (352, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:01:11');
+INSERT INTO `sys_logininfor` VALUES (353, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误1次', '2019-06-27 19:01:15');
+INSERT INTO `sys_logininfor` VALUES (354, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误2次', '2019-06-27 19:01:21');
+INSERT INTO `sys_logininfor` VALUES (355, '123123', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:13:29');
+INSERT INTO `sys_logininfor` VALUES (356, '123123', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:13:34');
+INSERT INTO `sys_logininfor` VALUES (357, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:13:44');
+INSERT INTO `sys_logininfor` VALUES (358, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:13:46');
+INSERT INTO `sys_logininfor` VALUES (359, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:13:49');
+INSERT INTO `sys_logininfor` VALUES (360, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:13:52');
+INSERT INTO `sys_logininfor` VALUES (361, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:16:57');
+INSERT INTO `sys_logininfor` VALUES (362, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:16:59');
+INSERT INTO `sys_logininfor` VALUES (363, '121414', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:17:07');
+INSERT INTO `sys_logininfor` VALUES (364, '12434234', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:17:22');
+INSERT INTO `sys_logininfor` VALUES (365, '12434234', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:17:26');
+INSERT INTO `sys_logininfor` VALUES (366, '44444444', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:17:52');
+INSERT INTO `sys_logininfor` VALUES (367, '44444444', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:18:00');
+INSERT INTO `sys_logininfor` VALUES (368, '121414', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:18:03');
+INSERT INTO `sys_logininfor` VALUES (369, '121414', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:18:05');
+INSERT INTO `sys_logininfor` VALUES (370, '121414', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:18:10');
+INSERT INTO `sys_logininfor` VALUES (371, '121414', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:18:19');
+INSERT INTO `sys_logininfor` VALUES (372, '121414', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误1次', '2019-06-27 19:18:21');
+INSERT INTO `sys_logininfor` VALUES (373, '121414', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:18:26');
+INSERT INTO `sys_logininfor` VALUES (374, '121414', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:18:27');
+INSERT INTO `sys_logininfor` VALUES (375, '121414', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误1次', '2019-06-27 19:18:29');
+INSERT INTO `sys_logininfor` VALUES (376, '121414', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误2次', '2019-06-27 19:18:32');
+INSERT INTO `sys_logininfor` VALUES (377, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:23:47');
+INSERT INTO `sys_logininfor` VALUES (378, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:23:59');
+INSERT INTO `sys_logininfor` VALUES (379, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误1次', '2019-06-27 19:24:40');
+INSERT INTO `sys_logininfor` VALUES (380, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误2次', '2019-06-27 19:24:43');
+INSERT INTO `sys_logininfor` VALUES (381, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误3次', '2019-06-27 19:24:46');
+INSERT INTO `sys_logininfor` VALUES (382, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误4次', '2019-06-27 19:24:56');
+INSERT INTO `sys_logininfor` VALUES (383, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误5次', '2019-06-27 19:25:00');
+INSERT INTO `sys_logininfor` VALUES (384, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误5次，帐户锁定10分钟', '2019-06-27 19:25:04');
+INSERT INTO `sys_logininfor` VALUES (385, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误5次，帐户锁定10分钟', '2019-06-27 19:25:07');
+INSERT INTO `sys_logininfor` VALUES (386, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:28:44');
+INSERT INTO `sys_logininfor` VALUES (387, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:28:56');
+INSERT INTO `sys_logininfor` VALUES (388, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:29:01');
+INSERT INTO `sys_logininfor` VALUES (389, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:29:05');
+INSERT INTO `sys_logininfor` VALUES (390, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:29:09');
+INSERT INTO `sys_logininfor` VALUES (391, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:29:35');
+INSERT INTO `sys_logininfor` VALUES (392, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:30:35');
+INSERT INTO `sys_logininfor` VALUES (393, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:30:44');
+INSERT INTO `sys_logininfor` VALUES (394, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:30:57');
+INSERT INTO `sys_logininfor` VALUES (395, '152730116361', '192.168.0.80', '内网IP', 'Internet Explorer 11', 'Windows 10', '0', '登录成功', '2019-06-27 19:31:52');
+INSERT INTO `sys_logininfor` VALUES (396, '152730116361', '192.168.0.80', '内网IP', 'Internet Explorer 11', 'Windows 10', '0', '退出成功', '2019-06-27 19:31:59');
+INSERT INTO `sys_logininfor` VALUES (397, 'admin', '192.168.0.80', '内网IP', 'Internet Explorer 11', 'Windows 10', '1', '密码输入错误1次', '2019-06-27 19:32:04');
+INSERT INTO `sys_logininfor` VALUES (398, 'admin', '192.168.0.80', '内网IP', 'Internet Explorer 11', 'Windows 10', '0', '登录成功', '2019-06-27 19:32:11');
+INSERT INTO `sys_logininfor` VALUES (399, 'admin', '192.168.0.80', '内网IP', 'Internet Explorer 11', 'Windows 10', '0', '退出成功', '2019-06-27 19:32:30');
+INSERT INTO `sys_logininfor` VALUES (400, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:33:18');
+INSERT INTO `sys_logininfor` VALUES (401, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:33:29');
+INSERT INTO `sys_logininfor` VALUES (402, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:41:58');
+INSERT INTO `sys_logininfor` VALUES (403, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:42:47');
+INSERT INTO `sys_logininfor` VALUES (404, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:43:50');
+INSERT INTO `sys_logininfor` VALUES (405, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:44:59');
+INSERT INTO `sys_logininfor` VALUES (406, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:45:09');
+INSERT INTO `sys_logininfor` VALUES (407, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:45:16');
+INSERT INTO `sys_logininfor` VALUES (408, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:46:36');
+INSERT INTO `sys_logininfor` VALUES (409, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:46:49');
+INSERT INTO `sys_logininfor` VALUES (410, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:46:52');
+INSERT INTO `sys_logininfor` VALUES (411, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:47:03');
+INSERT INTO `sys_logininfor` VALUES (412, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:49:54');
+INSERT INTO `sys_logininfor` VALUES (413, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:52:33');
+INSERT INTO `sys_logininfor` VALUES (414, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:52:49');
+INSERT INTO `sys_logininfor` VALUES (415, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:52:55');
+INSERT INTO `sys_logininfor` VALUES (416, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:52:59');
+INSERT INTO `sys_logininfor` VALUES (417, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:53:04');
+INSERT INTO `sys_logininfor` VALUES (418, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:53:34');
+INSERT INTO `sys_logininfor` VALUES (419, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:53:57');
+INSERT INTO `sys_logininfor` VALUES (420, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:54:00');
+INSERT INTO `sys_logininfor` VALUES (421, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:54:11');
+INSERT INTO `sys_logininfor` VALUES (422, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:54:48');
+INSERT INTO `sys_logininfor` VALUES (423, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-27 19:54:53');
+INSERT INTO `sys_logininfor` VALUES (424, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:54:59');
+INSERT INTO `sys_logininfor` VALUES (425, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 19:55:23');
+INSERT INTO `sys_logininfor` VALUES (426, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:58:38');
+INSERT INTO `sys_logininfor` VALUES (427, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:59:27');
+INSERT INTO `sys_logininfor` VALUES (428, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 19:59:45');
+INSERT INTO `sys_logininfor` VALUES (429, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 20:00:53');
+INSERT INTO `sys_logininfor` VALUES (430, 'admin', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 20:08:36');
+INSERT INTO `sys_logininfor` VALUES (431, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 20:08:50');
+INSERT INTO `sys_logininfor` VALUES (432, '', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '* 必须填写', '2019-06-27 20:09:05');
+INSERT INTO `sys_logininfor` VALUES (433, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 20:10:10');
+INSERT INTO `sys_logininfor` VALUES (434, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-27 20:11:03');
+INSERT INTO `sys_logininfor` VALUES (435, '15273011636', '192.168.0.80', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-27 20:13:11');
+INSERT INTO `sys_logininfor` VALUES (436, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 09:04:32');
+INSERT INTO `sys_logininfor` VALUES (437, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 09:04:42');
+INSERT INTO `sys_logininfor` VALUES (438, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 09:04:46');
+INSERT INTO `sys_logininfor` VALUES (439, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-28 09:04:49');
+INSERT INTO `sys_logininfor` VALUES (440, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-28 09:04:53');
+INSERT INTO `sys_logininfor` VALUES (441, '123123', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-28 09:04:57');
+INSERT INTO `sys_logininfor` VALUES (442, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 09:05:03');
+INSERT INTO `sys_logininfor` VALUES (443, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 09:05:08');
+INSERT INTO `sys_logininfor` VALUES (444, '152730116361', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-28 09:05:11');
+INSERT INTO `sys_logininfor` VALUES (445, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 09:21:09');
+INSERT INTO `sys_logininfor` VALUES (446, '15273011636', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 09:21:16');
+INSERT INTO `sys_logininfor` VALUES (447, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 09:21:18');
+INSERT INTO `sys_logininfor` VALUES (448, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 09:25:16');
+INSERT INTO `sys_logininfor` VALUES (449, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '* 必须填写', '2019-06-28 09:35:12');
+INSERT INTO `sys_logininfor` VALUES (450, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 09:36:10');
+INSERT INTO `sys_logininfor` VALUES (451, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 10:14:09');
+INSERT INTO `sys_logininfor` VALUES (452, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 10:21:32');
+INSERT INTO `sys_logininfor` VALUES (453, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 10:22:04');
+INSERT INTO `sys_logininfor` VALUES (454, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 10:23:06');
+INSERT INTO `sys_logininfor` VALUES (455, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 10:23:08');
+INSERT INTO `sys_logininfor` VALUES (456, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 10:23:52');
+INSERT INTO `sys_logininfor` VALUES (457, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 10:26:53');
+INSERT INTO `sys_logininfor` VALUES (458, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误1次', '2019-06-28 10:27:12');
+INSERT INTO `sys_logininfor` VALUES (459, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '密码输入错误2次', '2019-06-28 10:27:45');
+INSERT INTO `sys_logininfor` VALUES (460, 'admin1', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '用户不存在/密码错误', '2019-06-28 10:27:48');
+INSERT INTO `sys_logininfor` VALUES (461, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 10:44:27');
+INSERT INTO `sys_logininfor` VALUES (462, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 10:44:32');
+INSERT INTO `sys_logininfor` VALUES (463, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 10:51:31');
+INSERT INTO `sys_logininfor` VALUES (464, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 10:52:29');
+INSERT INTO `sys_logininfor` VALUES (465, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 10:58:16');
+INSERT INTO `sys_logininfor` VALUES (466, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 10:58:19');
+INSERT INTO `sys_logininfor` VALUES (467, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 11:04:55');
+INSERT INTO `sys_logininfor` VALUES (468, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 11:04:57');
+INSERT INTO `sys_logininfor` VALUES (469, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 11:05:15');
+INSERT INTO `sys_logininfor` VALUES (470, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 11:05:17');
+INSERT INTO `sys_logininfor` VALUES (471, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 11:05:30');
+INSERT INTO `sys_logininfor` VALUES (472, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 11:05:33');
+INSERT INTO `sys_logininfor` VALUES (473, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 11:05:41');
+INSERT INTO `sys_logininfor` VALUES (474, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 11:05:44');
+INSERT INTO `sys_logininfor` VALUES (475, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 11:07:26');
+INSERT INTO `sys_logininfor` VALUES (476, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 11:07:29');
+INSERT INTO `sys_logininfor` VALUES (477, NULL, '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '* 必须填写', '2019-06-28 11:12:16');
+INSERT INTO `sys_logininfor` VALUES (478, NULL, '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '1', '* 必须填写', '2019-06-28 11:27:20');
+INSERT INTO `sys_logininfor` VALUES (479, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 11:53:39');
+INSERT INTO `sys_logininfor` VALUES (480, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 11:53:51');
+INSERT INTO `sys_logininfor` VALUES (481, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 11:53:56');
+INSERT INTO `sys_logininfor` VALUES (482, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 11:53:59');
+INSERT INTO `sys_logininfor` VALUES (483, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 11:57:25');
+INSERT INTO `sys_logininfor` VALUES (484, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 12:02:42');
+INSERT INTO `sys_logininfor` VALUES (485, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 13:52:35');
+INSERT INTO `sys_logininfor` VALUES (486, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 13:53:33');
+INSERT INTO `sys_logininfor` VALUES (487, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 14:23:21');
+INSERT INTO `sys_logininfor` VALUES (488, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 14:25:06');
+INSERT INTO `sys_logininfor` VALUES (489, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 14:26:28');
+INSERT INTO `sys_logininfor` VALUES (490, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 14:38:41');
+INSERT INTO `sys_logininfor` VALUES (491, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 14:41:18');
+INSERT INTO `sys_logininfor` VALUES (492, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 14:41:29');
+INSERT INTO `sys_logininfor` VALUES (493, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 14:44:26');
+INSERT INTO `sys_logininfor` VALUES (494, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 14:44:27');
+INSERT INTO `sys_logininfor` VALUES (495, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 14:44:36');
+INSERT INTO `sys_logininfor` VALUES (496, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 14:45:57');
+INSERT INTO `sys_logininfor` VALUES (497, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 14:46:21');
+INSERT INTO `sys_logininfor` VALUES (498, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 14:46:23');
+INSERT INTO `sys_logininfor` VALUES (499, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 14:48:07');
+INSERT INTO `sys_logininfor` VALUES (500, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 14:48:30');
+INSERT INTO `sys_logininfor` VALUES (501, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 14:48:31');
+INSERT INTO `sys_logininfor` VALUES (502, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 14:48:58');
+INSERT INTO `sys_logininfor` VALUES (503, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 14:48:59');
+INSERT INTO `sys_logininfor` VALUES (504, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 14:50:50');
+INSERT INTO `sys_logininfor` VALUES (505, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 14:51:53');
+INSERT INTO `sys_logininfor` VALUES (506, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 14:52:02');
+INSERT INTO `sys_logininfor` VALUES (507, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 14:52:03');
+INSERT INTO `sys_logininfor` VALUES (508, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 14:57:25');
+INSERT INTO `sys_logininfor` VALUES (509, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 15:01:01');
+INSERT INTO `sys_logininfor` VALUES (510, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 15:01:03');
+INSERT INTO `sys_logininfor` VALUES (511, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 15:04:03');
+INSERT INTO `sys_logininfor` VALUES (512, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 15:04:05');
+INSERT INTO `sys_logininfor` VALUES (513, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 15:04:44');
+INSERT INTO `sys_logininfor` VALUES (514, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 15:04:46');
+INSERT INTO `sys_logininfor` VALUES (515, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 15:07:54');
+INSERT INTO `sys_logininfor` VALUES (516, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 15:09:08');
+INSERT INTO `sys_logininfor` VALUES (517, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 15:09:23');
+INSERT INTO `sys_logininfor` VALUES (518, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 15:09:35');
+INSERT INTO `sys_logininfor` VALUES (519, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 15:09:41');
+INSERT INTO `sys_logininfor` VALUES (520, 'manager', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 15:10:09');
+INSERT INTO `sys_logininfor` VALUES (521, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 15:10:23');
+INSERT INTO `sys_logininfor` VALUES (522, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 15:10:25');
+INSERT INTO `sys_logininfor` VALUES (523, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 15:10:32');
+INSERT INTO `sys_logininfor` VALUES (524, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 15:10:44');
+INSERT INTO `sys_logininfor` VALUES (525, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 15:10:45');
+INSERT INTO `sys_logininfor` VALUES (526, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 15:22:55');
+INSERT INTO `sys_logininfor` VALUES (527, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 15:22:57');
+INSERT INTO `sys_logininfor` VALUES (528, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 16:03:43');
+INSERT INTO `sys_logininfor` VALUES (529, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 16:12:43');
+INSERT INTO `sys_logininfor` VALUES (530, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 17:19:44');
+INSERT INTO `sys_logininfor` VALUES (531, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 17:23:25');
+INSERT INTO `sys_logininfor` VALUES (532, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 17:29:01');
+INSERT INTO `sys_logininfor` VALUES (533, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 17:38:29');
+INSERT INTO `sys_logininfor` VALUES (534, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 17:40:03');
+INSERT INTO `sys_logininfor` VALUES (535, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 17:42:32');
+INSERT INTO `sys_logininfor` VALUES (536, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 17:55:23');
+INSERT INTO `sys_logininfor` VALUES (537, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 17:59:33');
+INSERT INTO `sys_logininfor` VALUES (538, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 17:59:35');
+INSERT INTO `sys_logininfor` VALUES (539, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 18:02:55');
+INSERT INTO `sys_logininfor` VALUES (540, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 18:16:04');
+INSERT INTO `sys_logininfor` VALUES (541, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 18:21:07');
+INSERT INTO `sys_logininfor` VALUES (542, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 18:23:24');
+INSERT INTO `sys_logininfor` VALUES (543, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 18:29:08');
+INSERT INTO `sys_logininfor` VALUES (544, '', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '退出成功', '2019-06-28 18:29:54');
+INSERT INTO `sys_logininfor` VALUES (545, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 18:29:57');
+INSERT INTO `sys_logininfor` VALUES (546, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', '0', '登录成功', '2019-06-28 18:31:08');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -794,14 +1293,12 @@ CREATE TABLE `sys_menu`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2058 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2062 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES (1, '系统管理', 0, 1, '#', '', 'M', '0', '', 'fa fa-gear', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '系统管理目录');
-INSERT INTO `sys_menu` VALUES (2, '系统监控', 0, 2, '#', '', 'M', '0', '', 'fa fa-video-camera', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '系统监控目录');
-INSERT INTO `sys_menu` VALUES (3, '系统工具', 0, 3, '#', '', 'M', '0', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '系统工具目录');
+INSERT INTO `sys_menu` VALUES (3, '保函系统', 0, 3, '#', '', 'M', '0', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '系统工具目录');
 INSERT INTO `sys_menu` VALUES (100, '账号管理', 3, 1, '/system/user', '', 'C', '0', 'system:user:view', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '用户管理菜单');
 INSERT INTO `sys_menu` VALUES (101, '角色管理', 3, 2, '/system/role', '', 'C', '0', 'system:role:view', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '角色管理菜单');
 INSERT INTO `sys_menu` VALUES (102, '菜单管理', 1, 3, '/system/menu', '', 'C', '0', 'system:menu:view', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '菜单管理菜单');
@@ -815,8 +1312,6 @@ INSERT INTO `sys_menu` VALUES (109, '在线用户', 2, 1, '/monitor/online', '',
 INSERT INTO `sys_menu` VALUES (110, '定时任务', 2, 2, '/monitor/job', '', 'C', '0', 'monitor:job:view', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '定时任务菜单');
 INSERT INTO `sys_menu` VALUES (111, '数据监控', 2, 3, '/monitor/data', '', 'C', '0', 'monitor:data:view', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '数据监控菜单');
 INSERT INTO `sys_menu` VALUES (112, '服务监控', 2, 3, '/monitor/server', '', 'C', '0', 'monitor:server:view', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '服务监控菜单');
-INSERT INTO `sys_menu` VALUES (113, '表单构建', 3, 1, '/tool/build', '', 'C', '0', 'tool:build:view', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '表单构建菜单');
-INSERT INTO `sys_menu` VALUES (114, '代码生成', 3, 2, '/tool/gen', '', 'C', '0', 'tool:gen:view', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '代码生成菜单');
 INSERT INTO `sys_menu` VALUES (500, '操作日志', 108, 1, '/monitor/operlog', '', 'C', '0', 'monitor:operlog:view', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '操作日志菜单');
 INSERT INTO `sys_menu` VALUES (501, '登录日志', 108, 2, '/monitor/logininfor', '', 'C', '0', 'monitor:logininfor:view', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '登录日志菜单');
 INSERT INTO `sys_menu` VALUES (1000, '用户查询', 100, 1, '#', '', 'F', '0', 'system:user:list', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
@@ -902,7 +1397,10 @@ INSERT INTO `sys_menu` VALUES (2053, '项目基础资料查询', 2052, 1, '#', '
 INSERT INTO `sys_menu` VALUES (2054, '项目基础资料新增', 2052, 2, '#', '', 'F', '0', 'baohan:gurtCategory:add', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu` VALUES (2055, '项目基础资料修改', 2052, 3, '#', '', 'F', '0', 'baohan:gurtCategory:edit', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu` VALUES (2056, '项目基础资料删除', 2052, 4, '#', '', 'F', '0', 'baohan:gurtCategory:remove', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
-INSERT INTO `sys_menu` VALUES (2057, '提交订单', 2030, 5, '#', '', 'F', '0', 'baohan:gurtOrder:submit', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2057, '提交', 2030, 5, '#', '', 'F', '0', 'baohan:gurtOrder:submit', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2059, '撤销', 2030, 6, '#', '', 'F', '0', 'baohan:gurtOrder:exit', '#', 'admin', NULL, 'ry', NULL, '');
+INSERT INTO `sys_menu` VALUES (2060, '我的邀请码', 3, 1, '/baohan/gurtma', '', 'C', '0', 'baohan:gurtma:view', '#', 'admin', NULL, 'ry', NULL, '我的邀请码');
+INSERT INTO `sys_menu` VALUES (2061, '基础设置', 3, 1, '/baohan/gurtshezhi', '', 'C', '0', 'baohan:gurtshezhi:view', '#', 'admin', NULL, 'ry', NULL, '基础设置');
 
 -- ----------------------------
 -- Table structure for sys_notice
@@ -948,7 +1446,7 @@ CREATE TABLE `sys_oper_log`  (
   `error_msg` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '错误消息',
   `oper_time` datetime(0) NULL DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`oper_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 282 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 408 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -1135,6 +1633,132 @@ INSERT INTO `sys_oper_log` VALUES (278, '订单', 1, 'com.ruoyi.baohan.controlle
 INSERT INTO `sys_oper_log` VALUES (279, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"\" ],\r\n  \"beneficiary\" : [ \"\" ],\r\n  \"projectNumber\" : [ \"\" ],\r\n  \"projectName\" : [ \"\" ],\r\n  \"closingTime\" : [ \"\" ],\r\n  \"guaranteeAmount\" : [ \"\" ],\r\n  \"validityDeadline\" : [ \"\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"20\" ],\r\n  \"amount\" : [ \"\" ],\r\n  \"paidamount\" : [ \"0\" ],\r\n  \"money1\" : [ \"\" ],\r\n  \"money2\" : [ \"\" ],\r\n  \"money3\" : [ \"\" ]\r\n}', 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'warrantee\' doesn\'t have a default value\r\n### The error may involve com.ruoyi.baohan.mapper.GurtOrderMapper.insertGurtOrder-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into gurt_order    ( guarantee_id,    bank_id,    project_type_id,        create_user_id )           values ( ?,    ?,    ?,        ? )\r\n### Cause: java.sql.SQLException: Field \'warrantee\' doesn\'t have a default value\n; Field \'warrantee\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'warrantee\' doesn\'t have a default value', '2019-06-21 16:28:31');
 INSERT INTO `sys_oper_log` VALUES (280, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"\" ],\r\n  \"beneficiary\" : [ \"\" ],\r\n  \"projectNumber\" : [ \"\" ],\r\n  \"projectName\" : [ \"\" ],\r\n  \"closingTime\" : [ \"\" ],\r\n  \"guaranteeAmount\" : [ \"\" ],\r\n  \"validityDeadline\" : [ \"\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"20\" ],\r\n  \"amount\" : [ \"\" ],\r\n  \"paidamount\" : [ \"12257\" ],\r\n  \"money\" : [ \"44\", \"12213\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/21/e1e59eedf4af96e7df428d27f4d591a8.xlsx\" ],\r\n  \"fileNames\" : [ \"2019/06/21/e1e59eedf4af96e7df428d27f4d591a8.xlsx\" ]\r\n}', 0, NULL, '2019-06-21 18:12:20');
 INSERT INTO `sys_oper_log` VALUES (281, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"\" ],\r\n  \"beneficiary\" : [ \"\" ],\r\n  \"projectNumber\" : [ \"\" ],\r\n  \"projectName\" : [ \"\" ],\r\n  \"closingTime\" : [ \"\" ],\r\n  \"guaranteeAmount\" : [ \"\" ],\r\n  \"validityDeadline\" : [ \"\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"20\" ],\r\n  \"amount\" : [ \"\" ],\r\n  \"paidamount\" : [ \"4165\" ],\r\n  \"money\" : [ \"44\", \"4121\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/21/6cff5e39ce09c2520ee7405588ccb9dc.xlsx\" ],\r\n  \"fileNames\" : [ \"2019/06/21/6cff5e39ce09c2520ee7405588ccb9dc.xlsx\" ]\r\n}', 0, NULL, '2019-06-21 18:12:59');
+INSERT INTO `sys_oper_log` VALUES (282, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtCategory/add', '127.0.0.1', '内网IP', '{\r\n  \"name\" : [ \"656\" ],\r\n  \"type\" : [ \"0,0\" ],\r\n  \"remark\" : [ \"876\" ],\r\n  \"projectName\" : [ \"\" ],\r\n  \"starting_amount\" : [ \"\" ],\r\n  \"ending_amount\" : [ \"\" ],\r\n  \"single_payment_cost\" : [ \"\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"\" ],\r\n  \"21000/\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-24 10:31:00');
+INSERT INTO `sys_oper_log` VALUES (283, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addType()', 1, 'admin', '研发部门', '/baohan/gurtCategory/addType', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"catId\" : [ \"17\" ],\r\n  \"projectName\" : [ \"\" ],\r\n  \"starting_amount\" : [ \"\" ],\r\n  \"ending_amount\" : [ \"\" ],\r\n  \"single_payment_cost\" : [ \"\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"\" ],\r\n  \"21000/\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-24 14:17:52');
+INSERT INTO `sys_oper_log` VALUES (284, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addType()', 1, 'admin', '研发部门', '/baohan/gurtCategory/addType', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"catId\" : [ \"22\" ],\r\n  \"projectName\" : [ \"\" ],\r\n  \"starting_amount\" : [ \"\" ],\r\n  \"ending_amount\" : [ \"\" ],\r\n  \"single_payment_cost\" : [ \"\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"\" ],\r\n  \"21000/\" : [ \"0\" ]\r\n}', 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'name\' doesn\'t have a default value\r\n### The error may involve com.ruoyi.baohan.mapper.GurtProjectTypeMapper.insertGurtProjectType-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into gurt_project_type    ( category_id )           values ( ? )\r\n### Cause: java.sql.SQLException: Field \'name\' doesn\'t have a default value\n; Field \'name\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'name\' doesn\'t have a default value', '2019-06-24 14:18:44');
+INSERT INTO `sys_oper_log` VALUES (285, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtProjectTypeCostConfigController.modifyConf()', 1, 'admin', '研发部门', '/baohan/gurtProjectTypeCostConfig/modifyConf', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,1\" ],\r\n  \"gurtProjectTypeid\" : [ \"2\" ],\r\n  \"name\" : [ \"交通\" ],\r\n  \"id\" : [ \"1\" ],\r\n  \"starting_amount\" : [ \"0\" ],\r\n  \"ending_amount\" : [ \"400\" ],\r\n  \"single_payment_cost\" : [ \"0\" ],\r\n  \"1\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"1\" ],\r\n  \"10001\" : [ \"1\" ]\r\n}', 0, NULL, '2019-06-24 14:46:47');
+INSERT INTO `sys_oper_log` VALUES (286, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addType()', 1, 'admin', '研发部门', '/baohan/gurtCategory/addType', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"catId\" : [ \"17\" ],\r\n  \"projectName\" : [ \"\" ],\r\n  \"starting_amount\" : [ \"\" ],\r\n  \"ending_amount\" : [ \"\" ],\r\n  \"single_payment_cost\" : [ \"\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"\" ],\r\n  \"21000/\" : [ \"0\" ]\r\n}', 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'name\' doesn\'t have a default value\r\n### The error may involve com.ruoyi.baohan.mapper.GurtProjectTypeMapper.insertGurtProjectType-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into gurt_project_type    ( category_id )           values ( ? )\r\n### Cause: java.sql.SQLException: Field \'name\' doesn\'t have a default value\n; Field \'name\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'name\' doesn\'t have a default value', '2019-06-24 14:48:58');
+INSERT INTO `sys_oper_log` VALUES (287, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addType()', 1, 'admin', '研发部门', '/baohan/gurtCategory/addType', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"projectName\" : [ \"市政\" ],\r\n  \"starting_amount\" : [ \"0\" ],\r\n  \"ending_amount\" : [ \"1000\" ],\r\n  \"single_payment_cost\" : [ \"450\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"1\" ],\r\n  \"21000/\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-24 15:06:15');
+INSERT INTO `sys_oper_log` VALUES (288, '项目基础资料', 3, 'com.ruoyi.baohan.controller.GurtCategoryController.remove()', 1, 'admin', '研发部门', '/baohan/gurtCategory/remove', '127.0.0.1', '内网IP', '{\r\n  \"ids\" : [ \"1\" ]\r\n}', 0, NULL, '2019-06-24 15:10:27');
+INSERT INTO `sys_oper_log` VALUES (289, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtProjectTypeCostConfigController.modifyConf()', 1, 'admin', '研发部门', '/baohan/gurtProjectTypeCostConfig/modifyConf', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"gurtProjectTypeid\" : [ \"1\" ],\r\n  \"name\" : [ \"市政\" ],\r\n  \"id\" : [ \"2\" ],\r\n  \"starting_amount\" : [ \"0\" ],\r\n  \"ending_amount\" : [ \"10000\" ],\r\n  \"single_payment_cost\" : [ \"450\" ],\r\n  \"2\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"1\" ],\r\n  \"10002\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-24 15:10:38');
+INSERT INTO `sys_oper_log` VALUES (290, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtCategory/add', '127.0.0.1', '内网IP', '{\r\n  \"name\" : [ \"客户经理1\" ],\r\n  \"type\" : [ \"\" ],\r\n  \"remark\" : [ \"1231\" ]\r\n}', 0, NULL, '2019-06-24 15:25:02');
+INSERT INTO `sys_oper_log` VALUES (291, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtCategory/add', '127.0.0.1', '内网IP', '{\r\n  \"name\" : [ \"A\" ],\r\n  \"type\" : [ \"\" ],\r\n  \"remark\" : [ \"AA\" ]\r\n}', 0, NULL, '2019-06-24 15:28:04');
+INSERT INTO `sys_oper_log` VALUES (292, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtCategory/add', '127.0.0.1', '内网IP', '{\r\n  \"name\" : [ \"12\" ],\r\n  \"type\" : [ \"\" ],\r\n  \"remark\" : [ \"123\" ]\r\n}', 1, '\r\n### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry \'1\' for key \'PRIMARY\'\r\n### The error may involve com.ruoyi.baohan.mapper.GurtProjectTypeCostConfigMapper.insertGurtProjectTypeCostConfig-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into gurt_project_type_cost_config    ( id,    project_type_id,    starting_amount,    ending_amount,    single_payment_cost,    single_payment_count_type,    multiple_payment_cost,    multiple_payment_count_type,    category_id )           values ( ?,    ?,    ?,    ?,    ?,    ?,    ?,    ?,    ? )\r\n### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry \'1\' for key \'PRIMARY\'\n; Duplicate entry \'1\' for key \'PRIMARY\'; nested exception is java.sql.SQLIntegrityConstraintViolationException: Duplicate entry \'1\' for key \'PRIMARY\'', '2019-06-24 15:30:42');
+INSERT INTO `sys_oper_log` VALUES (293, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtCategory/add', '127.0.0.1', '内网IP', '{\r\n  \"name\" : [ \"124\" ],\r\n  \"type\" : [ \"\" ],\r\n  \"remark\" : [ \"123\" ]\r\n}', 1, '\r\n### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry \'1\' for key \'PRIMARY\'\r\n### The error may involve com.ruoyi.baohan.mapper.GurtProjectTypeCostConfigMapper.insertGurtProjectTypeCostConfig-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into gurt_project_type_cost_config    ( id,    project_type_id,    starting_amount,    ending_amount,    single_payment_cost,    single_payment_count_type,    multiple_payment_cost,    multiple_payment_count_type,    category_id )           values ( ?,    ?,    ?,    ?,    ?,    ?,    ?,    ?,    ? )\r\n### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry \'1\' for key \'PRIMARY\'\n; Duplicate entry \'1\' for key \'PRIMARY\'; nested exception is java.sql.SQLIntegrityConstraintViolationException: Duplicate entry \'1\' for key \'PRIMARY\'', '2019-06-24 15:31:28');
+INSERT INTO `sys_oper_log` VALUES (294, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtCategory/add', '127.0.0.1', '内网IP', '{\r\n  \"name\" : [ \"4\" ],\r\n  \"type\" : [ \"\" ],\r\n  \"remark\" : [ \"4\" ]\r\n}', 1, '\r\n### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry \'1\' for key \'PRIMARY\'\r\n### The error may involve com.ruoyi.baohan.mapper.GurtProjectTypeCostConfigMapper.insertGurtProjectTypeCostConfig-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into gurt_project_type_cost_config    ( id,    project_type_id,    starting_amount,    ending_amount,    single_payment_cost,    single_payment_count_type,    multiple_payment_cost,    multiple_payment_count_type,    category_id )           values ( ?,    ?,    ?,    ?,    ?,    ?,    ?,    ?,    ? )\r\n### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry \'1\' for key \'PRIMARY\'\n; Duplicate entry \'1\' for key \'PRIMARY\'; nested exception is java.sql.SQLIntegrityConstraintViolationException: Duplicate entry \'1\' for key \'PRIMARY\'', '2019-06-24 15:33:38');
+INSERT INTO `sys_oper_log` VALUES (295, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtCategory/add', '127.0.0.1', '内网IP', '{\r\n  \"name\" : [ \"11\" ],\r\n  \"type\" : [ \"\" ],\r\n  \"remark\" : [ \"111\" ]\r\n}', 0, NULL, '2019-06-24 15:34:05');
+INSERT INTO `sys_oper_log` VALUES (296, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtProjectTypeCostConfigController.modifyConf()', 1, 'admin', '研发部门', '/baohan/gurtProjectTypeCostConfig/modifyConf', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"gurtProjectTypeid\" : [ \"1\" ],\r\n  \"name\" : [ \"市政\" ],\r\n  \"id\" : [ \"2\" ],\r\n  \"starting_amount\" : [ \"01\" ],\r\n  \"ending_amount\" : [ \"10000\" ],\r\n  \"single_payment_cost\" : [ \"450\" ],\r\n  \"2\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"1\" ],\r\n  \"10002\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-24 15:47:55');
+INSERT INTO `sys_oper_log` VALUES (297, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtProjectTypeCostConfigController.modifyConf()', 1, 'admin', '研发部门', '/baohan/gurtProjectTypeCostConfig/modifyConf', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,1\" ],\r\n  \"gurtProjectTypeid\" : [ \"2\" ],\r\n  \"name\" : [ \"交通\" ],\r\n  \"id\" : [ \"1\" ],\r\n  \"starting_amount\" : [ \"0\" ],\r\n  \"ending_amount\" : [ \"4000000\" ],\r\n  \"single_payment_cost\" : [ \"0\" ],\r\n  \"1\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"1\" ],\r\n  \"10001\" : [ \"1\" ]\r\n}', 0, NULL, '2019-06-24 15:48:17');
+INSERT INTO `sys_oper_log` VALUES (298, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtCategory/add', '127.0.0.1', '内网IP', '{\r\n  \"name\" : [ \"1213\" ],\r\n  \"type\" : [ \"\" ],\r\n  \"remark\" : [ \"12\" ]\r\n}', 0, NULL, '2019-06-24 16:25:04');
+INSERT INTO `sys_oper_log` VALUES (299, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtProjectTypeCostConfigController.modifyConf()', 1, 'admin', '研发部门', '/baohan/gurtProjectTypeCostConfig/modifyConf', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"gurtProjectTypeid\" : [ \"1\" ],\r\n  \"name\" : [ \"市政\" ],\r\n  \"id\" : [ \"6\" ],\r\n  \"starting_amount\" : [ \"1\" ],\r\n  \"ending_amount\" : [ \"10444\" ],\r\n  \"single_payment_cost\" : [ \"4540\" ],\r\n  \"6\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"1\" ],\r\n  \"10006\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-24 16:30:10');
+INSERT INTO `sys_oper_log` VALUES (300, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtProjectTypeCostConfigController.modifyConf()', 1, 'admin', '研发部门', '/baohan/gurtProjectTypeCostConfig/modifyConf', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,1\" ],\r\n  \"gurtProjectTypeid\" : [ \"2\" ],\r\n  \"name\" : [ \"交通\" ],\r\n  \"id\" : [ \"1\" ],\r\n  \"starting_amount\" : [ \"0\" ],\r\n  \"ending_amount\" : [ \"444\" ],\r\n  \"single_payment_cost\" : [ \"0\" ],\r\n  \"1\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"1\" ],\r\n  \"10001\" : [ \"1\" ]\r\n}', 0, NULL, '2019-06-24 16:30:30');
+INSERT INTO `sys_oper_log` VALUES (301, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtCategory/add', '127.0.0.1', '内网IP', '{\r\n  \"name\" : [ \"44444\" ],\r\n  \"type\" : [ \"\" ],\r\n  \"remark\" : [ \"2312\" ]\r\n}', 0, NULL, '2019-06-24 16:31:00');
+INSERT INTO `sys_oper_log` VALUES (302, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addType()', 1, 'admin', '研发部门', '/baohan/gurtCategory/addType', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0,0,0,0,0\" ],\r\n  \"catId\" : [ \"31\" ],\r\n  \"projectName\" : [ \"市政\" ],\r\n  \"starting_amount\" : [ \"444\", \"33\", \"3\" ],\r\n  \"ending_amount\" : [ \"444\", \"3\", \"4\" ],\r\n  \"single_payment_cost\" : [ \"1\", \"3\", \"3\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"21\", \"3\", \"3\" ],\r\n  \"21000/\" : [ \"0\" ],\r\n  \"3/\" : [ \"0\" ],\r\n  \"31000/\" : [ \"0\" ],\r\n  \"4/\" : [ \"0\" ],\r\n  \"41000/\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-24 16:31:18');
+INSERT INTO `sys_oper_log` VALUES (303, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addType()', 1, 'admin', '研发部门', '/baohan/gurtCategory/addType', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0,0,0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"projectName\" : [ \"市政\" ],\r\n  \"starting_amount\" : [ \"1000000\", \"441\" ],\r\n  \"ending_amount\" : [ \"44\", \"23213\" ],\r\n  \"single_payment_cost\" : [ \"1\", \"4\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"421\", \"41\" ],\r\n  \"21000/\" : [ \"0\" ],\r\n  \"3/\" : [ \"0\" ],\r\n  \"31000/\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-24 16:34:35');
+INSERT INTO `sys_oper_log` VALUES (304, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtCategory/add', '127.0.0.1', '内网IP', '{\r\n  \"name\" : [ \"4\" ],\r\n  \"type\" : [ \"\" ],\r\n  \"remark\" : [ \"4\" ]\r\n}', 0, NULL, '2019-06-24 16:34:53');
+INSERT INTO `sys_oper_log` VALUES (305, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtProjectTypeCostConfigController.modifyConf()', 1, 'admin', '研发部门', '/baohan/gurtProjectTypeCostConfig/modifyConf', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0,0,0,0,0\" ],\r\n  \"gurtProjectTypeid\" : [ \"1\" ],\r\n  \"name\" : [ \"市政\" ],\r\n  \"id\" : [ \"15\", \"16\", \"17\" ],\r\n  \"starting_amount\" : [ \"1\", \"1000000\", \"441\" ],\r\n  \"ending_amount\" : [ \"10000\", \"44\", \"23213\" ],\r\n  \"single_payment_cost\" : [ \"450\", \"1444\", \"4444\" ],\r\n  \"15\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"144\", \"421\", \"414\" ],\r\n  \"10015\" : [ \"0\" ],\r\n  \"16\" : [ \"0\" ],\r\n  \"10016\" : [ \"0\" ],\r\n  \"17\" : [ \"0\" ],\r\n  \"10017\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-24 16:35:06');
+INSERT INTO `sys_oper_log` VALUES (306, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtCategory/add', '127.0.0.1', '内网IP', '{\r\n  \"name\" : [ \"123\" ],\r\n  \"type\" : [ \"\" ],\r\n  \"remark\" : [ \"4\" ]\r\n}', 0, NULL, '2019-06-24 16:40:03');
+INSERT INTO `sys_oper_log` VALUES (307, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtProjectTypeCostConfigController.modifyConf()', 1, 'admin', '研发部门', '/baohan/gurtProjectTypeCostConfig/modifyConf', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,1\" ],\r\n  \"gurtProjectTypeid\" : [ \"2\" ],\r\n  \"name\" : [ \"交通\" ],\r\n  \"id\" : [ \"18\" ],\r\n  \"starting_amount\" : [ \"0\" ],\r\n  \"ending_amount\" : [ \"4445\" ],\r\n  \"single_payment_cost\" : [ \"0\" ],\r\n  \"18\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"1\" ],\r\n  \"10018\" : [ \"1\" ]\r\n}', 0, NULL, '2019-06-24 16:40:55');
+INSERT INTO `sys_oper_log` VALUES (308, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addType()', 1, 'admin', '研发部门', '/baohan/gurtCategory/addType', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0,0,0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"projectName\" : [ \"市政\" ],\r\n  \"starting_amount\" : [ \"0\", \"1000\" ],\r\n  \"ending_amount\" : [ \"1000\", \"2000\" ],\r\n  \"single_payment_cost\" : [ \"450\", \"500\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"350\", \"400\" ],\r\n  \"21000/\" : [ \"0\" ],\r\n  \"3/\" : [ \"0\" ],\r\n  \"31000/\" : [ \"0\" ]\r\n}', 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'category_id\' doesn\'t have a default value\r\n### The error may involve com.ruoyi.baohan.mapper.GurtProjectTypeMapper.insertGurtProjectType-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into gurt_project_type    ( name )           values ( ? )\r\n### Cause: java.sql.SQLException: Field \'category_id\' doesn\'t have a default value\n; Field \'category_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'category_id\' doesn\'t have a default value', '2019-06-24 16:44:35');
+INSERT INTO `sys_oper_log` VALUES (309, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addType()', 1, 'admin', '研发部门', '/baohan/gurtCategory/addType', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0,0,0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"projectName\" : [ \"市政\" ],\r\n  \"starting_amount\" : [ \"0\", \"1000\" ],\r\n  \"ending_amount\" : [ \"1000\", \"2000\" ],\r\n  \"single_payment_cost\" : [ \"450\", \"500\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"350\", \"400\" ],\r\n  \"21000/\" : [ \"0\" ],\r\n  \"3/\" : [ \"0\" ],\r\n  \"31000/\" : [ \"0\" ]\r\n}', 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'category_id\' doesn\'t have a default value\r\n### The error may involve com.ruoyi.baohan.mapper.GurtProjectTypeMapper.insertGurtProjectType-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into gurt_project_type    ( name )           values ( ? )\r\n### Cause: java.sql.SQLException: Field \'category_id\' doesn\'t have a default value\n; Field \'category_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'category_id\' doesn\'t have a default value', '2019-06-24 16:44:40');
+INSERT INTO `sys_oper_log` VALUES (310, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addType()', 1, 'admin', '研发部门', '/baohan/gurtCategory/addType', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"projectName\" : [ \"市政\" ],\r\n  \"starting_amount\" : [ \"0\" ],\r\n  \"ending_amount\" : [ \"1100\" ],\r\n  \"single_payment_cost\" : [ \"450\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"350\" ],\r\n  \"21000/\" : [ \"0\" ]\r\n}', 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'category_id\' doesn\'t have a default value\r\n### The error may involve com.ruoyi.baohan.mapper.GurtProjectTypeMapper.insertGurtProjectType-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into gurt_project_type    ( name )           values ( ? )\r\n### Cause: java.sql.SQLException: Field \'category_id\' doesn\'t have a default value\n; Field \'category_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'category_id\' doesn\'t have a default value', '2019-06-24 16:50:17');
+INSERT INTO `sys_oper_log` VALUES (311, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addType()', 1, 'admin', '研发部门', '/baohan/gurtCategory/addType', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"projectName\" : [ \"市政\" ],\r\n  \"starting_amount\" : [ \"0\" ],\r\n  \"ending_amount\" : [ \"1100\" ],\r\n  \"single_payment_cost\" : [ \"450\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"350\" ],\r\n  \"21000/\" : [ \"0\" ]\r\n}', 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'category_id\' doesn\'t have a default value\r\n### The error may involve com.ruoyi.baohan.mapper.GurtProjectTypeMapper.insertGurtProjectType-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into gurt_project_type    ( name )           values ( ? )\r\n### Cause: java.sql.SQLException: Field \'category_id\' doesn\'t have a default value\n; Field \'category_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'category_id\' doesn\'t have a default value', '2019-06-24 16:51:35');
+INSERT INTO `sys_oper_log` VALUES (312, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addType()', 1, 'admin', '研发部门', '/baohan/gurtCategory/addType', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"projectName\" : [ \"市政\" ],\r\n  \"starting_amount\" : [ \"0\" ],\r\n  \"ending_amount\" : [ \"1100\" ],\r\n  \"single_payment_cost\" : [ \"450\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"350\" ],\r\n  \"21000/\" : [ \"0\" ]\r\n}', 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'category_id\' doesn\'t have a default value\r\n### The error may involve com.ruoyi.baohan.mapper.GurtProjectTypeMapper.insertGurtProjectType-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into gurt_project_type    ( name )           values ( ? )\r\n### Cause: java.sql.SQLException: Field \'category_id\' doesn\'t have a default value\n; Field \'category_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'category_id\' doesn\'t have a default value', '2019-06-24 16:52:53');
+INSERT INTO `sys_oper_log` VALUES (313, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addType()', 1, 'admin', '研发部门', '/baohan/gurtCategory/addType', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"projectName\" : [ \"市政\" ],\r\n  \"starting_amount\" : [ \"0\" ],\r\n  \"ending_amount\" : [ \"10000\" ],\r\n  \"single_payment_cost\" : [ \"450\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"350\" ],\r\n  \"21000/\" : [ \"0\" ]\r\n}', 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'category_id\' doesn\'t have a default value\r\n### The error may involve com.ruoyi.baohan.mapper.GurtProjectTypeMapper.insertGurtProjectType-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into gurt_project_type    ( `name` )           values ( ? )\r\n### Cause: java.sql.SQLException: Field \'category_id\' doesn\'t have a default value\n; Field \'category_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'category_id\' doesn\'t have a default value', '2019-06-24 17:00:13');
+INSERT INTO `sys_oper_log` VALUES (314, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addType()', 1, 'admin', '研发部门', '/baohan/gurtCategory/addType', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"projectName\" : [ \"市政\" ],\r\n  \"starting_amount\" : [ \"0\" ],\r\n  \"ending_amount\" : [ \"10000\" ],\r\n  \"single_payment_cost\" : [ \"450\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"350\" ],\r\n  \"21000/\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-24 17:01:50');
+INSERT INTO `sys_oper_log` VALUES (315, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addType()', 1, 'admin', '研发部门', '/baohan/gurtCategory/addType', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0,0,0,0,0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"projectName\" : [ \"交通\" ],\r\n  \"starting_amount\" : [ \"0\", \"20000\", \"30000\" ],\r\n  \"ending_amount\" : [ \"10000\", \"30000\", \"40000\" ],\r\n  \"single_payment_cost\" : [ \"400\", \"450\", \"500\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"350\", \"400\", \"450\" ],\r\n  \"21000/\" : [ \"0\" ],\r\n  \"3/\" : [ \"0\" ],\r\n  \"31000/\" : [ \"0\" ],\r\n  \"4/\" : [ \"0\" ],\r\n  \"41000/\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-24 17:02:56');
+INSERT INTO `sys_oper_log` VALUES (316, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtCategory/add', '127.0.0.1', '内网IP', '{\r\n  \"name\" : [ \"测试类目1\" ],\r\n  \"type\" : [ \"\" ],\r\n  \"remark\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-24 17:03:21');
+INSERT INTO `sys_oper_log` VALUES (317, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtProjectTypeCostConfigController.modifyConf()', 1, 'admin', '研发部门', '/baohan/gurtProjectTypeCostConfig/modifyConf', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"gurtProjectTypeid\" : [ \"10\" ],\r\n  \"name\" : [ \"市政\" ],\r\n  \"id\" : [ \"26\" ],\r\n  \"starting_amount\" : [ \"0\" ],\r\n  \"ending_amount\" : [ \"10000\" ],\r\n  \"single_payment_cost\" : [ \"10000\" ],\r\n  \"26\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"350\" ],\r\n  \"10026\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-24 17:03:40');
+INSERT INTO `sys_oper_log` VALUES (318, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"1\" ],\r\n  \"beneficiary\" : [ \"1\" ],\r\n  \"projectNumber\" : [ \"1\" ],\r\n  \"projectName\" : [ \"1\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1\" ],\r\n  \"validityDeadline\" : [ \"2012-1-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"450\" ],\r\n  \"paidamount\" : [ \"3224\" ],\r\n  \"money\" : [ \"11\", \"3213\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/24/e57beb44a84021f489c0a9447b12823e.png,http://localhost/profile/upload/2019/06/24/93a58b2798385db892a7660d0b358735.xlsx\" ],\r\n  \"fileNames\" : [ \"2019/06/24/e57beb44a84021f489c0a9447b12823e.png,2019/06/24/93a58b2798385db892a7660d0b358735.xlsx\" ]\r\n}', 1, 'Invalid bound statement (not found): com.ruoyi.baohan.mapper.GurtOrderMapper.insertOrderFile', '2019-06-24 17:53:34');
+INSERT INTO `sys_oper_log` VALUES (319, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"1\" ],\r\n  \"beneficiary\" : [ \"1\" ],\r\n  \"projectNumber\" : [ \"1\" ],\r\n  \"projectName\" : [ \"1\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1\" ],\r\n  \"validityDeadline\" : [ \"2012-1-1\" ],\r\n  \"guaranteeId\" : [ \"3\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"450\" ],\r\n  \"paidamount\" : [ \"244\" ],\r\n  \"money\" : [ \"133\", \"111\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/24/249060739e776c3bb2549edad295a26a.docx,http://localhost/profile/upload/2019/06/24/67a0016e28974c64cbbe7a322d077af8.xls\" ],\r\n  \"fileNames\" : [ \"2019/06/24/249060739e776c3bb2549edad295a26a.docx,2019/06/24/67a0016e28974c64cbbe7a322d077af8.xls\" ]\r\n}', 1, 'Invalid bound statement (not found): com.ruoyi.baohan.mapper.GurtOrderMapper.insertOrderFile', '2019-06-24 17:56:43');
+INSERT INTO `sys_oper_log` VALUES (320, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"1\" ],\r\n  \"beneficiary\" : [ \"1\" ],\r\n  \"projectNumber\" : [ \"1\" ],\r\n  \"projectName\" : [ \"1\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"450\" ],\r\n  \"paidamount\" : [ \"100\" ],\r\n  \"money\" : [ \"100\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/24/3e75a4ba51136c5ac996b70668c78eff.docx,http://localhost/profile/upload/2019/06/24/0135a08dd7721e49313cde0a4fb694c5.docx\" ],\r\n  \"fileNames\" : [ \"2019/06/24/3e75a4ba51136c5ac996b70668c78eff.docx,2019/06/24/0135a08dd7721e49313cde0a4fb694c5.docx\" ]\r\n}', 1, 'Invalid bound statement (not found): com.ruoyi.baohan.mapper.GurtOrderMapper.insertOrderFile', '2019-06-24 17:59:31');
+INSERT INTO `sys_oper_log` VALUES (321, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"1\" ],\r\n  \"beneficiary\" : [ \"1\" ],\r\n  \"projectNumber\" : [ \"1\" ],\r\n  \"projectName\" : [ \"1\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"450\" ],\r\n  \"paidamount\" : [ \"100\" ],\r\n  \"money\" : [ \"100\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/24/3e75a4ba51136c5ac996b70668c78eff.docx,http://localhost/profile/upload/2019/06/24/0135a08dd7721e49313cde0a4fb694c5.docx\" ],\r\n  \"fileNames\" : [ \"2019/06/24/3e75a4ba51136c5ac996b70668c78eff.docx,2019/06/24/0135a08dd7721e49313cde0a4fb694c5.docx\" ]\r\n}', 1, 'Invalid bound statement (not found): com.ruoyi.baohan.mapper.GurtOrderMapper.insertOrderFile', '2019-06-24 18:01:16');
+INSERT INTO `sys_oper_log` VALUES (322, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"1\" ],\r\n  \"beneficiary\" : [ \"1\" ],\r\n  \"projectNumber\" : [ \"1\" ],\r\n  \"projectName\" : [ \"1\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"450\" ],\r\n  \"paidamount\" : [ \"100\" ],\r\n  \"money\" : [ \"100\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/24/3e75a4ba51136c5ac996b70668c78eff.docx,http://localhost/profile/upload/2019/06/24/0135a08dd7721e49313cde0a4fb694c5.docx\" ],\r\n  \"fileNames\" : [ \"2019/06/24/3e75a4ba51136c5ac996b70668c78eff.docx,2019/06/24/0135a08dd7721e49313cde0a4fb694c5.docx\" ]\r\n}', 1, 'nested exception is org.apache.ibatis.binding.BindingException: Parameter \'orderId\' not found. Available parameters are [arg1, arg0, param1, param2]', '2019-06-24 18:06:34');
+INSERT INTO `sys_oper_log` VALUES (323, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"1\" ],\r\n  \"beneficiary\" : [ \"1\" ],\r\n  \"projectNumber\" : [ \"1\" ],\r\n  \"projectName\" : [ \"1\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"450\" ],\r\n  \"paidamount\" : [ \"100\" ],\r\n  \"money\" : [ \"100\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/24/3e75a4ba51136c5ac996b70668c78eff.docx,http://localhost/profile/upload/2019/06/24/0135a08dd7721e49313cde0a4fb694c5.docx\" ],\r\n  \"fileNames\" : [ \"2019/06/24/3e75a4ba51136c5ac996b70668c78eff.docx,2019/06/24/0135a08dd7721e49313cde0a4fb694c5.docx\" ]\r\n}', 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column \'orderId\' in \'field list\'\r\n### The error may involve defaultParameterMap\r\n### The error occurred while setting parameters\r\n### SQL: insert into gurt_order_file(`orderId`,paid_amount)         value (?,?)\r\n### Cause: java.sql.SQLSyntaxErrorException: Unknown column \'orderId\' in \'field list\'\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column \'orderId\' in \'field list\'', '2019-06-24 18:07:59');
+INSERT INTO `sys_oper_log` VALUES (324, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"1\" ],\r\n  \"beneficiary\" : [ \"1\" ],\r\n  \"projectNumber\" : [ \"1\" ],\r\n  \"projectName\" : [ \"1\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"450\" ],\r\n  \"paidamount\" : [ \"100\" ],\r\n  \"money\" : [ \"100\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/24/3e75a4ba51136c5ac996b70668c78eff.docx,http://localhost/profile/upload/2019/06/24/0135a08dd7721e49313cde0a4fb694c5.docx\" ],\r\n  \"fileNames\" : [ \"2019/06/24/3e75a4ba51136c5ac996b70668c78eff.docx,2019/06/24/0135a08dd7721e49313cde0a4fb694c5.docx\" ]\r\n}', 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column \'paid_amount\' in \'field list\'\r\n### The error may involve defaultParameterMap\r\n### The error occurred while setting parameters\r\n### SQL: insert into gurt_order_file(`order_id`,paid_amount)         value (?,?)\r\n### Cause: java.sql.SQLSyntaxErrorException: Unknown column \'paid_amount\' in \'field list\'\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column \'paid_amount\' in \'field list\'', '2019-06-24 18:09:38');
+INSERT INTO `sys_oper_log` VALUES (325, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"1\" ],\r\n  \"beneficiary\" : [ \"1\" ],\r\n  \"projectNumber\" : [ \"1\" ],\r\n  \"projectName\" : [ \"1\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"450\" ],\r\n  \"paidamount\" : [ \"100\" ],\r\n  \"money\" : [ \"100\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/24/3e75a4ba51136c5ac996b70668c78eff.docx,http://localhost/profile/upload/2019/06/24/0135a08dd7721e49313cde0a4fb694c5.docx\" ],\r\n  \"fileNames\" : [ \"2019/06/24/3e75a4ba51136c5ac996b70668c78eff.docx,2019/06/24/0135a08dd7721e49313cde0a4fb694c5.docx\" ]\r\n}', 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column \'paid_amount\' in \'field list\'\r\n### The error may involve defaultParameterMap\r\n### The error occurred while setting parameters\r\n### SQL: insert into gurt_order_file(`order_id`,paid_amount)          value (?,?)\r\n### Cause: java.sql.SQLSyntaxErrorException: Unknown column \'paid_amount\' in \'field list\'\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column \'paid_amount\' in \'field list\'', '2019-06-24 18:10:31');
+INSERT INTO `sys_oper_log` VALUES (326, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"1\" ],\r\n  \"beneficiary\" : [ \"1\" ],\r\n  \"projectNumber\" : [ \"1\" ],\r\n  \"projectName\" : [ \"1\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"450\" ],\r\n  \"paidamount\" : [ \"100\" ],\r\n  \"money\" : [ \"100\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/24/3e75a4ba51136c5ac996b70668c78eff.docx,http://localhost/profile/upload/2019/06/24/0135a08dd7721e49313cde0a4fb694c5.docx\" ],\r\n  \"fileNames\" : [ \"2019/06/24/3e75a4ba51136c5ac996b70668c78eff.docx,2019/06/24/0135a08dd7721e49313cde0a4fb694c5.docx\" ]\r\n}', 0, NULL, '2019-06-24 18:11:37');
+INSERT INTO `sys_oper_log` VALUES (327, '订单', 3, 'com.ruoyi.baohan.controller.GurtOrderController.remove()', 1, 'admin', '研发部门', '/baohan/gurtOrder/remove', '127.0.0.1', '内网IP', '{\r\n  \"ids\" : [ \"3\" ]\r\n}', 0, NULL, '2019-06-24 18:12:04');
+INSERT INTO `sys_oper_log` VALUES (328, '订单', 3, 'com.ruoyi.baohan.controller.GurtOrderController.remove()', 1, 'admin', '研发部门', '/baohan/gurtOrder/remove', '127.0.0.1', '内网IP', '{\r\n  \"ids\" : [ \"1,2\" ]\r\n}', 0, NULL, '2019-06-24 18:12:34');
+INSERT INTO `sys_oper_log` VALUES (329, '角色管理', 2, 'com.ruoyi.web.controller.system.SysRoleController.editSave()', 1, 'admin', '研发部门', '/system/role/edit', '127.0.0.1', '内网IP', '{\r\n  \"roleId\" : [ \"2\" ],\r\n  \"roleName\" : [ \"普通角色\" ],\r\n  \"roleKey\" : [ \"common\" ],\r\n  \"roleSort\" : [ \"3\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"remark\" : [ \"普通角色\" ],\r\n  \"menuIds\" : [ \"3,2030,2031,2032,2033,2034\" ]\r\n}', 0, NULL, '2019-06-25 10:17:58');
+INSERT INTO `sys_oper_log` VALUES (330, '角色管理', 2, 'com.ruoyi.web.controller.system.SysRoleController.editSave()', 1, 'admin', '研发部门', '/system/role/edit', '127.0.0.1', '内网IP', '{\r\n  \"roleId\" : [ \"3\" ],\r\n  \"roleName\" : [ \"客户经理\" ],\r\n  \"roleKey\" : [ \"manager\" ],\r\n  \"roleSort\" : [ \"2\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"menuIds\" : [ \"3,2030,2031,2032,2033,2034,2057,2059\" ]\r\n}', 0, NULL, '2019-06-25 10:18:05');
+INSERT INTO `sys_oper_log` VALUES (331, '角色管理', 2, 'com.ruoyi.web.controller.system.SysRoleController.editSave()', 1, 'admin', '研发部门', '/system/role/edit', '127.0.0.1', '内网IP', '{\r\n  \"roleId\" : [ \"2\" ],\r\n  \"roleName\" : [ \"普通角色\" ],\r\n  \"roleKey\" : [ \"common\" ],\r\n  \"roleSort\" : [ \"3\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"remark\" : [ \"普通角色\" ],\r\n  \"menuIds\" : [ \"3,2030,2031,2032,2033,2034,2057,2059\" ]\r\n}', 0, NULL, '2019-06-25 10:22:18');
+INSERT INTO `sys_oper_log` VALUES (332, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"2\" ],\r\n  \"beneficiary\" : [ \"2\" ],\r\n  \"projectNumber\" : [ \"2\" ],\r\n  \"projectName\" : [ \"2\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"11\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"450\" ],\r\n  \"paidamount\" : [ \"11\" ],\r\n  \"money\" : [ \"11\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/25/fef651dad4c66416a1cd0eb81c499b62.png\" ],\r\n  \"fileNames\" : [ \"2019/06/25/fef651dad4c66416a1cd0eb81c499b62.png\" ]\r\n}', 0, NULL, '2019-06-25 10:26:37');
+INSERT INTO `sys_oper_log` VALUES (333, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"3\" ],\r\n  \"beneficiary\" : [ \"3\" ],\r\n  \"projectNumber\" : [ \"3\" ],\r\n  \"projectName\" : [ \"3\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"10000\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"\" ],\r\n  \"paidamount\" : [ \"3\" ],\r\n  \"money\" : [ \"3\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/25/41fa36fd47167d526a0bbaa3f0666c62.xls\" ],\r\n  \"fileNames\" : [ \"2019/06/25/41fa36fd47167d526a0bbaa3f0666c62.xls\" ]\r\n}', 0, NULL, '2019-06-25 10:26:51');
+INSERT INTO `sys_oper_log` VALUES (334, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"4\" ],\r\n  \"beneficiary\" : [ \"4\" ],\r\n  \"projectNumber\" : [ \"4\" ],\r\n  \"projectName\" : [ \"4\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"10000\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"\" ],\r\n  \"paidamount\" : [ \"1\" ],\r\n  \"money\" : [ \"1\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/25/31c8dc5b2e4ea9f2cfeebbf72838d95a.png\" ],\r\n  \"fileNames\" : [ \"2019/06/25/31c8dc5b2e4ea9f2cfeebbf72838d95a.png\" ]\r\n}', 0, NULL, '2019-06-25 10:27:09');
+INSERT INTO `sys_oper_log` VALUES (335, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"5\" ],\r\n  \"beneficiary\" : [ \"5\" ],\r\n  \"projectNumber\" : [ \"5\" ],\r\n  \"projectName\" : [ \"5\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"155\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"450\" ],\r\n  \"paidamount\" : [ \"1111\" ],\r\n  \"money\" : [ \"1111\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/25/5fc982b066a5cd58176ff9625bc01011.png\" ],\r\n  \"fileNames\" : [ \"2019/06/25/5fc982b066a5cd58176ff9625bc01011.png\" ]\r\n}', 0, NULL, '2019-06-25 10:27:23');
+INSERT INTO `sys_oper_log` VALUES (336, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtProjectTypeCostConfigController.modifyConf()', 1, 'admin', '研发部门', '/baohan/gurtProjectTypeCostConfig/modifyConf', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"gurtProjectTypeid\" : [ \"10\" ],\r\n  \"name\" : [ \"市政\" ],\r\n  \"id\" : [ \"22\" ],\r\n  \"starting_amount\" : [ \"0\" ],\r\n  \"ending_amount\" : [ \"10000\" ],\r\n  \"single_payment_cost\" : [ \"1000\" ],\r\n  \"22\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"350\" ],\r\n  \"10022\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-25 15:08:47');
+INSERT INTO `sys_oper_log` VALUES (337, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtProjectTypeCostConfigController.modifyConf()', 1, 'admin', '研发部门', '/baohan/gurtProjectTypeCostConfig/modifyConf', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"gurtProjectTypeid\" : [ \"10\" ],\r\n  \"name\" : [ \"市政\" ],\r\n  \"id\" : [ \"26\" ],\r\n  \"starting_amount\" : [ \"0\" ],\r\n  \"ending_amount\" : [ \"500\" ],\r\n  \"single_payment_cost\" : [ \"10000\" ],\r\n  \"26\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"350\" ],\r\n  \"10026\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-25 15:09:04');
+INSERT INTO `sys_oper_log` VALUES (338, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtProjectTypeCostConfigController.modifyConf()', 1, 'admin', '研发部门', '/baohan/gurtProjectTypeCostConfig/modifyConf', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"gurtProjectTypeid\" : [ \"10\" ],\r\n  \"name\" : [ \"市政\" ],\r\n  \"id\" : [ \"26\" ],\r\n  \"starting_amount\" : [ \"0\" ],\r\n  \"ending_amount\" : [ \"10000\" ],\r\n  \"single_payment_cost\" : [ \"500\" ],\r\n  \"26\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"350\" ],\r\n  \"10026\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-25 15:09:49');
+INSERT INTO `sys_oper_log` VALUES (339, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"7\" ],\r\n  \"beneficiary\" : [ \"7\" ],\r\n  \"projectNumber\" : [ \"7\" ],\r\n  \"projectName\" : [ \"7\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"100\" ],\r\n  \"money\" : [ \"100\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/25/07e50ba9bea0e157103923feb4bae8d1.png,http://localhost/profile/upload/2019/06/25/eb7b6641b365cd9fa7d4e51289c77d26.docx,http://localhost/profile/upload/2019/06/25/b334bc6acd9a8d2bb7459dfbd0fef43b.xls\" ],\r\n  \"fileNames\" : [ \"2019/06/25/07e50ba9bea0e157103923feb4bae8d1.png,2019/06/25/eb7b6641b365cd9fa7d4e51289c77d26.docx,2019/06/25/b334bc6acd9a8d2bb7459dfbd0fef43b.xls\" ]\r\n}', 0, NULL, '2019-06-25 15:11:29');
+INSERT INTO `sys_oper_log` VALUES (340, '订单', 3, 'com.ruoyi.baohan.controller.GurtOrderController.remove()', 1, 'admin', '研发部门', '/baohan/gurtOrder/remove', '127.0.0.1', '内网IP', '{\r\n  \"ids\" : [ \"13,14,15,16,17,12\" ]\r\n}', 0, NULL, '2019-06-25 16:33:40');
+INSERT INTO `sys_oper_log` VALUES (341, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'ry', '测试部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"测试客户1有邀请人1提成\" ],\r\n  \"beneficiary\" : [ \"测试\" ],\r\n  \"projectNumber\" : [ \"测试\" ],\r\n  \"projectName\" : [ \"测试\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"300\" ],\r\n  \"money\" : [ \"100\", \"200\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/25/cd390b11b5a90c8814ce6cf648817c60.xlsx,http://localhost/profile/upload/2019/06/25/24d299e5bda6daee51a316c8d146e570.png\" ],\r\n  \"fileNames\" : [ \"2019/06/25/cd390b11b5a90c8814ce6cf648817c60.xlsx,2019/06/25/24d299e5bda6daee51a316c8d146e570.png\" ]\r\n}', 0, NULL, '2019-06-25 16:39:36');
+INSERT INTO `sys_oper_log` VALUES (342, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"测试客户1有邀请人1无提成\\t\" ],\r\n  \"beneficiary\" : [ \"测试\" ],\r\n  \"projectNumber\" : [ \"测试\" ],\r\n  \"projectName\" : [ \"测试\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"\" ],\r\n  \"money\" : [ \"\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/25/4e8d0633c8bd332153184359ca5373ba.docx\" ],\r\n  \"fileNames\" : [ \"2019/06/25/4e8d0633c8bd332153184359ca5373ba.docx\" ]\r\n}', 0, NULL, '2019-06-25 16:45:20');
+INSERT INTO `sys_oper_log` VALUES (343, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addType()', 1, 'admin', '研发部门', '/baohan/gurtCategory/addType', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"projectName\" : [ \"市政\" ],\r\n  \"starting_amount\" : [ \"20000\" ],\r\n  \"ending_amount\" : [ \"30000\" ],\r\n  \"single_payment_cost\" : [ \"1500\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"1000\" ],\r\n  \"21000/\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-25 17:14:07');
+INSERT INTO `sys_oper_log` VALUES (344, '项目基础资料', 1, 'com.ruoyi.baohan.controller.GurtCategoryController.addType()', 1, 'admin', '研发部门', '/baohan/gurtCategory/addType', '127.0.0.1', '内网IP', '{\r\n  \"type\" : [ \"0,0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"projectName\" : [ \"\" ],\r\n  \"starting_amount\" : [ \"10000\" ],\r\n  \"ending_amount\" : [ \"20000\" ],\r\n  \"single_payment_cost\" : [ \"800\" ],\r\n  \"2/\" : [ \"0\" ],\r\n  \"multiple_payment_cost\" : [ \"700\" ],\r\n  \"21000/\" : [ \"0\" ]\r\n}', 0, NULL, '2019-06-25 17:14:48');
+INSERT INTO `sys_oper_log` VALUES (345, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"1\" ],\r\n  \"beneficiary\" : [ \"1\" ],\r\n  \"projectNumber\" : [ \"4\" ],\r\n  \"projectName\" : [ \"市政\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"\" ],\r\n  \"money\" : [ \"\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/26/d5b116500a79bbcdd8ed69ba9ff5195b.xlsx\" ],\r\n  \"fileNames\" : [ \"file\" ]\r\n}', 0, NULL, '2019-06-26 09:22:55');
+INSERT INTO `sys_oper_log` VALUES (346, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', NULL, '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"1\" ],\r\n  \"beneficiary\" : [ \"1\" ],\r\n  \"projectNumber\" : [ \"1\" ],\r\n  \"projectName\" : [ \"市政\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"\" ],\r\n  \"money\" : [ \"\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/26/8f609649a0a98bfb9805576a0af61901.png,http://localhost/profile/upload/2019/06/26/e9259d2bef235ec71da0ff075f361ee7.xls,http://localhost/profile/upload/2019/06/26/2d8a11ace46a312b5d4f9e6107fb7701.docx\" ],\r\n  \"fileNames\" : [ \"file,file,加班申请及打卡规则.docx\" ]\r\n}', 0, NULL, '2019-06-26 09:27:10');
+INSERT INTO `sys_oper_log` VALUES (347, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"2\" ],\r\n  \"beneficiary\" : [ \"2\" ],\r\n  \"projectNumber\" : [ \"2\" ],\r\n  \"projectName\" : [ \"2\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"\" ],\r\n  \"money\" : [ \"\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/26/7b2cb73359e6d5b58f7eff4f74d057cf.xlsx,http://localhost/profile/upload/2019/06/26/ee1c5b337b6559dd0d7471a1e1107cfd.png\" ],\r\n  \"fileNames\" : [ \"问题.xlsx,名片-0626_画板 1 副本.png\" ]\r\n}', 0, NULL, '2019-06-26 09:28:52');
+INSERT INTO `sys_oper_log` VALUES (348, '订单', 3, 'com.ruoyi.baohan.controller.GurtOrderController.remove()', 1, 'admin', '研发部门', '/baohan/gurtOrder/remove', '127.0.0.1', '内网IP', '{\r\n  \"ids\" : [ \"20,21,22\" ]\r\n}', 0, NULL, '2019-06-26 09:29:33');
+INSERT INTO `sys_oper_log` VALUES (349, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"文件\" ],\r\n  \"beneficiary\" : [ \"文件\" ],\r\n  \"projectNumber\" : [ \"文件\" ],\r\n  \"projectName\" : [ \"文件\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"\" ],\r\n  \"money\" : [ \"\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/26/2c9faa22ee545a9626dc5a25467d1507.docx\" ],\r\n  \"fileNames\" : [ \"保函格式十三份_2_.docx\" ]\r\n}', 0, NULL, '2019-06-26 09:30:00');
+INSERT INTO `sys_oper_log` VALUES (350, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', NULL, '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"123\" ],\r\n  \"beneficiary\" : [ \"231\" ],\r\n  \"projectNumber\" : [ \"123\" ],\r\n  \"projectName\" : [ \"213\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"\" ],\r\n  \"money\" : [ \"\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/26/50898428a10fa12ad3eeb424a88cec73.docx\" ],\r\n  \"fileNames\" : [ \"个人所得税通知.docx\" ]\r\n}', 0, NULL, '2019-06-26 09:41:24');
+INSERT INTO `sys_oper_log` VALUES (351, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"测试文件\" ],\r\n  \"beneficiary\" : [ \"测试文件\" ],\r\n  \"projectNumber\" : [ \"文件\" ],\r\n  \"projectName\" : [ \"测试文件\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"10001\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"800\" ],\r\n  \"paidamount\" : [ \"\" ],\r\n  \"money\" : [ \"\", \"\", \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/26/39d8338170a2c47676c172957d999a49.png,http://localhost/profile/upload/2019/06/26/f5c1fd02a9e8bab4b2ffd0961374a9e6.xlsx,http://localhost/profile/upload/2019/06/26/5737e58496d173a8d20c1b4c1fc88384.docx,http://localhost/profile/upload/2019/06/26/66cfcb618376ba1ddf93243c3bd0c94c.xls\" ],\r\n  \"fileNames\" : [ \"名片-0626_画板 1 副本.png,问题.xlsx,加班申请及打卡规则.docx,后台样式0516.xls\" ]\r\n}', 0, NULL, '2019-06-26 13:59:19');
+INSERT INTO `sys_oper_log` VALUES (352, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"已收金额测试\" ],\r\n  \"beneficiary\" : [ \"已收金额测试\" ],\r\n  \"projectNumber\" : [ \"已收金额测试\" ],\r\n  \"projectName\" : [ \"已收金额测试\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"10001\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"800\" ],\r\n  \"paidamount\" : [ \"700\" ],\r\n  \"money\" : [ \"400\", \"200\", \"100\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/26/1631cb0b676c25a3de8ee20671b04ba8.xls,http://localhost/profile/upload/2019/06/26/4e676be1065464574bff7b2bee5f80a9.png,http://localhost/profile/upload/2019/06/26/a5fa9a7a193024a72121db19d787ad0f.xlsx,http://localhost/profile/upload/2019/06/26/f4d033e0ba3b6a4bd5a5efede88ac6c1.docx\" ],\r\n  \"fileNames\" : [ \"后台样式0516.xls,名片-0626_画板 1 副本.png,问题.xlsx,加班申请及打卡规则.docx\" ]\r\n}', 0, NULL, '2019-06-26 14:51:47');
+INSERT INTO `sys_oper_log` VALUES (353, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"26\" ],\r\n  \"warrantee\" : [ \"已收金额测试\" ],\r\n  \"beneficiary\" : [ \"已收金额测试\" ],\r\n  \"projectNumber\" : [ \"已收金额测试\" ],\r\n  \"projectName\" : [ \"已收金额测试\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"20001\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1500\" ],\r\n  \"paidamount\" : [ \"700\" ],\r\n  \"money\" : [ \"400\", \"200\", \"100\" ],\r\n  \"fileUrls\" : [ \"\" ],\r\n  \"fileNames\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-26 16:23:02');
+INSERT INTO `sys_oper_log` VALUES (354, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"26\" ],\r\n  \"warrantee\" : [ \"已收金额测试\" ],\r\n  \"beneficiary\" : [ \"已收金额测试\" ],\r\n  \"projectNumber\" : [ \"已收金额测试\" ],\r\n  \"projectName\" : [ \"已收金额测试\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"20001\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"4\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1500\" ],\r\n  \"paidamount\" : [ \"700\" ],\r\n  \"money\" : [ \"400\", \"200\", \"100\" ],\r\n  \"fileUrls\" : [ \"\" ],\r\n  \"fileNames\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-26 16:23:14');
+INSERT INTO `sys_oper_log` VALUES (355, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"26\" ],\r\n  \"warrantee\" : [ \"已收金额测试\" ],\r\n  \"beneficiary\" : [ \"已收金额测试\" ],\r\n  \"projectNumber\" : [ \"已收金额测试\" ],\r\n  \"projectName\" : [ \"已收金额测试\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"20001\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"4\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"11\" ],\r\n  \"amount\" : [ \"450\" ],\r\n  \"paidamount\" : [ \"700\" ],\r\n  \"money\" : [ \"400\", \"200\", \"100\" ],\r\n  \"fileUrls\" : [ \"\" ],\r\n  \"fileNames\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-26 16:23:19');
+INSERT INTO `sys_oper_log` VALUES (356, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"26\" ],\r\n  \"warrantee\" : [ \"已收金额测试\" ],\r\n  \"beneficiary\" : [ \"已收金额测试\" ],\r\n  \"projectNumber\" : [ \"已收金额测试\" ],\r\n  \"projectName\" : [ \"已收金额测试\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"20001\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"4\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"11\" ],\r\n  \"amount\" : [ \"450\" ],\r\n  \"paidamount\" : [ \"700\" ],\r\n  \"money\" : [ \"400\", \"200\", \"100\" ],\r\n  \"fileUrls\" : [ \"\" ],\r\n  \"fileNames\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-26 16:23:39');
+INSERT INTO `sys_oper_log` VALUES (357, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"26\" ],\r\n  \"warrantee\" : [ \"已收金额测试\" ],\r\n  \"beneficiary\" : [ \"已收金额测试\" ],\r\n  \"projectNumber\" : [ \"已收金额测试\" ],\r\n  \"projectName\" : [ \"已收金额测试\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"20001\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"4\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"11\" ],\r\n  \"amount\" : [ \"450\" ],\r\n  \"paidamount\" : [ \"700\" ],\r\n  \"money\" : [ \"400\", \"200\", \"100\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/26/b42f22849f2e10077fb6a9769f714b39.png,http://localhost/profile/upload/2019/06/26/50e68ae1c8a31dda6e5a43216020521f.xlsx\" ],\r\n  \"fileNames\" : [ \"名片-0626_画板 1 副本.png,问题.xlsx\" ]\r\n}', 0, NULL, '2019-06-26 16:23:52');
+INSERT INTO `sys_oper_log` VALUES (358, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"26\" ],\r\n  \"warrantee\" : [ \"已收金额测试\" ],\r\n  \"beneficiary\" : [ \"已收金额测试\" ],\r\n  \"projectNumber\" : [ \"已收金额测试\" ],\r\n  \"projectName\" : [ \"已收金额测试\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"20001\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"4\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"11\" ],\r\n  \"amount\" : [ \"450\" ],\r\n  \"paidamount\" : [ \"1000\" ],\r\n  \"money\" : [ \"100\", \"200\", \"300\", \"400\" ],\r\n  \"fileUrls\" : [ \"\" ],\r\n  \"fileNames\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-26 16:24:18');
+INSERT INTO `sys_oper_log` VALUES (359, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"26\" ],\r\n  \"warrantee\" : [ \"已收金额测试\" ],\r\n  \"beneficiary\" : [ \"已收金额测试\" ],\r\n  \"projectNumber\" : [ \"已收金额测试\" ],\r\n  \"projectName\" : [ \"已收金额测试\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"20001\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"3\" ],\r\n  \"bankId\" : [ \"2\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1500\" ],\r\n  \"paidamount\" : [ \"1900\" ],\r\n  \"money\" : [ \"1000\", \"200\", \"300\", \"400\" ],\r\n  \"fileUrls\" : [ \"\" ],\r\n  \"fileNames\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-26 16:24:40');
+INSERT INTO `sys_oper_log` VALUES (360, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"26\" ],\r\n  \"warrantee\" : [ \"已收金额测试\" ],\r\n  \"beneficiary\" : [ \"已收金额测试\" ],\r\n  \"projectNumber\" : [ \"已收金额测试\" ],\r\n  \"projectName\" : [ \"已收金额测试\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"20001\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"3\" ],\r\n  \"bankId\" : [ \"2\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1500\" ],\r\n  \"paidamount\" : [ \"1900\" ],\r\n  \"money\" : [ \"1000\", \"200\", \"300\", \"400\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/26/e62c92124c7f951d4c269852f9815b11.png,http://localhost/profile/upload/2019/06/26/235ab8c34d6781e2f1869f87663a903d.xlsx,http://localhost/profile/upload/2019/06/26/c81032b7120277ce0a61721d59b2374a.xls,http://localhost/profile/upload/2019/06/26/ce11dde8fd4673009fbc7e13b9fa9b0a.docx\" ],\r\n  \"fileNames\" : [ \"名片-0626_画板 1 副本.png,问题.xlsx,后台样式0516.xls,加班申请及打卡规则.docx\" ]\r\n}', 0, NULL, '2019-06-26 16:25:25');
+INSERT INTO `sys_oper_log` VALUES (361, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"26\" ],\r\n  \"warrantee\" : [ \"已收金额测试\" ],\r\n  \"beneficiary\" : [ \"已收金额测试\" ],\r\n  \"projectNumber\" : [ \"已收金额测试\" ],\r\n  \"projectName\" : [ \"已收金额测试\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"20001\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"3\" ],\r\n  \"bankId\" : [ \"2\" ],\r\n  \"projectTypeId\" : [ \"11\" ],\r\n  \"amount\" : [ \"450\" ],\r\n  \"paidamount\" : [ \"3700\" ],\r\n  \"money\" : [ \"1000\", \"2000\", \"300\", \"400\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/26/0b11cf70b58b552d07f1d8fe83d5ebe3.png,http://localhost/profile/upload/2019/06/26/d92bae45bd27a42f5a6983b7297ef18a.xlsx\" ],\r\n  \"fileNames\" : [ \"名片-0626_画板 1 副本.png,问题.xlsx\" ]\r\n}', 0, NULL, '2019-06-26 16:25:38');
+INSERT INTO `sys_oper_log` VALUES (362, '岗位管理', 5, 'com.ruoyi.web.controller.system.SysPostController.export()', 1, 'admin', '研发部门', '/system/post/export', '127.0.0.1', '内网IP', '{\r\n  \"postCode\" : [ \"\" ],\r\n  \"postName\" : [ \"\" ],\r\n  \"status\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-26 17:02:20');
+INSERT INTO `sys_oper_log` VALUES (363, '岗位管理', 5, 'com.ruoyi.web.controller.system.SysPostController.export()', 1, 'admin', '研发部门', '/system/post/export', '127.0.0.1', '内网IP', '{\r\n  \"postCode\" : [ \"\" ],\r\n  \"postName\" : [ \"\" ],\r\n  \"status\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-26 17:02:41');
+INSERT INTO `sys_oper_log` VALUES (364, '岗位管理', 5, 'com.ruoyi.web.controller.system.SysPostController.export()', 1, 'admin', '研发部门', '/system/post/export', '127.0.0.1', '内网IP', '{\r\n  \"postCode\" : [ \"\" ],\r\n  \"postName\" : [ \"\" ],\r\n  \"status\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-26 17:03:05');
+INSERT INTO `sys_oper_log` VALUES (365, '登陆日志', 9, 'com.ruoyi.web.controller.monitor.SysLogininforController.clean()', 1, 'admin', '研发部门', '/monitor/logininfor/clean', '127.0.0.1', '内网IP', '{ }', 0, NULL, '2019-06-26 17:21:27');
+INSERT INTO `sys_oper_log` VALUES (366, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"23\" ],\r\n  \"warrantee\" : [ \"文件\" ],\r\n  \"beneficiary\" : [ \"文件\" ],\r\n  \"projectNumber\" : [ \"文件\" ],\r\n  \"projectName\" : [ \"文件\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"2\" ],\r\n  \"bankId\" : [ \"2\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"0\" ],\r\n  \"fileUrls\" : [ \"\" ],\r\n  \"fileNames\" : [ \"\" ]\r\n}', 1, '', '2019-06-27 09:41:45');
+INSERT INTO `sys_oper_log` VALUES (367, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"23\" ],\r\n  \"warrantee\" : [ \"文件\" ],\r\n  \"beneficiary\" : [ \"文件\" ],\r\n  \"projectNumber\" : [ \"文件\" ],\r\n  \"projectName\" : [ \"文件\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"2\" ],\r\n  \"bankId\" : [ \"2\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"0\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/27/7dde767b3ca4927d6e9ffb55d50ebb2a.png,http://localhost/profile/upload/2019/06/27/edc577fca983fc9ce37b88a6f2049674.xlsx,http://localhost/profile/upload/2019/06/27/96ca6ba5d5d34048144cbfd86d0a54ad.xls,http://localhost/profile/upload/2019/06/27/2423bc2d548b55b870fc473b8f5de2c7.docx\" ],\r\n  \"fileNames\" : [ \"名片-0626_画板 1 副本.png,问题.xlsx,后台样式0516.xls,加班申请及打卡规则.docx\" ]\r\n}', 1, '', '2019-06-27 09:41:55');
+INSERT INTO `sys_oper_log` VALUES (368, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"25\" ],\r\n  \"warrantee\" : [ \"测试文件\" ],\r\n  \"beneficiary\" : [ \"测试文件\" ],\r\n  \"projectNumber\" : [ \"文件\" ],\r\n  \"projectName\" : [ \"测试文件\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"10001\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"800\" ],\r\n  \"paidamount\" : [ \"0\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/27/6e57e0e0dc27010f9b5a016bfe6add1b.png,http://localhost/profile/upload/2019/06/27/8b41ff451bbe9e4c93741897b8caa84e.xls,http://localhost/profile/upload/2019/06/27/a2a164a3b14ffa6c724221c88e224a84.xlsx,http://localhost/profile/upload/2019/06/27/2fa9483c3612d819ebacf23439d17868.docx,http://localhost/profile/upload/2019/06/27/c4acc8d178d1875e0c96a5c4a26da194.docx\" ],\r\n  \"fileNames\" : [ \"名片-0626_画板 1 副本.png,后台样式0516.xls,问题.xlsx,个人所得税通知.docx,加班申请及打卡规则.docx\" ]\r\n}', 1, '', '2019-06-27 09:42:36');
+INSERT INTO `sys_oper_log` VALUES (369, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"25\" ],\r\n  \"warrantee\" : [ \"测试文件\" ],\r\n  \"beneficiary\" : [ \"测试文件\" ],\r\n  \"projectNumber\" : [ \"文件\" ],\r\n  \"projectName\" : [ \"测试文件\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"10001\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"800\" ],\r\n  \"paidamount\" : [ \"0\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/27/6e57e0e0dc27010f9b5a016bfe6add1b.png,http://localhost/profile/upload/2019/06/27/8b41ff451bbe9e4c93741897b8caa84e.xls,http://localhost/profile/upload/2019/06/27/a2a164a3b14ffa6c724221c88e224a84.xlsx,http://localhost/profile/upload/2019/06/27/2fa9483c3612d819ebacf23439d17868.docx,http://localhost/profile/upload/2019/06/27/c4acc8d178d1875e0c96a5c4a26da194.docx\" ],\r\n  \"fileNames\" : [ \"名片-0626_画板 1 副本.png,后台样式0516.xls,问题.xlsx,个人所得税通知.docx,加班申请及打卡规则.docx\" ]\r\n}', 1, '', '2019-06-27 09:42:45');
+INSERT INTO `sys_oper_log` VALUES (370, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"25\" ],\r\n  \"warrantee\" : [ \"测试文件\" ],\r\n  \"beneficiary\" : [ \"测试文件\" ],\r\n  \"projectNumber\" : [ \"文件\" ],\r\n  \"projectName\" : [ \"测试文件\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"10001\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"800\" ],\r\n  \"paidamount\" : [ \"100\" ],\r\n  \"money\" : [ \"100\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/27/6e57e0e0dc27010f9b5a016bfe6add1b.png,http://localhost/profile/upload/2019/06/27/8b41ff451bbe9e4c93741897b8caa84e.xls,http://localhost/profile/upload/2019/06/27/a2a164a3b14ffa6c724221c88e224a84.xlsx,http://localhost/profile/upload/2019/06/27/2fa9483c3612d819ebacf23439d17868.docx,http://localhost/profile/upload/2019/06/27/c4acc8d178d1875e0c96a5c4a26da194.docx\" ],\r\n  \"fileNames\" : [ \"名片-0626_画板 1 副本.png,后台样式0516.xls,问题.xlsx,个人所得税通知.docx,加班申请及打卡规则.docx\" ]\r\n}', 0, NULL, '2019-06-27 09:43:06');
+INSERT INTO `sys_oper_log` VALUES (371, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"23\" ],\r\n  \"warrantee\" : [ \"文件\" ],\r\n  \"beneficiary\" : [ \"文件\" ],\r\n  \"projectNumber\" : [ \"文件\" ],\r\n  \"projectName\" : [ \"文件\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"2\" ],\r\n  \"bankId\" : [ \"2\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"0\" ],\r\n  \"fileUrls\" : [ \"\" ],\r\n  \"fileNames\" : [ \"\" ]\r\n}', 1, '', '2019-06-27 09:54:24');
+INSERT INTO `sys_oper_log` VALUES (372, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"23\" ],\r\n  \"warrantee\" : [ \"文件\" ],\r\n  \"beneficiary\" : [ \"文件\" ],\r\n  \"projectNumber\" : [ \"文件\" ],\r\n  \"projectName\" : [ \"文件\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"2\" ],\r\n  \"bankId\" : [ \"2\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"0\" ],\r\n  \"fileUrls\" : [ \"\" ],\r\n  \"fileNames\" : [ \"\" ]\r\n}', 1, '', '2019-06-27 09:55:22');
+INSERT INTO `sys_oper_log` VALUES (373, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"23\" ],\r\n  \"warrantee\" : [ \"文件\" ],\r\n  \"beneficiary\" : [ \"文件\" ],\r\n  \"projectNumber\" : [ \"文件\" ],\r\n  \"projectName\" : [ \"文件\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"2\" ],\r\n  \"bankId\" : [ \"2\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"0\" ],\r\n  \"fileUrls\" : [ \"\" ],\r\n  \"fileNames\" : [ \"\" ]\r\n}', 1, '', '2019-06-27 09:56:14');
+INSERT INTO `sys_oper_log` VALUES (374, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"23\" ],\r\n  \"warrantee\" : [ \"文件\" ],\r\n  \"beneficiary\" : [ \"文件\" ],\r\n  \"projectNumber\" : [ \"文件\" ],\r\n  \"projectName\" : [ \"文件\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"2\" ],\r\n  \"bankId\" : [ \"2\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"0\" ],\r\n  \"fileUrls\" : [ \"\" ],\r\n  \"fileNames\" : [ \"\" ]\r\n}', 1, '', '2019-06-27 09:57:15');
+INSERT INTO `sys_oper_log` VALUES (375, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"23\" ],\r\n  \"warrantee\" : [ \"文件\" ],\r\n  \"beneficiary\" : [ \"文件\" ],\r\n  \"projectNumber\" : [ \"文件\" ],\r\n  \"projectName\" : [ \"文件\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"2\" ],\r\n  \"bankId\" : [ \"2\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"0\" ],\r\n  \"fileUrls\" : [ \"\" ],\r\n  \"fileNames\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-27 09:58:03');
+INSERT INTO `sys_oper_log` VALUES (376, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"23\" ],\r\n  \"warrantee\" : [ \"文件\" ],\r\n  \"beneficiary\" : [ \"文件\" ],\r\n  \"projectNumber\" : [ \"文件\" ],\r\n  \"projectName\" : [ \"文件\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"2\" ],\r\n  \"bankId\" : [ \"2\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"0\" ],\r\n  \"fileUrls\" : [ \"\" ],\r\n  \"fileNames\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-27 09:58:09');
+INSERT INTO `sys_oper_log` VALUES (377, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"23\" ],\r\n  \"warrantee\" : [ \"文件\" ],\r\n  \"beneficiary\" : [ \"文件1\" ],\r\n  \"projectNumber\" : [ \"文件\" ],\r\n  \"projectName\" : [ \"文件\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"2\" ],\r\n  \"bankId\" : [ \"2\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"0\" ],\r\n  \"fileUrls\" : [ \"\" ],\r\n  \"fileNames\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-27 09:58:16');
+INSERT INTO `sys_oper_log` VALUES (378, '用户管理', 1, 'com.ruoyi.web.controller.system.SysUserController.addSave()', 1, 'admin', '研发部门', '/system/user/add', '127.0.0.1', '内网IP', '{\r\n  \"deptId\" : [ \"104\" ],\r\n  \"userName\" : [ \"二维码测试1\" ],\r\n  \"deptName\" : [ \"市场部门\" ],\r\n  \"phonenumber\" : [ \"15241423434\" ],\r\n  \"email\" : [ \"impor1nt@163.com\" ],\r\n  \"loginName\" : [ \"啊2314\" ],\r\n  \"password\" : [ \"123456\" ],\r\n  \"sex\" : [ \"1\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"role\" : [ \"1\", \"2\", \"3\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"1,2,3\" ],\r\n  \"postIds\" : [ \"2\" ]\r\n}', 0, NULL, '2019-06-27 10:27:13');
+INSERT INTO `sys_oper_log` VALUES (379, '用户管理', 1, 'com.ruoyi.web.controller.system.SysUserController.addSave()', 1, 'admin', '研发部门', '/system/user/add', '127.0.0.1', '内网IP', '{\r\n  \"deptId\" : [ \"109\" ],\r\n  \"userName\" : [ \"4\" ],\r\n  \"deptName\" : [ \"财务部门\" ],\r\n  \"phonenumber\" : [ \"15241423432\" ],\r\n  \"email\" : [ \"importjant3@163.com\" ],\r\n  \"loginName\" : [ \"啊2311213\" ],\r\n  \"password\" : [ \"123456\" ],\r\n  \"sex\" : [ \"0\" ],\r\n  \"catId\" : [ \"34\" ],\r\n  \"role\" : [ \"1\", \"2\", \"3\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"1,2,3\" ],\r\n  \"postIds\" : [ \"2\" ]\r\n}', 0, NULL, '2019-06-27 11:07:36');
+INSERT INTO `sys_oper_log` VALUES (380, '用户管理', 1, 'com.ruoyi.web.controller.system.SysUserController.addSave()', 1, 'admin', '研发部门', '/system/user/add', '127.0.0.1', '内网IP', '{\r\n  \"deptId\" : [ \"108\" ],\r\n  \"userName\" : [ \"1123\" ],\r\n  \"deptName\" : [ \"市场部门\" ],\r\n  \"phonenumber\" : [ \"15241423434\" ],\r\n  \"email\" : [ \"importj3nt@163.com\" ],\r\n  \"loginName\" : [ \"啊2312\" ],\r\n  \"password\" : [ \"123456\" ],\r\n  \"sex\" : [ \"0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"role\" : [ \"1\", \"2\", \"3\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"1,2,3\" ],\r\n  \"postIds\" : [ \"2\" ]\r\n}', 0, NULL, '2019-06-27 11:10:25');
+INSERT INTO `sys_oper_log` VALUES (381, '用户管理', 1, 'com.ruoyi.web.controller.system.SysUserController.addSave()', 1, 'admin', '研发部门', '/system/user/add', '127.0.0.1', '内网IP', '{\r\n  \"deptId\" : [ \"108\" ],\r\n  \"userName\" : [ \"1123\" ],\r\n  \"deptName\" : [ \"市场部门\" ],\r\n  \"phonenumber\" : [ \"15241423434\" ],\r\n  \"email\" : [ \"importjant@163.com\" ],\r\n  \"loginName\" : [ \"啊231\" ],\r\n  \"password\" : [ \"123456\" ],\r\n  \"sex\" : [ \"0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"role\" : [ \"1\", \"2\", \"3\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"1,2,3\" ],\r\n  \"postIds\" : [ \"2\" ]\r\n}', 0, NULL, '2019-06-27 11:17:21');
+INSERT INTO `sys_oper_log` VALUES (382, '用户管理', 1, 'com.ruoyi.web.controller.system.SysUserController.addSave()', 1, 'admin', '研发部门', '/system/user/add', '127.0.0.1', '内网IP', '{\r\n  \"deptId\" : [ \"105\" ],\r\n  \"userName\" : [ \"1123\" ],\r\n  \"deptName\" : [ \"测试部门\" ],\r\n  \"phonenumber\" : [ \"15241423434\" ],\r\n  \"email\" : [ \"importj3nt@163.com\" ],\r\n  \"loginName\" : [ \"啊231\" ],\r\n  \"password\" : [ \"123456\" ],\r\n  \"sex\" : [ \"0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"role\" : [ \"1\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"1\" ],\r\n  \"postIds\" : [ \"2\" ]\r\n}', 0, NULL, '2019-06-27 11:18:58');
+INSERT INTO `sys_oper_log` VALUES (383, '用户管理', 1, 'com.ruoyi.web.controller.system.SysUserController.addSave()', 1, 'admin', '研发部门', '/system/user/add', '127.0.0.1', '内网IP', '{\r\n  \"deptId\" : [ \"106\" ],\r\n  \"userName\" : [ \"1123\" ],\r\n  \"deptName\" : [ \"财务部门\" ],\r\n  \"phonenumber\" : [ \"15244443332\" ],\r\n  \"email\" : [ \"importjant@163.com\" ],\r\n  \"loginName\" : [ \"啊2312\" ],\r\n  \"password\" : [ \"123456\" ],\r\n  \"sex\" : [ \"0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"role\" : [ \"1\", \"2\", \"3\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"1,2,3\" ],\r\n  \"postIds\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-27 11:21:22');
+INSERT INTO `sys_oper_log` VALUES (384, '用户管理', 1, 'com.ruoyi.web.controller.system.SysUserController.addSave()', 1, 'admin', '研发部门', '/system/user/add', '127.0.0.1', '内网IP', '{\r\n  \"deptId\" : [ \"105\" ],\r\n  \"userName\" : [ \"1123\" ],\r\n  \"deptName\" : [ \"测试部门\" ],\r\n  \"phonenumber\" : [ \"15241423434\" ],\r\n  \"email\" : [ \"impor1ant@163.com\" ],\r\n  \"loginName\" : [ \"啊23121\" ],\r\n  \"password\" : [ \"123456\" ],\r\n  \"sex\" : [ \"0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"role\" : [ \"1\", \"2\", \"3\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"1,2,3\" ],\r\n  \"postIds\" : [ \"2\" ]\r\n}', 0, NULL, '2019-06-27 11:26:45');
+INSERT INTO `sys_oper_log` VALUES (385, '用户管理', 1, 'com.ruoyi.web.controller.system.SysUserController.addSave()', 1, 'admin', NULL, '/system/user/add', '127.0.0.1', '内网IP', '{\r\n  \"deptId\" : [ \"106\" ],\r\n  \"userName\" : [ \"1123\" ],\r\n  \"deptName\" : [ \"财务部门\" ],\r\n  \"phonenumber\" : [ \"15241423434\" ],\r\n  \"email\" : [ \"3nt@163.com\" ],\r\n  \"loginName\" : [ \"啊2317\" ],\r\n  \"password\" : [ \"123456\" ],\r\n  \"sex\" : [ \"0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"role\" : [ \"2\", \"3\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"2,3\" ],\r\n  \"postIds\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-27 11:28:53');
+INSERT INTO `sys_oper_log` VALUES (386, '用户管理', 1, 'com.ruoyi.web.controller.system.SysUserController.addSave()', 1, 'admin', NULL, '/system/user/add', '127.0.0.1', '内网IP', '{\r\n  \"deptId\" : [ \"103\" ],\r\n  \"userName\" : [ \"65\" ],\r\n  \"deptName\" : [ \"研发部门\" ],\r\n  \"phonenumber\" : [ \"15244443332\" ],\r\n  \"email\" : [ \"importj3nt@163.com\" ],\r\n  \"loginName\" : [ \"啊2312\" ],\r\n  \"password\" : [ \"123456\" ],\r\n  \"sex\" : [ \"2\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"role\" : [ \"1\", \"2\", \"3\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"1,2,3\" ],\r\n  \"postIds\" : [ \"2\" ]\r\n}', 0, NULL, '2019-06-27 11:32:27');
+INSERT INTO `sys_oper_log` VALUES (387, '用户管理', 1, 'com.ruoyi.web.controller.system.SysUserController.addSave()', 1, 'admin', NULL, '/system/user/add', '127.0.0.1', '内网IP', '{\r\n  \"deptId\" : [ \"104\" ],\r\n  \"userName\" : [ \"1123\" ],\r\n  \"deptName\" : [ \"市场部门\" ],\r\n  \"phonenumber\" : [ \"15244443132\" ],\r\n  \"email\" : [ \"imporja1nt@163.com\" ],\r\n  \"loginName\" : [ \"啊231\" ],\r\n  \"password\" : [ \"123456\" ],\r\n  \"sex\" : [ \"0\" ],\r\n  \"catId\" : [ \"0\" ],\r\n  \"role\" : [ \"2\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"2\" ],\r\n  \"postIds\" : [ \"3\" ]\r\n}', 0, NULL, '2019-06-27 11:33:58');
+INSERT INTO `sys_oper_log` VALUES (388, '用户管理', 2, 'com.ruoyi.web.controller.system.SysUserController.editSave()', 1, 'admin', '研发部门', '/system/user/edit', '127.0.0.1', '内网IP', '{\r\n  \"userId\" : [ \"8\" ],\r\n  \"deptId\" : [ \"105\" ],\r\n  \"userName\" : [ \"65\" ],\r\n  \"dept.deptName\" : [ \"测试部门\" ],\r\n  \"phonenumber\" : [ \"18845677894\" ],\r\n  \"email\" : [ \"imporjant@163.com\" ],\r\n  \"loginName\" : [ \"manager\" ],\r\n  \"sex\" : [ \"1\" ],\r\n  \"role\" : [ \"3\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"3\" ],\r\n  \"postIds\" : [ \"2\" ]\r\n}', 0, NULL, '2019-06-27 11:37:21');
+INSERT INTO `sys_oper_log` VALUES (389, '用户管理', 2, 'com.ruoyi.web.controller.system.SysUserController.editSave()', 1, 'admin', '研发部门', '/system/user/edit', '127.0.0.1', '内网IP', '{\r\n  \"userId\" : [ \"8\" ],\r\n  \"deptId\" : [ \"105\" ],\r\n  \"userName\" : [ \"65\" ],\r\n  \"dept.deptName\" : [ \"测试部门\" ],\r\n  \"phonenumber\" : [ \"18845677894\" ],\r\n  \"email\" : [ \"imporjant@163.com\" ],\r\n  \"loginName\" : [ \"manager\" ],\r\n  \"sex\" : [ \"1\" ],\r\n  \"role\" : [ \"3\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"3\" ],\r\n  \"postIds\" : [ \"2\" ]\r\n}', 0, NULL, '2019-06-27 11:38:26');
+INSERT INTO `sys_oper_log` VALUES (390, '用户管理', 2, 'com.ruoyi.web.controller.system.SysUserController.editSave()', 1, 'admin', '研发部门', '/system/user/edit', '127.0.0.1', '内网IP', '{\r\n  \"userId\" : [ \"8\" ],\r\n  \"deptId\" : [ \"105\" ],\r\n  \"userName\" : [ \"65\" ],\r\n  \"dept.deptName\" : [ \"测试部门\" ],\r\n  \"phonenumber\" : [ \"18845677894\" ],\r\n  \"email\" : [ \"imporjant@163.com\" ],\r\n  \"loginName\" : [ \"manager\" ],\r\n  \"sex\" : [ \"1\" ],\r\n  \"role\" : [ \"3\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"3\" ],\r\n  \"postIds\" : [ \"2\" ]\r\n}', 0, NULL, '2019-06-27 11:39:37');
+INSERT INTO `sys_oper_log` VALUES (391, '用户管理', 2, 'com.ruoyi.web.controller.system.SysUserController.editSave()', 1, 'admin', '研发部门', '/system/user/edit', '127.0.0.1', '内网IP', '{\r\n  \"userId\" : [ \"8\" ],\r\n  \"deptId\" : [ \"105\" ],\r\n  \"userName\" : [ \"65\" ],\r\n  \"dept.deptName\" : [ \"测试部门\" ],\r\n  \"phonenumber\" : [ \"18845677894\" ],\r\n  \"email\" : [ \"imporjant@163.com\" ],\r\n  \"loginName\" : [ \"manager\" ],\r\n  \"sex\" : [ \"1\" ],\r\n  \"role\" : [ \"3\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"3\" ],\r\n  \"postIds\" : [ \"2\" ]\r\n}', 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'\'http://localhost/profile/upload/pLVzl15KYznP.jpg\',\n 			update_time = sysdate() \' at line 16\r\n### The error may involve com.ruoyi.system.mapper.SysUserMapper.updateUser-Inline\r\n### The error occurred while setting parameters\r\n### SQL: update sys_user     SET dept_id = ?,     login_name = ?,     user_name = ?,     email = ?,     phonenumber = ?,     sex = ?,                    status = ?,               update_by = ?,         ?,     update_time = sysdate()     where user_id = ?\r\n### Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'\'http://localhost/profile/upload/pLVzl15KYznP.jpg\',\n 			update_time = sysdate() \' at line 16\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'\'http://localhost/profile/upload/pLVzl15KYznP.jpg\',\n 			update_time = sysdate() \' at line 16', '2019-06-27 11:40:53');
+INSERT INTO `sys_oper_log` VALUES (392, '用户管理', 2, 'com.ruoyi.web.controller.system.SysUserController.editSave()', 1, 'admin', '研发部门', '/system/user/edit', '127.0.0.1', '内网IP', '{\r\n  \"userId\" : [ \"8\" ],\r\n  \"deptId\" : [ \"105\" ],\r\n  \"userName\" : [ \"65\" ],\r\n  \"dept.deptName\" : [ \"测试部门\" ],\r\n  \"phonenumber\" : [ \"18845677894\" ],\r\n  \"email\" : [ \"imporjant@163.com\" ],\r\n  \"loginName\" : [ \"manager\" ],\r\n  \"sex\" : [ \"1\" ],\r\n  \"role\" : [ \"3\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"3\" ],\r\n  \"postIds\" : [ \"2\" ]\r\n}', 0, NULL, '2019-06-27 11:42:37');
+INSERT INTO `sys_oper_log` VALUES (393, '用户管理', 2, 'com.ruoyi.web.controller.system.SysUserController.editSave()', 1, 'admin', '研发部门', '/system/user/edit', '127.0.0.1', '内网IP', '{\r\n  \"userId\" : [ \"1\" ],\r\n  \"deptId\" : [ \"103\" ],\r\n  \"userName\" : [ \"若依\" ],\r\n  \"dept.deptName\" : [ \"研发部门\" ],\r\n  \"phonenumber\" : [ \"15888888888\" ],\r\n  \"email\" : [ \"ry@163.com\" ],\r\n  \"loginName\" : [ \"admin\" ],\r\n  \"sex\" : [ \"1\" ],\r\n  \"role\" : [ \"1\" ],\r\n  \"remark\" : [ \"管理员\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"1\" ],\r\n  \"postIds\" : [ \"1\" ]\r\n}', 0, NULL, '2019-06-27 13:47:03');
+INSERT INTO `sys_oper_log` VALUES (394, '用户管理', 2, 'com.ruoyi.web.controller.system.SysUserController.editSave()', 1, 'admin', '研发部门', '/system/user/edit', '127.0.0.1', '内网IP', '{\r\n  \"userId\" : [ \"1\" ],\r\n  \"deptId\" : [ \"103\" ],\r\n  \"userName\" : [ \"若依\" ],\r\n  \"dept.deptName\" : [ \"研发部门\" ],\r\n  \"phonenumber\" : [ \"15888888888\" ],\r\n  \"email\" : [ \"ry@163.com\" ],\r\n  \"loginName\" : [ \"admin\" ],\r\n  \"sex\" : [ \"1\" ],\r\n  \"role\" : [ \"1\", \"2\", \"3\" ],\r\n  \"remark\" : [ \"管理员\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"1,2,3\" ],\r\n  \"postIds\" : [ \"1\" ]\r\n}', 0, NULL, '2019-06-27 13:47:07');
+INSERT INTO `sys_oper_log` VALUES (395, '角色管理', 2, 'com.ruoyi.web.controller.system.SysRoleController.editSave()', 1, 'admin', '研发部门', '/system/role/edit', '127.0.0.1', '内网IP', '{\r\n  \"roleId\" : [ \"3\" ],\r\n  \"roleName\" : [ \"客户经理\" ],\r\n  \"roleKey\" : [ \"manager\" ],\r\n  \"roleSort\" : [ \"2\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"menuIds\" : [ \"3,2060,2030,2031,2032,2033,2034,2057,2059\" ]\r\n}', 0, NULL, '2019-06-27 13:48:15');
+INSERT INTO `sys_oper_log` VALUES (396, '角色管理', 2, 'com.ruoyi.web.controller.system.SysRoleController.editSave()', 1, 'admin', '研发部门', '/system/role/edit', '192.168.0.80', '内网IP', '{\r\n  \"roleId\" : [ \"2\" ],\r\n  \"roleName\" : [ \"普通角色\" ],\r\n  \"roleKey\" : [ \"common\" ],\r\n  \"roleSort\" : [ \"3\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"remark\" : [ \"普通角色\" ],\r\n  \"menuIds\" : [ \"3,2030,2031,2032,2033,2034,2057,2059\" ]\r\n}', 0, NULL, '2019-06-27 17:21:09');
+INSERT INTO `sys_oper_log` VALUES (397, '角色管理', 2, 'com.ruoyi.web.controller.system.SysRoleController.authDataScopeSave()', 1, 'admin', '研发部门', '/system/role/authDataScope', '192.168.0.80', '内网IP', '{\r\n  \"roleId\" : [ \"2\" ],\r\n  \"roleName\" : [ \"普通角色\" ],\r\n  \"roleKey\" : [ \"common\" ],\r\n  \"dataScope\" : [ \"1\" ],\r\n  \"deptIds\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-27 17:21:17');
+INSERT INTO `sys_oper_log` VALUES (398, '角色管理', 2, 'com.ruoyi.web.controller.system.SysRoleController.authDataScopeSave()', 1, 'admin', '研发部门', '/system/role/authDataScope', '192.168.0.80', '内网IP', '{\r\n  \"roleId\" : [ \"2\" ],\r\n  \"roleName\" : [ \"普通角色\" ],\r\n  \"roleKey\" : [ \"common\" ],\r\n  \"dataScope\" : [ \"1\" ],\r\n  \"deptIds\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-27 17:22:17');
+INSERT INTO `sys_oper_log` VALUES (399, '重置密码', 2, 'com.ruoyi.web.controller.system.SysProfileController.resetPwd()', 1, '121414', NULL, '/system/user/profile/resetPwd', '127.0.0.1', '内网IP', '{\r\n  \"userId\" : [ \"88\" ],\r\n  \"loginName\" : [ \"121414\" ],\r\n  \"oldPassword\" : [ \"121414\" ],\r\n  \"newPassword\" : [ \"1214141\" ],\r\n  \"confirm\" : [ \"1214141\" ]\r\n}', 0, NULL, '2019-06-27 19:18:16');
+INSERT INTO `sys_oper_log` VALUES (400, '重置密码', 2, 'com.ruoyi.web.controller.system.SysProfileController.resetPwd()', 1, 'admin', '研发部门', '/system/user/profile/resetPwd', '127.0.0.1', '内网IP', '{\r\n  \"userId\" : [ \"1\" ],\r\n  \"loginName\" : [ \"admin\" ],\r\n  \"oldPassword\" : [ \"admin123\" ],\r\n  \"newPassword\" : [ \"admin\" ],\r\n  \"confirm\" : [ \"admin\" ]\r\n}', 0, NULL, '2019-06-27 19:23:56');
+INSERT INTO `sys_oper_log` VALUES (401, '重置密码', 2, 'com.ruoyi.web.controller.system.SysProfileController.resetPwd()', 1, 'admin', '研发部门', '/system/user/profile/resetPwd', '192.168.0.80', '内网IP', '{\r\n  \"userId\" : [ \"1\" ],\r\n  \"loginName\" : [ \"admin\" ],\r\n  \"oldPassword\" : [ \"admin\" ],\r\n  \"newPassword\" : [ \"admin123\" ],\r\n  \"confirm\" : [ \"admin123\" ]\r\n}', 0, NULL, '2019-06-27 19:32:26');
+INSERT INTO `sys_oper_log` VALUES (402, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, '', NULL, '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"测试用户152\" ],\r\n  \"beneficiary\" : [ \"测试用户152\" ],\r\n  \"projectNumber\" : [ \"测试用户152\" ],\r\n  \"projectName\" : [ \"测试用户152\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"3\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/28/53f163b8ecd1a4808b2cc0c26dd84df6.png,http://localhost/profile/upload/2019/06/28/8f801f325a8cdd4486a6a0365eb2bef0.xlsx,http://localhost/profile/upload/2019/06/28/2546abe183d129f19c0d21c166b19596.docx\" ],\r\n  \"fileNames\" : [ \"名片-0626_画板 1 副本.png,问题.xlsx,加班申请及打卡规则.docx\" ]\r\n}', 1, '', '2019-06-28 14:43:27');
+INSERT INTO `sys_oper_log` VALUES (403, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, '', NULL, '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"测试152\" ],\r\n  \"beneficiary\" : [ \"测试152\" ],\r\n  \"projectNumber\" : [ \"测试152\" ],\r\n  \"projectName\" : [ \"测试152\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/28/c4d152f39aa92e57eef19f7d369f4c09.png,http://localhost/profile/upload/2019/06/28/948ea050a96a9b4402912a1380f7c5e9.xlsx\" ],\r\n  \"fileNames\" : [ \"名片-0626_画板 1 副本.png,问题.xlsx\" ]\r\n}', 1, '', '2019-06-28 14:45:08');
+INSERT INTO `sys_oper_log` VALUES (404, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, '', NULL, '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"测试152\" ],\r\n  \"beneficiary\" : [ \"测试152\" ],\r\n  \"projectNumber\" : [ \"测试152\" ],\r\n  \"projectName\" : [ \"测试152\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"1000\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/28/047249863c4ad228f0fd05044c4465cb.xls,http://localhost/profile/upload/2019/06/28/a2534a3240270f46906e41bcddafa2a1.png,http://localhost/profile/upload/2019/06/28/59c252c2374e6df4edd2aaee14a3a5e3.xlsx,http://localhost/profile/upload/2019/06/28/b1b48fb446f844941471ccbd5c463d90.docx\" ],\r\n  \"fileNames\" : [ \"后台样式0516.xls,名片-0626_画板 1 副本.png,问题.xlsx,加班申请及打卡规则.docx\" ]\r\n}', 0, NULL, '2019-06-28 14:46:16');
+INSERT INTO `sys_oper_log` VALUES (405, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"18\" ],\r\n  \"warrantee\" : [ \"测试客户1有邀请人1提成\" ],\r\n  \"beneficiary\" : [ \"测试\" ],\r\n  \"projectNumber\" : [ \"测试\" ],\r\n  \"projectName\" : [ \"测试\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"21000\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"1\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1500\" ],\r\n  \"paidamount\" : [ \"300\" ],\r\n  \"money\" : [ \"100\", \"200\" ],\r\n  \"fileUrls\" : [ \"\" ],\r\n  \"fileNames\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-28 18:17:09');
+INSERT INTO `sys_oper_log` VALUES (406, '订单', 1, 'com.ruoyi.baohan.controller.GurtOrderController.addSave()', 1, '', NULL, '/baohan/gurtOrder/add', '127.0.0.1', '内网IP', '{\r\n  \"warrantee\" : [ \"123\" ],\r\n  \"beneficiary\" : [ \"123\" ],\r\n  \"projectNumber\" : [ \"123\" ],\r\n  \"projectName\" : [ \"123\" ],\r\n  \"closingTime\" : [ \"2012-1-1\" ],\r\n  \"guaranteeAmount\" : [ \"20001\" ],\r\n  \"validityDeadline\" : [ \"2012-2-1\" ],\r\n  \"guaranteeId\" : [ \"2\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1500\" ],\r\n  \"paidamount\" : [ \"\" ],\r\n  \"fileUrls\" : [ \"http://localhost/profile/upload/2019/06/28/e54eb38fefb80ba68817e47832e1b37c.xlsx\" ],\r\n  \"fileNames\" : [ \"问题.xlsx\" ]\r\n}', 0, NULL, '2019-06-28 18:29:51');
+INSERT INTO `sys_oper_log` VALUES (407, '订单', 2, 'com.ruoyi.baohan.controller.GurtOrderController.editSave()', 1, 'admin', '研发部门', '/baohan/gurtOrder/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"30\" ],\r\n  \"warrantee\" : [ \"123\" ],\r\n  \"beneficiary\" : [ \"123\" ],\r\n  \"projectNumber\" : [ \"123\" ],\r\n  \"projectName\" : [ \"123\" ],\r\n  \"closingTime\" : [ \"2012-01-01 00:00:00\" ],\r\n  \"guaranteeAmount\" : [ \"9000\" ],\r\n  \"validityDeadline\" : [ \"2012-02-01 00:00:00\" ],\r\n  \"guaranteeId\" : [ \"2\" ],\r\n  \"bankId\" : [ \"1\" ],\r\n  \"projectTypeId\" : [ \"10\" ],\r\n  \"amount\" : [ \"1000\" ],\r\n  \"paidamount\" : [ \"0\" ],\r\n  \"fileUrls\" : [ \"\" ],\r\n  \"fileNames\" : [ \"\" ]\r\n}', 0, NULL, '2019-06-28 18:32:39');
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -1186,8 +1810,8 @@ CREATE TABLE `sys_role`  (
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES (1, '管理员', 'admin', 1, '1', '0', '0', 'admin', '2018-03-16 11:33:00', 'admin', '2019-06-19 16:00:36', '管理员');
-INSERT INTO `sys_role` VALUES (2, '普通角色', 'common', 3, '2', '0', '0', 'admin', '2018-03-16 11:33:00', 'admin', '2019-06-21 10:58:27', '普通角色');
-INSERT INTO `sys_role` VALUES (3, '客户经理', 'manager', 2, '1', '0', '0', 'admin', NULL, 'admin', '2019-06-21 10:58:17', '');
+INSERT INTO `sys_role` VALUES (2, '普通角色', 'common', 3, '1', '0', '0', 'admin', '2018-03-16 11:33:00', 'admin', '2019-06-27 17:22:17', '普通角色');
+INSERT INTO `sys_role` VALUES (3, '客户经理', 'manager', 2, '1', '0', '0', 'admin', NULL, 'admin', '2019-06-27 13:48:15', '');
 
 -- ----------------------------
 -- Table structure for sys_role_dept
@@ -1198,13 +1822,6 @@ CREATE TABLE `sys_role_dept`  (
   `dept_id` bigint(20) NOT NULL COMMENT '部门ID',
   PRIMARY KEY (`role_id`, `dept_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色和部门关联表' ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of sys_role_dept
--- ----------------------------
-INSERT INTO `sys_role_dept` VALUES (2, 100);
-INSERT INTO `sys_role_dept` VALUES (2, 101);
-INSERT INTO `sys_role_dept` VALUES (2, 105);
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -1329,6 +1946,7 @@ INSERT INTO `sys_role_menu` VALUES (2, 2032);
 INSERT INTO `sys_role_menu` VALUES (2, 2033);
 INSERT INTO `sys_role_menu` VALUES (2, 2034);
 INSERT INTO `sys_role_menu` VALUES (2, 2057);
+INSERT INTO `sys_role_menu` VALUES (2, 2059);
 INSERT INTO `sys_role_menu` VALUES (3, 3);
 INSERT INTO `sys_role_menu` VALUES (3, 2030);
 INSERT INTO `sys_role_menu` VALUES (3, 2031);
@@ -1336,6 +1954,8 @@ INSERT INTO `sys_role_menu` VALUES (3, 2032);
 INSERT INTO `sys_role_menu` VALUES (3, 2033);
 INSERT INTO `sys_role_menu` VALUES (3, 2034);
 INSERT INTO `sys_role_menu` VALUES (3, 2057);
+INSERT INTO `sys_role_menu` VALUES (3, 2059);
+INSERT INTO `sys_role_menu` VALUES (3, 2060);
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -1348,7 +1968,7 @@ CREATE TABLE `sys_user`  (
   `user_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户昵称',
   `user_type` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '00' COMMENT '用户类型（00系统用户）',
   `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '用户邮箱',
-  `phonenumber` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '手机号码',
+  `phonenumber` varchar(22) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '手机号码',
   `sex` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '用户性别（0男 1女 2未知）',
   `avatar` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '头像路径',
   `password` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '密码',
@@ -1364,18 +1984,19 @@ CREATE TABLE `sys_user`  (
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '备注',
   `invite_user_id` bigint(20) NULL DEFAULT NULL,
   `category_id` bigint(20) NULL DEFAULT NULL,
+  `inviteurl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 99 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '29c67a30398638269fe600f73a054934', '111111', '0', '0', '127.0.0.1', '2019-06-21 10:59:00', 'admin', '2018-03-16 11:33:00', 'ry', '2019-06-21 10:58:59', '管理员', NULL, NULL);
-INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '8e6d98b90472783cc73c17047ddccf36', '222222', '0', '0', '127.0.0.1', '2019-06-21 10:58:41', 'admin', '2018-03-16 11:33:00', 'ry', '2019-06-21 10:58:40', '测试员', NULL, NULL);
-INSERT INTO `sys_user` VALUES (5, 103, 'ac', 'ac', '00', 'importjant@163.com', '15244443333', '0', '', '68ee11d49cd89e7bbec7d671c73f0c27', '9ab909', '0', '0', '127.0.0.1', '2019-06-19 14:15:59', 'ry', '2019-06-19 14:04:46', 'admin', '2019-06-19 14:15:59', '', NULL, NULL);
-INSERT INTO `sys_user` VALUES (6, 109, '啊231', '1123', '00', 'importj3nt@163.com', '15244443332', '1', '', 'adf6bde2e65926b8edcad38e50501ef5', 'f64a1f', '0', '2', '', NULL, 'admin', '2019-06-19 14:53:31', '', NULL, '', NULL, NULL);
-INSERT INTO `sys_user` VALUES (7, 105, '啊2312', '1123', '00', '3nt@163.com', '15211113332', '1', '', '6cb2d3abbe1d7df11ca8ca3fa006cddd', 'eef429', '0', '2', '', NULL, 'admin', '2019-06-19 14:55:13', '', NULL, '', NULL, NULL);
-INSERT INTO `sys_user` VALUES (8, 105, 'manager', '65', '00', 'imporjant@163.com', '18845677894', '1', '', '49cb00fe63426bc35c40f7f453ac7e9a', '1fc636', '0', '0', '127.0.0.1', '2019-06-20 09:45:33', 'admin', '2019-06-19 14:58:04', 'admin', '2019-06-20 09:45:33', '', NULL, 20);
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '超级管理员', '00', 'ry@163.com', '15888888888', '1', '', '4b9e4c48c6d8b7d9c7f62c10c8b846da', '5439f8', '0', '0', '127.0.0.1', '2019-06-28 18:31:09', 'admin', '2018-03-16 11:33:00', 'ry', '2019-06-28 18:31:08', '管理员', NULL, NULL, 'http://localhost/profile/upload/pLVzl15KYznP.jpg');
+INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '8e6d98b90472783cc73c17047ddccf36', '222222', '0', '0', '192.168.0.80', '2019-06-27 17:20:00', 'admin', '2018-03-16 11:33:00', 'ry', '2019-06-27 17:19:59', '测试员', 8, NULL, NULL);
+INSERT INTO `sys_user` VALUES (8, 105, 'manager', '65', '00', 'imporjant@163.com', '18845677894', '1', '', '49cb00fe63426bc35c40f7f453ac7e9a', '1fc636', '0', '0', '127.0.0.1', '2019-06-28 15:09:41', 'admin', '2019-06-19 14:58:04', 'admin', '2019-06-28 15:09:41', '', NULL, 34, 'http://localhost/profile/upload/q5N0iMaH30fc.jpg');
+INSERT INTO `sys_user` VALUES (17, 103, '啊2312', '65', '00', 'importj3nt@163.com', '15244443332', '2', '', '6232da4ba83f3d9b632f8ee99081fcc1', '670aed', '0', '0', '', NULL, 'admin', '2019-06-27 11:32:27', '', NULL, '', NULL, NULL, 'http://localhost/profile/upload/y8y6yY774bA1.jpg');
+INSERT INTO `sys_user` VALUES (18, 104, '啊231', '1123', '00', 'imporja1nt@163.com', '15244443132', '0', '', '9289ad407a7adfb9782d94430643d68b', '09a11d', '0', '0', '', NULL, 'admin', '2019-06-27 11:33:58', '', NULL, '', NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (98, NULL, '', '', '00', '', '15273011636', '0', '', '', '', '0', '0', '', NULL, '', NULL, '', NULL, '', 8, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_online
@@ -1399,7 +2020,7 @@ CREATE TABLE `sys_user_online`  (
 -- ----------------------------
 -- Records of sys_user_online
 -- ----------------------------
-INSERT INTO `sys_user_online` VALUES ('dd1fa2ad-53f8-409b-918c-fe947a1835e8', 'admin', '研发部门', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', 'on_line', '2019-06-21 18:12:05', '2019-06-21 18:12:05', 1800000);
+INSERT INTO `sys_user_online` VALUES ('32f49174-92f1-45d8-9967-40d6ad8efe2f', 'admin', '研发部门', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10', 'on_line', '2019-06-28 18:29:55', '2019-06-28 18:32:16', 1800000);
 
 -- ----------------------------
 -- Table structure for sys_user_post
@@ -1419,6 +2040,15 @@ INSERT INTO `sys_user_post` VALUES (2, 2);
 INSERT INTO `sys_user_post` VALUES (5, 2);
 INSERT INTO `sys_user_post` VALUES (6, 2);
 INSERT INTO `sys_user_post` VALUES (7, 3);
+INSERT INTO `sys_user_post` VALUES (8, 2);
+INSERT INTO `sys_user_post` VALUES (9, 2);
+INSERT INTO `sys_user_post` VALUES (10, 2);
+INSERT INTO `sys_user_post` VALUES (11, 2);
+INSERT INTO `sys_user_post` VALUES (12, 2);
+INSERT INTO `sys_user_post` VALUES (13, 2);
+INSERT INTO `sys_user_post` VALUES (15, 2);
+INSERT INTO `sys_user_post` VALUES (17, 2);
+INSERT INTO `sys_user_post` VALUES (18, 3);
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -1437,8 +2067,35 @@ INSERT INTO `sys_user_role` VALUES (1, 1);
 INSERT INTO `sys_user_role` VALUES (2, 2);
 INSERT INTO `sys_user_role` VALUES (5, 3);
 INSERT INTO `sys_user_role` VALUES (6, 1);
-INSERT INTO `sys_user_role` VALUES (6, 2);
 INSERT INTO `sys_user_role` VALUES (7, 2);
 INSERT INTO `sys_user_role` VALUES (8, 3);
+INSERT INTO `sys_user_role` VALUES (9, 1);
+INSERT INTO `sys_user_role` VALUES (9, 2);
+INSERT INTO `sys_user_role` VALUES (9, 3);
+INSERT INTO `sys_user_role` VALUES (10, 1);
+INSERT INTO `sys_user_role` VALUES (10, 2);
+INSERT INTO `sys_user_role` VALUES (10, 3);
+INSERT INTO `sys_user_role` VALUES (11, 1);
+INSERT INTO `sys_user_role` VALUES (11, 2);
+INSERT INTO `sys_user_role` VALUES (11, 3);
+INSERT INTO `sys_user_role` VALUES (12, 1);
+INSERT INTO `sys_user_role` VALUES (12, 2);
+INSERT INTO `sys_user_role` VALUES (12, 3);
+INSERT INTO `sys_user_role` VALUES (13, 1);
+INSERT INTO `sys_user_role` VALUES (14, 1);
+INSERT INTO `sys_user_role` VALUES (14, 2);
+INSERT INTO `sys_user_role` VALUES (14, 3);
+INSERT INTO `sys_user_role` VALUES (15, 1);
+INSERT INTO `sys_user_role` VALUES (15, 2);
+INSERT INTO `sys_user_role` VALUES (15, 3);
+INSERT INTO `sys_user_role` VALUES (16, 2);
+INSERT INTO `sys_user_role` VALUES (16, 3);
+INSERT INTO `sys_user_role` VALUES (17, 1);
+INSERT INTO `sys_user_role` VALUES (17, 2);
+INSERT INTO `sys_user_role` VALUES (17, 3);
+INSERT INTO `sys_user_role` VALUES (18, 2);
+INSERT INTO `sys_user_role` VALUES (19, 2);
+INSERT INTO `sys_user_role` VALUES (60, 2);
+INSERT INTO `sys_user_role` VALUES (98, 2);
 
 SET FOREIGN_KEY_CHECKS = 1;
