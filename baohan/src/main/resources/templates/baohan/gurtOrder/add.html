@@ -172,7 +172,12 @@
 				}else {
 	                $("[name=fileNames]").val(uploadFileName)
                     $("[name=fileUrls]").val(uploadFileUrl)
-                    $.operate.save(prefix + "/add", $('#form-gurtOrder-add').serialize());
+					var am=$("#amount").val();
+					if(isNaN(am)){
+						alert('金额超出范围')
+					}else {
+						$.operate.save(prefix + "/add", $('#form-gurtOrder-add').serialize());
+					}
                 }
 	        }
 	    }
@@ -188,8 +193,14 @@
             $("#paidamount").val(money1+money2+money3);
         }
 	    function getMoney() {
+			$("#amount").val(0);
 			$.get("/baohan/gurtOrder/money",$('#form-gurtOrder-add').serialize(),function (data) {
-				$("#amount").val(data.gurtOrder.amount);
+				if(data.gurtOrder.amount==0){
+					$("#amount").val("金额超出范围");
+				}else{
+					$("#amount").val(data.gurtOrder.amount);
+				}
+
             },"JSON")
         }
 	</script>

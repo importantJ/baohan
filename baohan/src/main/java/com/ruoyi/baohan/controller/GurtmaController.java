@@ -1,6 +1,7 @@
 package com.ruoyi.baohan.controller;
 
 import com.ruoyi.baohan.domain.GurtOrder;
+import com.ruoyi.common.config.ServerConfig;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysUser;
@@ -18,12 +19,14 @@ public class GurtmaController extends BaseController {
     private String prefix = "baohan/gurtma";
     @Autowired
     ISysUserService userService;
+    @Autowired
+    ServerConfig serverConfig;
     @RequiresPermissions("baohan:gurtma:view")
     @GetMapping()
     public Object list(ModelMap modelMap)
     {
         SysUser user=userService.selectUserById(ShiroUtils.getUserId());
-        String lianjie="http://192.168.0.80/login?";
+        String lianjie=serverConfig.getUrl()+"/login?";
         lianjie= lianjie+user.getInviteurl().substring(user.getInviteurl().lastIndexOf("/"),user.getInviteurl().lastIndexOf("."));
         modelMap.put("user",user);
         modelMap.put("lianjie",lianjie);

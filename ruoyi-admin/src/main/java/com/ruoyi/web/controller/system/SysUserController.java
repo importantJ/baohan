@@ -133,18 +133,15 @@ public class SysUserController extends BaseController
         return toAjax(userService.insertUser(user));
     }
 
-    /**
+   /* *//**
      * 新增保存用户
-     */
+     *//*
     @PostMapping("/reg")
     @ResponseBody
     public SysUser reg(@RequestParam("phone") String phone,@RequestParam("url") String url)
     {
         SysUser user=new SysUser();
         user.setPhonenumber(phone);
-        user.setLoginName(phone);
-        user.setUserName(phone);
-        user.setPassword(phone);
         user.setSalt(ShiroUtils.randomSalt());
         user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
 
@@ -159,7 +156,7 @@ public class SysUserController extends BaseController
         }
         userService.insertUser1(user);
         return user;
-    }
+    }*/
 
     /**
      * 修改用户

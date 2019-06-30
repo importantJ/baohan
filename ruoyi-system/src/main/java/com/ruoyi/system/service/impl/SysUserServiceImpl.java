@@ -61,6 +61,11 @@ public class SysUserServiceImpl implements ISysUserService
     @Autowired
     private ISysConfigService configService;
 
+    @Override
+    public int insertUserRole(Integer userId) {
+        return userRoleMapper.insertUserRole(userId);
+    }
+
     /**
      * 根据条件分页查询用户列表
      * 
@@ -201,7 +206,7 @@ public class SysUserServiceImpl implements ISysUserService
 
             if(roleIds[i]==1||roleIds[i]==3){
                 String url=Test.luanma();
-                String text = "http://192.168.0.80/login?"+url;
+                String text = serverConfig.getUrl()+"/login?"+url;
                 String filePath = Global.getUploadPath();
                 String intiviUrl=serverConfig.getUrl()+"/profile/upload/"+url+".jpg";
                 user.setInviteurl(intiviUrl);

@@ -215,7 +215,6 @@ public class 	GurtOrderController extends BaseController
 	@ResponseBody
 	public Object money(GurtOrder gurtOrder)
 	{
-
 		GurtProjectTypeCostConfig gurtProjectTypeCostConfig=new GurtProjectTypeCostConfig();
 		gurtProjectTypeCostConfig.setProjectTypeId(gurtOrder.getProjectTypeId());
 		if(ShiroUtils.getSysUser().getCatId()==null){

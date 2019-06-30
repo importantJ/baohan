@@ -43,7 +43,7 @@ public interface SysUserRoleMapper
      * @return 结果
      */
     public int batchUserRole(List<SysUserRole> userRoleList);
-    
+    int insertUserRole(Integer userId);
     /**
      * 删除用户和角色关联信息
      * 

@@ -17,6 +17,7 @@ public interface ISysUserService
      * @param user 用户信息
      * @return 用户信息集合信息
      */
+    int insertUserRole(Integer userId);
     public List<SysUser> selectUserList(SysUser user);
 
     /**
