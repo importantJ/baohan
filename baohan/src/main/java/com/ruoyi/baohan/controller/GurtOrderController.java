@@ -240,39 +240,34 @@ public class 	GurtOrderController extends BaseController
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, ModelMap mmap)
 	{
-		GurtOrder gurtOrder = gurtOrderService.selectGurtOrderById(id);
-		mmap.put("gurtOrder", gurtOrder);
-
 		List<GurtOrderFile> fileList=gurtOrderService.selectOrderFile(id.intValue());
 		mmap.put("fileList", fileList);
-
-		//查询保函下拉框
+		GurtOrder gurtOrder = gurtOrderService.selectGurtOrderById(id);
+		mmap.put("gurtOrder", gurtOrder);
 		List<GurtGuarantee> gurtGuaranteeList=iGurtGuaranteeService.selectGurtGuaranteeList(new GurtGuarantee());
-		//银行下拉框
+
 		List<GurtBank> bankList=gurtOrderService.getAllBank();
 
 		GurtProjectType gurtProjectType=new GurtProjectType();
-		//分类下拉框
+
 		gurtProjectType.setCatId(0);
 		List<GurtProjectType> gurtProjectTypeList=iGurtProjectTypeService.selectGurtProjectTypeList(gurtProjectType);
-
-		mmap.put("gurtGuaranteeList",gurtGuaranteeList);
-		mmap.put("bankList",bankList);
-		mmap.put("gurtProjectTypeList",gurtProjectTypeList);
 		int role=0;
 		List<SysRole> user=ShiroUtils.getSysUser().getRoles();
 		for (int i=0;i<user.size();i++){
 			if(user.get(i).getRoleName().equals("管理员")||user.get(i).getRoleName().equals("客户经理"))
 				role=1;
 		}
-		mmap.put("role",role);
-
 		List<GurtOrderRecord> gurtOrderRecordList=gurtOrderService.getRecordByOrderId(id.intValue());
 		int sum=0;
 		for (GurtOrderRecord record : gurtOrderRecordList) {
 			sum+=record.getPaidamount();
 		}
 		mmap.put("sum",sum);
+		mmap.put("gurtGuaranteeList",gurtGuaranteeList);
+		mmap.put("bankList",bankList);
+		mmap.put("gurtProjectTypeList",gurtProjectTypeList);
+		mmap.put("role",role);
 		mmap.put("recordList",gurtOrderRecordList);
 	    return prefix + "/edit";
 	}
@@ -349,7 +344,6 @@ public class 	GurtOrderController extends BaseController
 		Gurtshezhi gurtshezhi=new Gurtshezhi();
 		gurtshezhi.setCb(cb);
 		for(int i=0;i<starttime.length;i++){
-
 			String a="0000-00-00 "+starttime[i];
 			String b="0000-00-00 "+endtime[i];
 			DateFormat format= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
