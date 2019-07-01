@@ -49,6 +49,8 @@ public interface GurtOrderMapper {
 
     int delByOrderId(@Param("orderId") Long orderId);
 
+    List<Gurtshezhi> getAllShezhi();
+
     List<GurtOrderRecord> getRecordByOrderId(@Param("orderId") Integer orderId);
 
     int delticheng(@Param("orderId")Long orderId);

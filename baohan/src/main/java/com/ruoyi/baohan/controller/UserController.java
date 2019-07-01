@@ -51,6 +51,11 @@ public class UserController extends BaseController
 	{
 		startPage();
         List<User> list = userService.selectUserList(user);
+		for (User user1 : list) {
+			User user2=userService.selectUserById(user1.getInviteUserId());
+			if(user2!=null)
+			user1.setInviteName(user2.getUserName());
+		}
 		return getDataTable(list);
 	}
 	

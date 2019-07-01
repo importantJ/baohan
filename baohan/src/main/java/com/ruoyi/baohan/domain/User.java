@@ -14,7 +14,16 @@ import java.util.Date;
 public class User extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
-	
+	private String inviteName;
+
+	public String getInviteName() {
+		return inviteName;
+	}
+
+	public void setInviteName(String inviteName) {
+		this.inviteName = inviteName;
+	}
+
 	/** 用户ID */
 	private Long userId;
 	/** 部门ID */

@@ -34,7 +34,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 	
     <select id="selectUserList" parameterType="User" resultMap="UserResult">
-        <include refid="selectUserVo"/>
+        select inviteurl,sys_user.user_id, dept_id, login_name, user_name, user_type, email, phonenumber, sex, avatar, password, salt, status, del_flag, login_ip, login_date, create_by, create_time, update_by, update_time, remark, invite_user_id, category_id
+        from sys_user,sys_user_role
+        where sys_user.user_id=sys_user_role.user_id
+        and sys_user_role.role_id=2
         <where>  
             <if test="userId != null "> and user_id = #{userId}</if>
              <if test="deptId != null "> and dept_id = #{deptId}</if>

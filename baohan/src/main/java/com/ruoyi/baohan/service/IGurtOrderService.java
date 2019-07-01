@@ -62,7 +62,7 @@ public interface IGurtOrderService
 
 	int delorderfile(Integer id);
 
-	int insertinviteCommission(GurtOrder gurtOrder);
+	int insertinviteCommission(GurtOrder gurtOrder)throws Exception;
 
 	List<GurtOrderRecord> getRecordByOrderId(Integer orderId);
 }

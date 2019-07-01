@@ -1,10 +1,8 @@
 package com.ruoyi.baohan.controller;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.ruoyi.baohan.domain.*;
 import com.ruoyi.baohan.service.*;
@@ -65,7 +63,7 @@ public class 	GurtOrderController extends BaseController
 
 
 	@GetMapping("/modifystatus/{id}")
-	public Object status(@PathVariable("id") Long id,ModelMap modelMap){
+	public Object status(@PathVariable("id") Long id,ModelMap modelMap)throws Exception{
 		GurtOrder gurtOrder=gurtOrderService.selectGurtOrderById(id);
 		if(gurtOrder.getStatus()<4){
 			gurtOrder.setStatus(gurtOrder.getStatus()+1);
@@ -76,7 +74,6 @@ public class 	GurtOrderController extends BaseController
 		if(gurtOrder.getStatus()==3){
 			//提交
 			gurtOrderService.insertinviteCommission(gurtOrder);
-			gurtOrder.setBankSubmissionTime(new Date());
 		}
 		gurtOrderService.updateOrderstatus(gurtOrder);
 		List<GurtStatus> statusList=gurtOrderService.getStatus();
@@ -347,13 +344,19 @@ public class 	GurtOrderController extends BaseController
 
 	@GetMapping("/shezhi")
 	@ResponseBody
-	public Object shezhi(String cb,String[] starttime,String[] endtime){
+	public Object shezhi(String cb,String[] starttime,String[] endtime)throws Exception{
 		gurtOrderService.delAll();
 		Gurtshezhi gurtshezhi=new Gurtshezhi();
 		gurtshezhi.setCb(cb);
 		for(int i=0;i<starttime.length;i++){
-			gurtshezhi.setStarttime(starttime[i]);
-			gurtshezhi.setEndtime(endtime[i]);
+
+			String a="0000-00-00 "+starttime[i];
+			String b="0000-00-00 "+endtime[i];
+			DateFormat format= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date start=format.parse(a);
+			Date end=format.parse(b);
+			gurtshezhi.setStarttime(start);
+			gurtshezhi.setEndtime(end);
 			gurtOrderService.addshezhi(gurtshezhi);
 		}
 		return gurtshezhi;

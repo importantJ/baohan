@@ -30,7 +30,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="phoneNumber"    column="phone_number"    />
         <result property="invoiceFileDownloadUrl"    column="invoice_file_download_url"    />
     </resultMap>
-	
+	<select id="getAllShezhi" resultType="Gurtshezhi">
+        SELECT * FROM `gurt_shezhi`
+    </select>
 	<sql id="selectGurtOrderVo">
         select id, warrantee, beneficiary, project_number, project_name, closing_time, guarantee_amount, validity_deadline, guarantee_id, bank_id, project_type_id, amount, create_user_id, create_time, bank_submission_time, status, need_invoice, company_name, tax_number, bank_name, bank_account, company_address, phone_number, invoice_file_download_url from gurt_order
     </sql>

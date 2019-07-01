@@ -29,11 +29,11 @@
             <version>${poi.version}</version>
         </dependency>
 
-       <!-- <dependency>
+       <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-scratchpad</artifactId>
-            <version>3.16</version>
-        </dependency>-->
+           <version>${poi.version}</version>
+        </dependency>
         <!-- 通用工具-->
         <dependency>
             <groupId>com.ruoyi</groupId>

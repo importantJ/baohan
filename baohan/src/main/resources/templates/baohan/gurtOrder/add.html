@@ -62,10 +62,10 @@
 				</div>
 			</div>
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">保函格式：</label>
+				<label class="col-sm-3 control-label">保函格式：<a href="javascript:;" onclick="xz()">下载</a></label>
 				<div class="col-sm-8">
-				<select name="guaranteeId" class="form-control m-b">
-					<option th:each="dict : ${gurtGuaranteeList}" th:text="${dict.name}" th:value="${dict.id}"></option>
+				<select name="guaranteeId" id="testSelect" class="form-control m-b">
+					<option th:each="dict : ${gurtGuaranteeList}" th:name="${dict.guaranteeFilePath}" th:text="${dict.name}" th:value="${dict.id}"></option>
 				</select>
 				</div>
 			</div>
@@ -141,9 +141,11 @@
 
             var uploadFileName=[];
             var uploadFileUrl=[];
-
+		function xz() {
+			location.href=$('#testSelect option:selected').attr("name")
+        }
         $(document).ready(function () {
-
+			$("#")
             $("#fileinput-demo-1").fileinput({
                 language: 'zh',
                 showPreview: false,

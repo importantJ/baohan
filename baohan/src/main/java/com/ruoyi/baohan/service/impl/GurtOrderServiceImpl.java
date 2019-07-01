@@ -1,5 +1,9 @@
 package com.ruoyi.baohan.service.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.baohan.domain.*;
@@ -7,6 +11,7 @@ import com.ruoyi.baohan.mapper.GurtProjectTypeCostConfigMapper;
 import com.ruoyi.baohan.mapper.UserMapper;
 import com.ruoyi.framework.util.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.stereotype.Service;
 import com.ruoyi.baohan.mapper.GurtOrderMapper;
 import com.ruoyi.baohan.service.IGurtOrderService;
@@ -187,7 +192,62 @@ public class GurtOrderServiceImpl implements IGurtOrderService
 	@Resource
 	private GurtProjectTypeCostConfigMapper gurtProjectTypeCostConfigMapper;
 	@Override
-	public int insertinviteCommission(GurtOrder gurtOrder) {
+	public int insertinviteCommission(GurtOrder gurtOrder)throws Exception {
+		Calendar cal=Calendar.getInstance();
+		Calendar start=Calendar.getInstance();
+		Calendar end=Calendar.getInstance();
+		int count=0;
+		List<GurtOrder> gurtOrderList=gurtOrderMapper.selectGurtOrderList(new GurtOrder());
+
+
+		/*for (GurtOrder order : gurtOrderList) {
+			if(order.getWarrantee().equals(gurtOrder.getWarrantee())
+					&&order.getBeneficiary().equals(gurtOrder.getBeneficiary())
+					&&order.getProjectNumber().equals(gurtOrder.getProjectNumber())
+					&&order.getProjectName().equals(gurtOrder.getProjectName())
+					&&order.getGuaranteeAmount().equals(gurtOrder.getGuaranteeAmount())){
+				List<Gurtshezhi> gurtshezhiList=gurtOrderMapper.getAllShezhi();
+				for(Gurtshezhi gurtshezhi : gurtshezhiList) {
+					SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+					Date startHH=df.parse(df.format(gurtshezhi.getStarttime()));
+					start.setTime(startHH);
+
+					Date endHH=df.parse(df.format(gurtshezhi.getEndtime()));
+					end.setTime(endHH);
+
+					Date nowHH=df.parse(df.format(new Date()));
+					cal.setTime(nowHH);
+
+					if(cal.after(end)&&cal.before(start))
+						count++;
+				}
+			}
+		}*/
+
+		if(count>2){
+			GurtProjectTypeCostConfig gurtProjectTypeCostConfig=new GurtProjectTypeCostConfig();
+			gurtProjectTypeCostConfig.setProjectTypeId(gurtOrder.getProjectTypeId());
+			User user=userMapper.selectUserById(gurtOrder.getCreateUserId());
+			if(user.getCategoryId()!=null){
+				gurtProjectTypeCostConfig.setCategoryId(user.getCategoryId().intValue());
+			}else{
+				gurtProjectTypeCostConfig.setCategoryId(0);
+			}
+			List<GurtProjectTypeCostConfig> gurtProjectTypeCostConfigList=
+					gurtProjectTypeCostConfigMapper.selectGurtProjectTypeCostConfigList(gurtProjectTypeCostConfig);
+			for (GurtProjectTypeCostConfig g :gurtProjectTypeCostConfigList) {
+				if(g.getStartingAmount()<gurtOrder.getGuaranteeAmount()&&g.getEndingAmount()>gurtOrder.getGuaranteeAmount()){
+					if(g.getMultiplePaymentCountType()==0) {
+						gurtOrder.setAmount(g.getMultiplePaymentCost());
+						gurtOrderMapper.updateGurtOrder(gurtOrder);
+					}else{
+						gurtOrder.setAmount(gurtOrder.getGuaranteeAmount()*g.getMultiplePaymentCost()/100);
+						gurtOrderMapper.updateGurtOrder(gurtOrder);
+					}
+				}
+			}
+		}
+
 		Long money=null;
 		//订单创建人信息
 		User user=userMapper.selectUserById(gurtOrder.getCreateUserId());
@@ -198,14 +258,22 @@ public class GurtOrderServiceImpl implements IGurtOrderService
 			if(ivUser.getCategoryId()!=null){
 				GurtProjectTypeCostConfig gurtProjectTypeCostConfig=new GurtProjectTypeCostConfig();
 				gurtProjectTypeCostConfig.setProjectTypeId(gurtOrder.getProjectTypeId());
-				gurtProjectTypeCostConfig.setCategoryId(0);
+				gurtProjectTypeCostConfig.setCategoryId(ivUser.getCategoryId().intValue());
 				List<GurtProjectTypeCostConfig> gurtProjectTypeCostConfigList=gurtProjectTypeCostConfigMapper.selectGurtProjectTypeCostConfigList(gurtProjectTypeCostConfig);
 				for (GurtProjectTypeCostConfig g1 :gurtProjectTypeCostConfigList) {
 					if(g1.getStartingAmount()<gurtOrder.getGuaranteeAmount()&&g1.getEndingAmount()>gurtOrder.getGuaranteeAmount()){
 						if(g1.getSinglePaymentCountType()==0) {
-							money=gurtOrder.getGuaranteeAmount()-g1.getSinglePaymentCost();
+							if(count>1){
+								money=gurtOrder.getAmount()-g1.getMultiplePaymentCost();
+							}else {
+								money = gurtOrder.getAmount() - g1.getSinglePaymentCost();
+							}
 						}else{
-							money=(gurtOrder.getGuaranteeAmount()*g1.getSinglePaymentCost()/100);
+							if(count>1){
+								money=(gurtOrder.getAmount()*g1.getMultiplePaymentCost()/100);
+							}else {
+								money=(gurtOrder.getAmount()*g1.getSinglePaymentCost()/100);
+							}
 						}
 					}
 				}
@@ -216,7 +284,7 @@ public class GurtOrderServiceImpl implements IGurtOrderService
 
 			}
 		}
-		return 1;
+		return count;
 	}
 
 	@Override
