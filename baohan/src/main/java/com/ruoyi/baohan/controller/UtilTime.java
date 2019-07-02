@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Test1 {
+public class UtilTime {
    /* public static void main(String[] args)throws Exception {
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
@@ -30,10 +30,9 @@ public class Test1 {
 
     public static void main(String args[]) throws ParseException {
         String tS = "13:00";
-        String tE = "23:55";
-
-        long a=isis(tS,tE);
-        System.out.println(a);
+        String tE = "9:15";
+        Date date=new Date();
+        boolean a=day(getLong(sdf.format(date)),getLong(tE));
     }
 
     private static boolean isInZone(long tStart,long tEnd,long t) throws ParseException {
@@ -41,12 +40,36 @@ public class Test1 {
         return tStart <= t && t <= tEnd;
     }
 
-    private static boolean isis(long tStart,long tEnd) throws ParseException {
+    public static boolean day(long tStart,long tEnd) throws ParseException {
         System.out.println(tStart < tEnd);
         return tStart < tEnd;
     }
 
-    private static long getLong(String timeStr) throws ParseException {
+    public static boolean day(long tStart,long tEnd,long order,long date) throws ParseException {
+        boolean flag=false;
+        if(order>tStart&&order<tEnd&&date>tStart&&date<tEnd){
+            flag=true;
+        }
+        return flag;
+    }
+
+    public static boolean day1(long tStart,long tEnd,long order,long date) throws ParseException {
+        boolean flag=false;
+        if(order>tStart&&date>tStart||order<tEnd&&date<tEnd){
+            flag=true;
+        }
+        return flag;
+    }
+
+    public static boolean day2(long tStart,long tEnd,long order,long date) throws ParseException {
+        boolean flag=false;
+        if(order>tStart&&date<tEnd){
+            flag=true;
+        }
+        return flag;
+    }
+
+    public static long getLong(String timeStr) throws ParseException {
         return sdf.parse(timeStr).getTime();
     }
 

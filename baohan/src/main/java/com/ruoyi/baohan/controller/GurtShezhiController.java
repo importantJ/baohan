@@ -15,13 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class GurtShezhiController extends BaseController {
     private String prefix = "baohan/gurtShezhi";
 
-    @Autowired
-    private IGurtCategoryService gurtCategoryService;
-    @Autowired
-    private IGurtProjectTypeService gurtProjectTypeService;
-    @Autowired
-    private IGurtProjectTypeCostConfigService gurtProjectTypeCostConfigService;
-
     @RequiresPermissions("baohan:gurtshezhi:view")
     @GetMapping()
     public String gurtCategory() {

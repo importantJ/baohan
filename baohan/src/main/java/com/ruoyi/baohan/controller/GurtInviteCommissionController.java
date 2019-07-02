@@ -1,6 +1,9 @@
 package com.ruoyi.baohan.controller;
 
 import java.util.List;
+
+import com.ruoyi.baohan.domain.User;
+import com.ruoyi.baohan.service.impl.UserServiceImpl;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +36,8 @@ public class GurtInviteCommissionController extends BaseController
 	
 	@Autowired
 	private IGurtInviteCommissionService gurtInviteCommissionService;
-	
+	@Autowired
+	private UserServiceImpl userService;
 	@RequiresPermissions("baohan:gurtInviteCommission:view")
 	@GetMapping()
 	public String gurtInviteCommission()
@@ -51,6 +55,15 @@ public class GurtInviteCommissionController extends BaseController
 	{
 		startPage();
         List<GurtInviteCommission> list = gurtInviteCommissionService.selectGurtInviteCommissionList(gurtInviteCommission);
+		for (GurtInviteCommission commission : list) {
+			if(commission.getStatus()==0){
+				commission.setStatusName("未支付");
+			}else{
+				commission.setStatusName("已支付");
+			}
+			User user=userService.selectUserById(Long.valueOf(commission.getInviteuserid()));
+			commission.setInviteuserid(user.getUserName());
+		}
 		return getDataTable(list);
 	}
 	
@@ -90,28 +103,35 @@ public class GurtInviteCommissionController extends BaseController
 	}
 
 	/**
-	 * 修改邀请提成
-	 */
-	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Long id, ModelMap mmap)
-	{
-		GurtInviteCommission gurtInviteCommission = gurtInviteCommissionService.selectGurtInviteCommissionById(id);
-		mmap.put("gurtInviteCommission", gurtInviteCommission);
-	    return prefix + "/edit";
-	}
-	
-	/**
 	 * 修改保存邀请提成
 	 */
-	@RequiresPermissions("baohan:gurtInviteCommission:edit")
 	@Log(title = "邀请提成", businessType = BusinessType.UPDATE)
-	@PostMapping("/edit")
-	@ResponseBody
-	public AjaxResult editSave(GurtInviteCommission gurtInviteCommission)
-	{		
-		return toAjax(gurtInviteCommissionService.updateGurtInviteCommission(gurtInviteCommission));
+	@GetMapping("/edit/{id}")
+	public Object editSave(@PathVariable("id") Long id)
+	{
+		GurtInviteCommission gurtInviteCommission=new GurtInviteCommission();
+		gurtInviteCommission.setId(id);
+		gurtInviteCommission.setStatus(Long.valueOf(1));
+		gurtInviteCommissionService.updateGurtInviteCommission(gurtInviteCommission);
+		return prefix + "/gurtInviteCommission";
 	}
-	
+
+	/**
+	 * 批量支付
+	 */
+	@GetMapping("/zhifu")
+	@ResponseBody
+	public Object zhifu(Long[] ids){
+		int result=0;
+		for(int i=0;i<ids.length;i++){
+			GurtInviteCommission gurtInviteCommission=new GurtInviteCommission();
+			gurtInviteCommission.setId(ids[i]);
+			gurtInviteCommission.setStatus(Long.valueOf(1));
+			result=gurtInviteCommissionService.updateGurtInviteCommission(gurtInviteCommission);
+		}
+		return result;
+	}
+
 	/**
 	 * 删除邀请提成
 	 */

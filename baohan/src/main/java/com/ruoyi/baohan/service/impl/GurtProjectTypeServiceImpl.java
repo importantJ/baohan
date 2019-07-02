@@ -7,6 +7,7 @@ import com.ruoyi.baohan.mapper.GurtProjectTypeMapper;
 import com.ruoyi.baohan.domain.GurtProjectType;
 import com.ruoyi.baohan.service.IGurtProjectTypeService;
 import com.ruoyi.common.core.text.Convert;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 项目名称 服务层实现
@@ -15,6 +16,7 @@ import com.ruoyi.common.core.text.Convert;
  * @date 2019-06-17
  */
 @Service
+@Transactional
 public class GurtProjectTypeServiceImpl implements IGurtProjectTypeService 
 {
 	@Autowired

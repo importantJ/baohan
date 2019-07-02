@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="needInvoice"    column="need_invoice"    />
         <result property="companyName"    column="company_name"    />
         <result property="taxNumber"    column="tax_number"    />
-        <result property="bankName"    column="bank_name"    />
+        <result property="bankName"    column="bankName"    />
         <result property="bankAccount"    column="bank_account"    />
         <result property="companyAddress"    column="company_address"    />
         <result property="phoneNumber"    column="phone_number"    />
@@ -52,10 +52,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select * from gurt_bank
     </select>
     <select id="selectGurtOrderList" parameterType="GurtOrder" resultMap="GurtOrderResult">
-        select gurt_order.id, warrantee, beneficiary, project_number, project_name,DATE_FORMAT(closing_time,'%Y-%m-%d') as closing_time, guarantee_amount, DATE_FORMAT(validity_deadline,'%Y-%m-%d') as validity_deadline, guarantee_id, bank_id, project_type_id, amount, create_user_id, create_time, bank_submission_time, status, need_invoice, company_name, tax_number, bank_name, bank_account, company_address, phone_number, invoice_file_download_url,gurt_status.statusName as statusName
-        from gurt_order,gurt_status
+        select sys_user.user_name as userName,gurt_guarantee.`name` as baoName,gurt_project_type.`name` fenName,gurt_status.statusName as statusName,gurt_bank.bankName as bankName,gurt_order.id, warrantee, beneficiary, project_number, project_name,DATE_FORMAT(closing_time,'%Y-%m-%d') as closing_time, guarantee_amount, DATE_FORMAT(validity_deadline,'%Y-%m-%d') as validity_deadline, guarantee_id, bank_id, project_type_id, amount, create_user_id,gurt_order.create_time, bank_submission_time, gurt_order.status, need_invoice, company_name, tax_number, bank_name, bank_account, company_address, phone_number, invoice_file_download_url
+        from gurt_order,gurt_status,gurt_bank,gurt_project_type,gurt_guarantee,sys_user
         <where>
-            <if test="1==1"> and gurt_order.status=gurt_status.id</if>
+            <if test="1==1"> and gurt_order.status=gurt_status.id
+                and gurt_order.bank_id=gurt_bank.id
+                and gurt_project_type.id=gurt_order.project_type_id
+                and gurt_order.guarantee_id=gurt_guarantee.id
+                and gurt_order.create_user_id=sys_user.user_id</if>
             <if test="id != null "> and id = #{id}</if>
              <if test="warrantee != null  and warrantee != '' "> and warrantee = #{warrantee}</if>
              <if test="beneficiary != null  and beneficiary != '' "> and beneficiary = #{beneficiary}</if>

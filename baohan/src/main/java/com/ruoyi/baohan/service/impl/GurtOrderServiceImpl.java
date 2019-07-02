@@ -1,17 +1,15 @@
 package com.ruoyi.baohan.service.impl;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.ruoyi.baohan.controller.UtilTime;
 import com.ruoyi.baohan.domain.*;
 import com.ruoyi.baohan.mapper.GurtProjectTypeCostConfigMapper;
 import com.ruoyi.baohan.mapper.UserMapper;
 import com.ruoyi.framework.util.ShiroUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.stereotype.Service;
 import com.ruoyi.baohan.mapper.GurtOrderMapper;
 import com.ruoyi.baohan.service.IGurtOrderService;
@@ -63,6 +61,7 @@ public class GurtOrderServiceImpl implements IGurtOrderService {
     @Override
     public int insertGurtOrder(GurtOrder gurtOrder, String[] fileNames, String[] fileUrls, String[] money) {
         Long userId = ShiroUtils.getSysUser().getUserId();
+        if(gurtOrder.getCreateUserId()==null)
         gurtOrder.setCreateUserId(userId);
 
         //新增订单
@@ -70,14 +69,15 @@ public class GurtOrderServiceImpl implements IGurtOrderService {
 
         //新增订单文件
 
-        for (int i = 0; i < fileNames.length; i++) {
-            GurtOrderFile gurtOrderFile = new GurtOrderFile();
-            gurtOrderFile.setCreateUserId(userId);
-            gurtOrderFile.setOrderId(gurtOrder.getId());
-            gurtOrderFile.setName(fileNames[i]);
-            gurtOrderFile.setFileDownLoadUrl(fileUrls[i]);
-            gurtOrderMapper.insertOrderFile(gurtOrderFile);
-
+        if(fileNames!=null&&fileUrls!=null){
+            for (int i = 0; i < fileNames.length; i++) {
+                GurtOrderFile gurtOrderFile = new GurtOrderFile();
+                gurtOrderFile.setCreateUserId(userId);
+                gurtOrderFile.setOrderId(gurtOrder.getId());
+                gurtOrderFile.setName(fileNames[i]);
+                gurtOrderFile.setFileDownLoadUrl(fileUrls[i]);
+                gurtOrderMapper.insertOrderFile(gurtOrderFile);
+            }
         }
 
         //新增已付金额
@@ -89,16 +89,6 @@ public class GurtOrderServiceImpl implements IGurtOrderService {
                 gurtOrderMapper.insertOrderRecord(gurtOrder.getId(), money[i]);
             }
         }
-
-
-		/*
-		提成
-		Integer ivId=ShiroUtils.getSysUser().getInviteUserId();
-		if(ivId!=null){
-			gurtOrderMapper.insertinviteCommission(gurtOrder.getId(),"提交金额");
-		}*/
-
-
         return 1;
     }
 
@@ -186,12 +176,12 @@ public class GurtOrderServiceImpl implements IGurtOrderService {
     private UserMapper userMapper;
     @Resource
     private GurtProjectTypeCostConfigMapper gurtProjectTypeCostConfigMapper;
+    private static final String formatStr = "HH:mm";
+    SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
+    private static SimpleDateFormat sdf = new SimpleDateFormat(formatStr);
 
     @Override
     public int insertinviteCommission(GurtOrder gurtOrder) throws Exception {
-        Calendar cal = Calendar.getInstance();
-        Calendar start = Calendar.getInstance();
-        Calendar end = Calendar.getInstance();
         int count = 0;
         List<GurtOrder> gurtOrderList = gurtOrderMapper.selectGurtOrderList(new GurtOrder());
 
@@ -201,34 +191,47 @@ public class GurtOrderServiceImpl implements IGurtOrderService {
                     && order.getBeneficiary().equals(gurtOrder.getBeneficiary())
                     && order.getProjectNumber().equals(gurtOrder.getProjectNumber())
                     && order.getProjectName().equals(gurtOrder.getProjectName())
-                    && order.getGuaranteeAmount().equals(gurtOrder.getGuaranteeAmount())) {
-
+                    && order.getGuaranteeAmount().equals(gurtOrder.getGuaranteeAmount())
+                    &&order.getId()!=gurtOrder.getId()) {
                 Date date = new Date();
                 Long result = date.getTime() - order.getBankSubmissionTime().getTime();
-                if (result < (24 * 3600000)) {
 
-                    List<Gurtshezhi> gurtshezhiList = gurtOrderMapper.getAllShezhi();
-                    for (Gurtshezhi gurtshezhi : gurtshezhiList) {
+                long orderTime=UtilTime.getLong(sdf.format(order.getBankSubmissionTime()));
+                long newTime=UtilTime.getLong(sdf.format(date));
 
-                        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-                        Date startHH = df.parse(df.format(gurtshezhi.getStarttime()));
-                        start.setTime(startHH);
+                List<Gurtshezhi> gurtshezhiList = gurtOrderMapper.getAllShezhi();
+                for (Gurtshezhi gurtshezhi : gurtshezhiList) {
 
-                        Date endHH = df.parse(df.format(gurtshezhi.getEndtime()));
-                        end.setTime(endHH);
+                    long startTime=UtilTime.getLong(sdf.format(gurtshezhi.getStarttime()));
+                    long endTime=UtilTime.getLong(sdf.format(gurtshezhi.getEndtime()));
 
-                        Date nowHH = df.parse(df.format(date));
-                        cal.setTime(nowHH);
-
-                        if (cal.after(end) && cal.before(start))
-                            count++;
+                    if (UtilTime.day(startTime,endTime)) {
+                        if (fmt.format(date).equals(fmt.format(order.getBankSubmissionTime()))) {
+                            if(UtilTime.day(startTime,endTime,orderTime,newTime)){
+                                count++;
+                            }
+                        }
+                    } else {
+                        if (result < (24 * 3600000)) {
+                            if (fmt.format(date).equals(fmt.format(order.getBankSubmissionTime()))) {
+                                if(UtilTime.day1(startTime,endTime,orderTime,newTime)){
+                                    count++;
+                                }
+                            }else{
+                                if(UtilTime.day2(startTime,endTime,orderTime,newTime)){
+                                    count++;
+                                }
+                            }
+                        }
                     }
 
                 }
+
             }
+
         }
 
-        if (count > 2) {
+        if (count>0 ) {
             GurtProjectTypeCostConfig gurtProjectTypeCostConfig = new GurtProjectTypeCostConfig();
             gurtProjectTypeCostConfig.setProjectTypeId(gurtOrder.getProjectTypeId());
             User user = userMapper.selectUserById(gurtOrder.getCreateUserId());

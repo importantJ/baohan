@@ -13,7 +13,36 @@ import com.ruoyi.common.core.domain.BaseEntity;
 public class GurtInviteCommission extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
-	
+
+	private String inviteuserid;
+	private String name;
+
+	public String getInviteuserid() {
+		return inviteuserid;
+	}
+
+	public void setInviteuserid(String inviteuserid) {
+		this.inviteuserid = inviteuserid;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	private GurtOrder gurtOrder;
+
+	public GurtOrder getGurtOrder() {
+		return gurtOrder;
+	}
+
+	public void setGurtOrder(GurtOrder gurtOrder) {
+		this.gurtOrder = gurtOrder;
+	}
+
 	/**  */
 	private Long id;
 	/**  */
@@ -23,7 +52,17 @@ public class GurtInviteCommission extends BaseEntity
 	/** 状态(0 未支付; 1 已支付) */
 	private Long status;
 
-	public void setId(Long id) 
+	private String statusName;
+
+	public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+
+	public void setId(Long id)
 	{
 		this.id = id;
 	}

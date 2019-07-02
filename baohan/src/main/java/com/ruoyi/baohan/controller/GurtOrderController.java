@@ -21,6 +21,7 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 订单 信息操作处理
@@ -51,12 +52,7 @@ public class 	GurtOrderController extends BaseController
 	{
 		List<GurtStatus> statusList=gurtOrderService.getStatus();
 		modelMap.put("statusList",statusList);
-		int role=0;
-		List<SysRole> user=ShiroUtils.getSysUser().getRoles();
-		for (int i=0;i<user.size();i++){
-			if(user.get(i).getRoleName().equals("管理员")||user.get(i).getRoleName().equals("客户经理"))
-				role=1;
-		}
+		int role=UtilOrder.getRole();
 		modelMap.put("role",role);
 	    return prefix + "/gurtOrder";
 	}
@@ -79,12 +75,7 @@ public class 	GurtOrderController extends BaseController
 		List<GurtStatus> statusList=gurtOrderService.getStatus();
 		modelMap.put("statusList",statusList);
 
-		int role=0;
-		List<SysRole> user=ShiroUtils.getSysUser().getRoles();
-		for (int i=0;i<user.size();i++){
-			if(user.get(i).getRoleName().equals("管理员")||user.get(i).getRoleName().equals("客户经理"))
-				role=1;
-		}
+		int role=UtilOrder.getRole();
 		modelMap.put("role",role);
 		return prefix + "/gurtOrder";
 	}
@@ -98,12 +89,7 @@ public class 	GurtOrderController extends BaseController
 		List<GurtStatus> statusList=gurtOrderService.getStatus();
 		modelMap.put("statusList",statusList);
 
-		int role=0;
-		List<SysRole> user=ShiroUtils.getSysUser().getRoles();
-		for (int i=0;i<user.size();i++){
-			if(user.get(i).getRoleName().equals("管理员")||user.get(i).getRoleName().equals("客户经理"))
-				role=1;
-		}
+		int role=UtilOrder.getRole();
 		modelMap.put("role",role);
 		return prefix + "/gurtOrder";
 	}
@@ -117,13 +103,9 @@ public class 	GurtOrderController extends BaseController
 	{
 		List<GurtStatus> statusList=gurtOrderService.getStatus();
 		modelMap.put("statusList",statusList);
-		int role=0;
-		List<SysRole> user=ShiroUtils.getSysUser().getRoles();
-		for (int i=0;i<user.size();i++){
-			if(user.get(i).getRoleName().equals("管理员")||user.get(i).getRoleName().equals("客户经理"))
-				role=1;
-		}
+		int role=UtilOrder.getRole();
 		modelMap.put("role",role);
+
 		startPage();
         List<GurtOrder> list =null;
         if(role==1){
@@ -146,7 +128,19 @@ public class 	GurtOrderController extends BaseController
         ExcelUtil<GurtOrder> util = new ExcelUtil<GurtOrder>(GurtOrder.class);
         return util.exportExcel(list, "gurtOrder");
     }
-	
+	@PostMapping("/importData")
+	@ResponseBody
+	public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
+	{
+		ExcelUtil<GurtOrder> util = new ExcelUtil<GurtOrder>(GurtOrder.class);
+		List<GurtOrder> gurtOrderList = util.importExcel(file.getInputStream());
+		for (GurtOrder gurtOrder : gurtOrderList) {
+			if(gurtOrder.getGuaranteeAmount()!=null){
+				gurtOrderService.insertGurtOrder(gurtOrder,null,null,null);
+			}
+		}
+		return AjaxResult.success(1);
+	}
 	/**
 	 * 新增订单
 	 */

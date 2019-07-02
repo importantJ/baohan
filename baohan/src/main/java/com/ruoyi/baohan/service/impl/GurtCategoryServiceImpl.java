@@ -7,6 +7,7 @@ import com.ruoyi.baohan.mapper.GurtCategoryMapper;
 import com.ruoyi.baohan.domain.GurtCategory;
 import com.ruoyi.baohan.service.IGurtCategoryService;
 import com.ruoyi.common.core.text.Convert;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 项目基础资料 服务层实现
@@ -15,6 +16,7 @@ import com.ruoyi.common.core.text.Convert;
  * @date 2019-06-14
  */
 @Service
+@Transactional
 public class GurtCategoryServiceImpl implements IGurtCategoryService 
 {
 	@Autowired

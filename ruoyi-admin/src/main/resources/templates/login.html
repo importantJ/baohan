@@ -53,8 +53,8 @@
                 <form id="signupForm" class="signupForm"   style="display: none">
                     <h4 class="no-margins">登录：</h4>
                     <p class="m-t-md">请输入账号密码登录<a href="javascript:;" onclick="deng()">快速登录&raquo;</a></p>
-                    <input type="text"     name="username" class="form-control uname"     placeholder="用户名" value=""/>
-                    <input type="password" name="password" class="form-control pword"     placeholder="密码"   value=""/>
+                    <input type="text"     name="username" class="form-control uname"     placeholder="用户名" value="admin"/>
+                    <input type="password" name="password" class="form-control pword"     placeholder="密码"   value="admin123    "/>
 					<div class="row m-t" th:if="${captchaEnabled==true}"></div>
                     <div class="checkbox-custom" th:classappend="${captchaEnabled==false} ? 'm-t'">
 				        <input type="checkbox" id="rememberme" name="rememberme"> <label for="rememberme">记住我</label>
@@ -66,10 +66,10 @@
                     <p class="m-t-md">请输入手机登录<a href="javascript:;" onclick="deng()">账号密码登录&raquo;</a></p>
                     <input type="text" name="phone" class="form-control uname"     placeholder="手机号"   />
                     <input type="text" style="width: 100px;display: inline-block" name="code" class="form-control pword" placeholder="验证码" />
-                    <input type="button"  value="发送验证码" onclick="sendCode()" style="height: 30px;background-color: white;color: black"/>
+                    <input type="button" class="btn btn-success btn-block"  value="发送验证码" onclick="sendCode()" style="width:100px;background-color: white;color: black;display: inline-block;margin-top: -4px"/>
                     <div class="row m-t" th:if="${captchaEnabled==true}">
                     </div>
-                    <input type="button" onclick="zhuce()" class="btn btn-success btn-block" id="btnSubmit1" value="登录/注册" data-loading="正在验证登录，请稍后..."></input>
+                    <input type="button" onclick="zhuce()" style="margin-top: -2px" class="btn btn-success btn-block" id="btnSubmit1" value="登录/注册" data-loading="正在验证登录，请稍后..."></input>
                 </form>
             </div>
 

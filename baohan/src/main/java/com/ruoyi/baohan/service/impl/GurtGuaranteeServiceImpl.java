@@ -7,6 +7,7 @@ import com.ruoyi.baohan.mapper.GurtGuaranteeMapper;
 import com.ruoyi.baohan.domain.GurtGuarantee;
 import com.ruoyi.baohan.service.IGurtGuaranteeService;
 import com.ruoyi.common.core.text.Convert;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 保函 服务层实现
@@ -15,6 +16,7 @@ import com.ruoyi.common.core.text.Convert;
  * @date 2019-06-14
  */
 @Service
+@Transactional
 public class GurtGuaranteeServiceImpl implements IGurtGuaranteeService 
 {
 	@Autowired

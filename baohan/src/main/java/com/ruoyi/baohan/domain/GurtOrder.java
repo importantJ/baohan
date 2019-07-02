@@ -1,5 +1,6 @@
 package com.ruoyi.baohan.domain;
 
+import com.ruoyi.common.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -11,6 +12,7 @@ import java.util.Date;
  * @author ruoyi
  * @date 2019-06-14
  */
+
 public class GurtOrder extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
@@ -18,35 +20,78 @@ public class GurtOrder extends BaseEntity
 	/** 主键 */
 	private Long id;
 	/** 被保证人 */
+	@Excel(name = "被保证人", prompt = "被保证人")
 	private String warrantee;
 	/** 受益人 */
+	@Excel(name = "受益人", prompt = "受益人")
 	private String beneficiary;
 	/** 项目编号 */
+	@Excel(name = "项目编号", prompt = "项目编号")
 	private String projectNumber;
 	/** 项目名称 */
+	@Excel(name = "项目名称", prompt = "项目名称")
 	private String projectName;
 	/** 截标日期 */
+	@Excel(name = "截标日期", prompt = "截标日期")
 	private String closingTime;
 	/** 担保金额 */
+	@Excel(name = "担保金额", prompt = "担保金额")
 	private Long guaranteeAmount;
 	/** 有效期 */
+	@Excel(name = "有效期", prompt = "有效期")
 	private String validityDeadline;
 	/** 保函格式 */
+	@Excel(name = "保函格式", prompt = "保函格式")
+	private String baoName;
 	private Long guaranteeId;
 	/** 贷款银行 */
 	private Long bankId;
 	/** 项目分类 */
+	@Excel(name = "项目分类", prompt = "项目分类")
+	private String fenName;
 	private Long projectTypeId;
 	/** 应付金额 */
+	@Excel(name = "应付金额", prompt = "应付金额")
 	private Long amount;
 	/**  */
+	@Excel(name = "处理人", prompt = "处理人")
+	private String userName;
+
+	public String getBaoName() {
+		return baoName;
+	}
+
+	public void setBaoName(String baoName) {
+		this.baoName = baoName;
+	}
+
+	public String getFenName() {
+		return fenName;
+	}
+
+	public void setFenName(String fenName) {
+		this.fenName = fenName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	private Long createUserId;
 	/**  */
+
 	private Date bankSubmissionTime;
 	/** 订单状态(0 待提交; 1 待接收; 2 待处理; 3 已提交银行; 4 已撤销) */
+
 	private Long status;
 	/** 是否需要开发票(0 否, 1 是) */
+
 	private Long needInvoice;
+	@Excel(name = "状态", prompt = "状态")
 	private String statusName;
 
 	public String getStatusName() {
@@ -61,15 +106,27 @@ public class GurtOrder extends BaseEntity
 	private String companyName;
 	/**  */
 	private String taxNumber;
+
+	public String getBankName() {
+		return bankName;
+	}
+
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+
 	/**  */
+	@Excel(name = "贷款银行", prompt = "贷款银行")
 	private String bankName;
 	/**  */
 	private String bankAccount;
 	/**  */
 	private String companyAddress;
-	/**  */
+	/** 联系方式 */
+	@Excel(name = "联系方式", prompt = "联系方式")
 	private Long phoneNumber;
 	/** 发票文件下载地址 */
+
 	private String invoiceFileDownloadUrl;
 
 	public void setId(Long id) 
@@ -234,15 +291,7 @@ public class GurtOrder extends BaseEntity
 	{
 		return taxNumber;
 	}
-	public void setBankName(String bankName) 
-	{
-		this.bankName = bankName;
-	}
 
-	public String getBankName() 
-	{
-		return bankName;
-	}
 	public void setBankAccount(String bankAccount) 
 	{
 		this.bankAccount = bankAccount;

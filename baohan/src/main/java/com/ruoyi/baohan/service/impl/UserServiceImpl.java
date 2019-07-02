@@ -7,6 +7,7 @@ import com.ruoyi.baohan.mapper.UserMapper;
 import com.ruoyi.baohan.domain.User;
 import com.ruoyi.baohan.service.IUserService;
 import com.ruoyi.common.core.text.Convert;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 用户 服务层实现
@@ -15,6 +16,7 @@ import com.ruoyi.common.core.text.Convert;
  * @date 2019-06-14
  */
 @Service
+@Transactional
 public class UserServiceImpl implements IUserService 
 {
 	@Autowired
