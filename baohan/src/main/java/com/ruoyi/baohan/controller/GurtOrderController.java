@@ -1,11 +1,13 @@
 package com.ruoyi.baohan.controller;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.ruoyi.baohan.domain.*;
 import com.ruoyi.baohan.service.*;
+import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysRole;
 import com.ruoyi.system.domain.SysUser;
@@ -22,6 +24,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 订单 信息操作处理
@@ -50,13 +55,9 @@ public class 	GurtOrderController extends BaseController
 	@GetMapping()
 	public String gurtOrder(ModelMap modelMap)
 	{
-		List<GurtStatus> statusList=gurtOrderService.getStatus();
-		modelMap.put("statusList",statusList);
-		int role=UtilOrder.getRole();
-		modelMap.put("role",role);
+		UtilOrder.gurtOrder(modelMap,gurtOrderService);
 	    return prefix + "/gurtOrder";
 	}
-
 
 	@GetMapping("/modifystatus/{id}")
 	public Object status(@PathVariable("id") Long id,ModelMap modelMap)throws Exception{
@@ -72,11 +73,7 @@ public class 	GurtOrderController extends BaseController
 			gurtOrderService.insertinviteCommission(gurtOrder);
 		}
 		gurtOrderService.updateOrderstatus(gurtOrder);
-		List<GurtStatus> statusList=gurtOrderService.getStatus();
-		modelMap.put("statusList",statusList);
-
-		int role=UtilOrder.getRole();
-		modelMap.put("role",role);
+		UtilOrder.gurtOrder(modelMap,gurtOrderService);
 		return prefix + "/gurtOrder";
 	}
 
@@ -86,11 +83,7 @@ public class 	GurtOrderController extends BaseController
 		gurtOrder.setId(id);
 		gurtOrder.setStatus(Long.valueOf(4));
 		gurtOrderService.updateOrderstatus(gurtOrder);
-		List<GurtStatus> statusList=gurtOrderService.getStatus();
-		modelMap.put("statusList",statusList);
-
-		int role=UtilOrder.getRole();
-		modelMap.put("role",role);
+		UtilOrder.gurtOrder(modelMap,gurtOrderService);
 		return prefix + "/gurtOrder";
 	}
 	/**
@@ -134,11 +127,19 @@ public class 	GurtOrderController extends BaseController
 	{
 		ExcelUtil<GurtOrder> util = new ExcelUtil<GurtOrder>(GurtOrder.class);
 		List<GurtOrder> gurtOrderList = util.importExcel(file.getInputStream());
-		for (GurtOrder gurtOrder : gurtOrderList) {
-			if(gurtOrder.getGuaranteeAmount()!=null){
-				gurtOrderService.insertGurtOrder(gurtOrder,null,null,null);
-			}
-		}
+		gurtOrderService.importExcel(gurtOrderList);
+		return AjaxResult.success(1);
+	}
+
+	@GetMapping("/xiazai")
+	@ResponseBody
+	public AjaxResult xiazai(@RequestParam("url") String url, HttpServletResponse response,
+							 HttpServletRequest request)throws IOException {
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("multipart/form-data");
+		response.setHeader("Content-Disposition",
+				"attachment;fileName=" + FileUtils.setFileDownloadHeader(request,String.valueOf(System.currentTimeMillis())));
+		FileUtils.writeBytes(url, response.getOutputStream());
 		return AjaxResult.success(1);
 	}
 	/**

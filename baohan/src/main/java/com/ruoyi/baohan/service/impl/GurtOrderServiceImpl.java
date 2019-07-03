@@ -7,11 +7,12 @@ import java.util.List;
 
 import com.ruoyi.baohan.controller.UtilTime;
 import com.ruoyi.baohan.domain.*;
-import com.ruoyi.baohan.mapper.GurtProjectTypeCostConfigMapper;
-import com.ruoyi.baohan.mapper.UserMapper;
+import com.ruoyi.baohan.mapper.*;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.mapper.SysUserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.baohan.mapper.GurtOrderMapper;
 import com.ruoyi.baohan.service.IGurtOrderService;
 import com.ruoyi.common.core.text.Convert;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +30,12 @@ import javax.annotation.Resource;
 public class GurtOrderServiceImpl implements IGurtOrderService {
     @Resource
     private GurtOrderMapper gurtOrderMapper;
-
+    @Autowired
+    private GurtGuaranteeMapper gurtGuaranteeMapper;
+    @Autowired
+    private GurtProjectTypeMapper gurtProjectTypeMapper;
+    @Autowired
+    private SysUserMapper sysUserMapper;
     /**
      * 查询订单信息
      *
@@ -61,15 +67,15 @@ public class GurtOrderServiceImpl implements IGurtOrderService {
     @Override
     public int insertGurtOrder(GurtOrder gurtOrder, String[] fileNames, String[] fileUrls, String[] money) {
         Long userId = ShiroUtils.getSysUser().getUserId();
-        if(gurtOrder.getCreateUserId()==null)
-        gurtOrder.setCreateUserId(userId);
+        if (gurtOrder.getCreateUserId() == null)
+            gurtOrder.setCreateUserId(userId);
 
         //新增订单
         gurtOrderMapper.insertGurtOrder(gurtOrder);
 
         //新增订单文件
 
-        if(fileNames!=null&&fileUrls!=null){
+        if (fileNames != null && fileUrls != null) {
             for (int i = 0; i < fileNames.length; i++) {
                 GurtOrderFile gurtOrderFile = new GurtOrderFile();
                 gurtOrderFile.setCreateUserId(userId);
@@ -192,33 +198,35 @@ public class GurtOrderServiceImpl implements IGurtOrderService {
                     && order.getProjectNumber().equals(gurtOrder.getProjectNumber())
                     && order.getProjectName().equals(gurtOrder.getProjectName())
                     && order.getGuaranteeAmount().equals(gurtOrder.getGuaranteeAmount())
-                    &&order.getId()!=gurtOrder.getId()) {
+                    && order.getId() != gurtOrder.getId()) {
                 Date date = new Date();
+                if(order.getBankSubmissionTime()==null)
+                    break;
                 Long result = date.getTime() - order.getBankSubmissionTime().getTime();
 
-                long orderTime=UtilTime.getLong(sdf.format(order.getBankSubmissionTime()));
-                long newTime=UtilTime.getLong(sdf.format(date));
+                long orderTime = UtilTime.getLong(sdf.format(order.getBankSubmissionTime()));
+                long newTime = UtilTime.getLong(sdf.format(date));
 
                 List<Gurtshezhi> gurtshezhiList = gurtOrderMapper.getAllShezhi();
                 for (Gurtshezhi gurtshezhi : gurtshezhiList) {
 
-                    long startTime=UtilTime.getLong(sdf.format(gurtshezhi.getStarttime()));
-                    long endTime=UtilTime.getLong(sdf.format(gurtshezhi.getEndtime()));
+                    long startTime = UtilTime.getLong(sdf.format(gurtshezhi.getStarttime()));
+                    long endTime = UtilTime.getLong(sdf.format(gurtshezhi.getEndtime()));
 
-                    if (UtilTime.day(startTime,endTime)) {
+                    if (UtilTime.day(startTime, endTime)) {
                         if (fmt.format(date).equals(fmt.format(order.getBankSubmissionTime()))) {
-                            if(UtilTime.day(startTime,endTime,orderTime,newTime)){
+                            if (UtilTime.day(startTime, endTime, orderTime, newTime)) {
                                 count++;
                             }
                         }
                     } else {
                         if (result < (24 * 3600000)) {
                             if (fmt.format(date).equals(fmt.format(order.getBankSubmissionTime()))) {
-                                if(UtilTime.day1(startTime,endTime,orderTime,newTime)){
+                                if (UtilTime.day1(startTime, endTime, orderTime, newTime)) {
                                     count++;
                                 }
-                            }else{
-                                if(UtilTime.day2(startTime,endTime,orderTime,newTime)){
+                            } else {
+                                if (UtilTime.day2(startTime, endTime, orderTime, newTime)) {
                                     count++;
                                 }
                             }
@@ -231,7 +239,7 @@ public class GurtOrderServiceImpl implements IGurtOrderService {
 
         }
 
-        if (count>0 ) {
+        if (count > 0) {
             GurtProjectTypeCostConfig gurtProjectTypeCostConfig = new GurtProjectTypeCostConfig();
             gurtProjectTypeCostConfig.setProjectTypeId(gurtOrder.getProjectTypeId());
             User user = userMapper.selectUserById(gurtOrder.getCreateUserId());
@@ -297,6 +305,53 @@ public class GurtOrderServiceImpl implements IGurtOrderService {
     @Override
     public List<GurtOrderRecord> getRecordByOrderId(Integer orderId) {
         return gurtOrderMapper.getRecordByOrderId(orderId);
+    }
+
+    public int importExcel(List<GurtOrder> gurtOrderList) {
+        //保函列表
+        List<GurtGuarantee> gurtGuaranteeList=gurtGuaranteeMapper.selectGurtGuaranteeList(new GurtGuarantee());
+        //银行列表
+        List<GurtBank> bankList=gurtOrderMapper.getAllBank();
+        //项目分类
+        List<GurtProjectType> gurtProjectTypeList=gurtProjectTypeMapper.selectGurtProjectTypeList(new GurtProjectType());
+        //用户列表
+        List<SysUser> userList=sysUserMapper.selectUserList(new SysUser());
+        //订单状态
+        List<GurtStatus> statusList=gurtOrderMapper.getStatus();
+
+        for (GurtOrder order : gurtOrderList) {
+
+            for (GurtGuarantee guarantee : gurtGuaranteeList) {
+                if(guarantee.getName().equals(order.getBaoName()))
+                    order.setGuaranteeId(guarantee.getId());
+            }
+            for (GurtBank bank : bankList) {
+                if(bank.getBankName().equals(order.getBankName()))
+                    order.setBankId(Long.valueOf(bank.getId()));
+            }
+            for (GurtProjectType type : gurtProjectTypeList) {
+                if(type.getName().equals(order.getFenName()))
+                    order.setProjectTypeId(type.getId());
+            }
+            for (SysUser user : userList) {
+                if(order.getUserName()!=null&&user.getUserName()!=null){
+                    if(user.getUserName().equals(order.getUserName()))
+                        order.setCreateUserId(user.getUserId());
+                }
+            }
+            for (GurtStatus status : statusList) {
+                if(status.getStatusName().equals(order.getStatusName()))
+                    order.setStatus(Long.valueOf(status.getId()));
+            }
+            if(order.getCreateUserId()==null)
+                order.setCreateUserId(ShiroUtils.getUserId());
+            order.setStatus(Long.valueOf(0));
+            gurtOrderMapper.insertGurtOrder(order);
+            if(order.getYifu()!=null)
+            gurtOrderMapper.insertOrderRecord(order.getId(),order.getYifu().toString());
+        }
+
+        return 1;
     }
 
 }

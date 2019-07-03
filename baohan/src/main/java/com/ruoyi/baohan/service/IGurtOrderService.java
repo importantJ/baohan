@@ -12,6 +12,8 @@ import java.util.List;
  * @date 2019-06-14
  */
 public interface IGurtOrderService {
+
+    int importExcel(List<GurtOrder> gurtOrderList);
     /**
      * 查询订单信息
      *

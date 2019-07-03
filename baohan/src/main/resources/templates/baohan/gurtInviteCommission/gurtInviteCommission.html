@@ -32,7 +32,7 @@
         <div class="btn-group-sm" id="toolbar" role="group">
 
             <a class="btn btn-danger btn-del btn-del disabled" id="a">
-                <i class="fa fa-edit"></i> 修改
+                <i class="fa fa-edit"></i> 支付
             </a>
 
         </div>
@@ -62,6 +62,7 @@
                 $.get(prefix+"/zhifu","ids="+ids+"",function (data) {
                     if(data==1){
                         alert('操作成功')
+                        $.table.refresh();
                     }else{
                         alert('操作失败,请稍后再试')
                     }

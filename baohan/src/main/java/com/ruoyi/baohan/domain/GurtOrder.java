@@ -53,6 +53,26 @@ public class GurtOrder extends BaseEntity
 	/** 应付金额 */
 	@Excel(name = "应付金额", prompt = "应付金额")
 	private Long amount;
+	@Excel(name = "已付金额", prompt = "已付金额")
+	private Long yifu;
+
+	public Long getYifu() {
+		return yifu;
+	}
+
+	public void setYifu(Long yifu) {
+		this.yifu = yifu;
+	}
+	private String guaranteefilepath;
+
+	public String getGuaranteefilepath() {
+		return guaranteefilepath;
+	}
+
+	public void setGuaranteefilepath(String guaranteefilepath) {
+		this.guaranteefilepath = guaranteefilepath;
+	}
+
 	/**  */
 	@Excel(name = "处理人", prompt = "处理人")
 	private String userName;
