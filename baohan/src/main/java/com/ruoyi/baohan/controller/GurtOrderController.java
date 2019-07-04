@@ -7,6 +7,8 @@ import java.util.*;
 
 import com.ruoyi.baohan.domain.*;
 import com.ruoyi.baohan.service.*;
+import com.ruoyi.common.config.Global;
+import com.ruoyi.common.config.ServerConfig;
 import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysRole;
@@ -187,7 +189,9 @@ public class 	GurtOrderController extends BaseController
 		modelMap.put("role",role);
 	    return prefix + "/add";
 	}
-	
+
+	@Autowired
+	private ServerConfig serverConfig;
 	/**
 	 * 新增保存订单
 	 */
@@ -195,9 +199,17 @@ public class 	GurtOrderController extends BaseController
 	@Log(title = "订单", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(GurtOrder gurtOrder,String[] fileNames,String[] fileUrls,String[] money)
+	public AjaxResult addSave(GurtOrder gurtOrder,String[] fileNames,String[] fileUrls,String[] money,HttpServletRequest request)
 	{
-
+	    GurtGuarantee gurtGuarantee=iGurtGuaranteeService.selectGurtGuaranteeById(gurtOrder.getGuaranteeId());
+	    String baourl=gurtGuarantee.getGuaranteeFilePath();
+	    String ab=Global.getUploadPath()+baourl.substring(baourl.lastIndexOf("/"));
+        Map map=new HashMap();
+        map.put("warrantee",gurtOrder.getWarrantee());
+        String newpath=Global.getUploadPath()+baourl.substring(baourl.lastIndexOf("/"),baourl.lastIndexOf("/"))+gurtOrder.getWarrantee()+gurtOrder.getBeneficiary()+".docx";
+        Replace.searchAndReplace(ab,newpath,map);
+		String a=serverConfig.getUrl()+newpath.substring(newpath.lastIndexOf("/profile"));
+        gurtOrder.setBaohanfile(a);
 		return toAjax(gurtOrderService.insertGurtOrder(gurtOrder,fileNames,fileUrls,money));
 	}
 	/**

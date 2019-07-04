@@ -1,6 +1,7 @@
 
 package com.ruoyi.baohan.controller;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.ruoyi.common.config.ServerConfig;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -18,21 +20,21 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  *
  * @author zhangdapeng
  * @Date 2014年4月22日
  */
 
-public class replace {
+public class Replace {
 
     public static void searchAndReplace(String srcPath, String destPath,
                                         Map<String, String> map) {
         try {
-            InputStream is = new FileInputStream("http://192.168.0.80/profile/upload/2019/07/04/146b5a8cb3a6be07705be35da34ec356.docx");
-
-            XWPFDocument document = new XWPFDocument(
-                    POIXMLDocument.openPackage(srcPath));
+            InputStream input = new FileInputStream(srcPath);
+            XWPFDocument document = new XWPFDocument(input);
             // 替换段落中的指定文字
             Iterator<XWPFParagraph> itPara = document.getParagraphsIterator();
             while (itPara.hasNext()) {
@@ -52,7 +54,6 @@ public class replace {
                     }
                 }
             }
-
             // 替换表格中的指定文字
             Iterator<XWPFTable> itTable = document.getTablesIterator();
             while (itTable.hasNext()) {

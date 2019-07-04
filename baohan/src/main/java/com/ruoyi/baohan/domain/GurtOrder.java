@@ -16,7 +16,16 @@ import java.util.Date;
 public class GurtOrder extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
-	
+	private String baohanfile;
+
+	public String getBaohanfile() {
+		return baohanfile;
+	}
+
+	public void setBaohanfile(String baohanfile) {
+		this.baohanfile = baohanfile;
+	}
+
 	/** 主键 */
 	private Long id;
 	/** 被保证人 */

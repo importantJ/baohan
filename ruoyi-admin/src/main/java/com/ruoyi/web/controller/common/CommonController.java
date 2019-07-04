@@ -84,7 +84,6 @@ public class CommonController
     {
         try
         {
-
             // 上传文件路径
             String filePath = Global.getUploadPath();
             // 上传并返回新文件名称
@@ -124,7 +123,7 @@ public class CommonController
                     GurtOrderFile gurtOrderFile = new GurtOrderFile();
                     gurtOrderFile.setCreateUserId(ShiroUtils.getUserId());
                     gurtOrderFile.setOrderId(ids[i]);
-                    gurtOrderFile.setName(fileName);
+                    gurtOrderFile.setName(file[j].getOriginalFilename());
                     gurtOrderFile.setFileDownLoadUrl(url);
                     gurtOrderMapper.insertOrderFile(gurtOrderFile);
                 }
