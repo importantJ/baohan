@@ -15,8 +15,6 @@
                         <li>
                             搜索：<input type="text" name="warrantee"/>
                         </li>
-
-
                         <li>
                             提交状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
                             <option value="">所有</option>
@@ -24,8 +22,6 @@
                                     th:value="${dict.id}"></option>
                         </select>
                         </li>
-
-
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
                                     class="fa fa-search"></i>&nbsp;搜索</a>
@@ -54,6 +50,9 @@
             <a class="btn btn-success" onclick="xiazai()">
                 <i class="fa fa-edit"></i> 下载保函
             </a>
+            <a class="btn btn-danger btn-del btn-del disabled" onclick="tjiao()">
+                <i class="fa"></i> 提交
+            </a>
         </div>
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table" data-mobile-responsive="true"></table>
@@ -71,14 +70,36 @@
     var exitFlag = [[${@permission.hasPermi('baohan:gurtOrder:exit')}]];
     var prefix = ctx + "baohan/gurtOrder";
 
-   /* function shangchuan() {
-        $.operate.submit();
-    }*/
 
-   function xiazai() {
-       var ids=$.table.selectColumns("id");
-       alert(ids)
-   }
+
+    function xiazai() {
+        var baohans = $.table.selectColumns("guaranteefilepath");
+        if(baohans.length==0){
+            alert("请选择下载保函订单");
+        }else{
+            for (var i = 0; i < baohans.length; i++) {
+                window.open(baohans[i], '_blank');
+            }
+        }
+    }
+    function tjiao() {
+        var status=$.table.selectColumns("status");
+        var ids=$.table.selectColumns("id");
+        var flag=true;
+        for(var i=0;i<status.length;i++){
+            if(status[i]!=0&&status[i]!=4){
+                flag=false;
+            }
+        }
+        if(flag){
+            $.get(prefix+"/modifytijiao","ids="+ids+"",function (data) {
+                alert(data)
+                $.table.refresh();
+            })
+        }else{
+            alert('只允许提交已撤销和待提交订单!')
+        }
+    }
 
     function test() {
         $.modal.open("添加订单", "/baohan/gurtOrder/add", 1500);

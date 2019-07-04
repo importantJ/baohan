@@ -2,10 +2,15 @@ package com.ruoyi.web.controller.common;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.baohan.domain.GurtOrderFile;
+import com.ruoyi.baohan.mapper.GurtOrderMapper;
+import com.ruoyi.framework.util.ShiroUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -79,6 +84,7 @@ public class CommonController
     {
         try
         {
+
             // 上传文件路径
             String filePath = Global.getUploadPath();
             // 上传并返回新文件名称
@@ -92,6 +98,42 @@ public class CommonController
         catch (Exception e)
         {
             return AjaxResult.error(e.getMessage());
+        }
+    }
+    @Autowired
+    private GurtOrderMapper gurtOrderMapper;
+    /**
+     * 多文件上传
+     */
+    @PostMapping("/common/uploadFiles")
+    @ResponseBody
+    public Object uploadFiles(MultipartFile[] file, Long[] ids, ModelMap map) throws Exception
+    {
+        try
+        {
+
+            // 上传文件路径
+            String filePath = Global.getUploadPath();
+            // 上传并返回新文件名称
+
+            for(int i=0;i<ids.length;i++){
+                for(int j=0;j<file.length;j++){
+                    String fileName = FileUploadUtils.upload(filePath, file[j]);
+                    String url = serverConfig.getUrl() + UPLOAD_PATH + fileName;
+
+                    GurtOrderFile gurtOrderFile = new GurtOrderFile();
+                    gurtOrderFile.setCreateUserId(ShiroUtils.getUserId());
+                    gurtOrderFile.setOrderId(ids[i]);
+                    gurtOrderFile.setName(fileName);
+                    gurtOrderFile.setFileDownLoadUrl(url);
+                    gurtOrderMapper.insertOrderFile(gurtOrderFile);
+                }
+            }
+            return "上传招标成功";
+        }
+        catch (Exception e)
+        {
+            return "上传招标出现错误!";
         }
     }
 }

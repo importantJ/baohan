@@ -52,7 +52,7 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">截标日期：</label>
 				<div class="col-sm-8">
-					<input id="closingTime" name="closingTime" th:value="${gurtOrder.closingTime}" class="form-control" type="text">
+					<input id="closingTime" required name="closingTime" th:value="${#dates.format(gurtOrder.closingTime, 'yyyy-MM-dd')}" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">	
@@ -65,7 +65,7 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">有效期：</label>
 				<div class="col-sm-8">
-					<input id="validityDeadline" name="validityDeadline" th:value="${gurtOrder.validityDeadline}" class="form-control" type="text">
+					<input id="validityDeadline" required name="validityDeadline" th:value="${gurtOrder.validityDeadline}" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">	
@@ -142,6 +142,7 @@
 	<th:block th:include="include :: bootstrap-fileinput-js" />
     <script type="text/javascript">
 
+
 		function addjinespan() {
 			$("#jinespan").append("<div class=\"form-group\" >\n" +
                 "\t\t\t\t<label class=\"col-sm-3 control-label\">已收账款：</label>\n" +
@@ -191,11 +192,26 @@
 		});
 		
 		function submitHandler() {
-	        if ($.validate.form()) {
-	                $("[name=fileNames]").val(uploadFileName)
+			var flag=true;
+            	var youxiao=document.getElementById("validityDeadline").value;
+                var date = document.getElementById("closingTime").value;
+                var result1=youxiao.match(/((^((1[8-9]\d{2})|([2-9]\d{3}))(-)(10|12|0?[13578])(-)(3[01]|[12][0-9]|0?[1-9])$)|(^((1[8-9]\d{2})|([2-9]\d{3}))(-)(11|0?[469])(-)(30|[12][0-9]|0?[1-9])$)|(^((1[8-9]\d{2})|([2-9]\d{3}))(-)(0?2)(-)(2[0-8]|1[0-9]|0?[1-9])$)|(^([2468][048]00)(-)(0?2)(-)(29)$)|(^([3579][26]00)(-)(0?2)(-)(29)$)|(^([1][89][0][48])(-)(0?2)(-)(29)$)|(^([2-9][0-9][0][48])(-)(0?2)(-)(29)$)|(^([1][89][2468][048])(-)(0?2)(-)(29)$)|(^([2-9][0-9][2468][048])(-)(0?2)(-)(29)$)|(^([1][89][13579][26])(-)(0?2)(-)(29)$)|(^([2-9][0-9][13579][26])(-)(0?2)(-)(29)$))/);
+                var result = date.match(/((^((1[8-9]\d{2})|([2-9]\d{3}))(-)(10|12|0?[13578])(-)(3[01]|[12][0-9]|0?[1-9])$)|(^((1[8-9]\d{2})|([2-9]\d{3}))(-)(11|0?[469])(-)(30|[12][0-9]|0?[1-9])$)|(^((1[8-9]\d{2})|([2-9]\d{3}))(-)(0?2)(-)(2[0-8]|1[0-9]|0?[1-9])$)|(^([2468][048]00)(-)(0?2)(-)(29)$)|(^([3579][26]00)(-)(0?2)(-)(29)$)|(^([1][89][0][48])(-)(0?2)(-)(29)$)|(^([2-9][0-9][0][48])(-)(0?2)(-)(29)$)|(^([1][89][2468][048])(-)(0?2)(-)(29)$)|(^([2-9][0-9][2468][048])(-)(0?2)(-)(29)$)|(^([1][89][13579][26])(-)(0?2)(-)(29)$)|(^([2-9][0-9][13579][26])(-)(0?2)(-)(29)$))/);
+                if(result==null)
+                {
+                    alert("截标时间请输入正确的日期格式如(2012-01-01)");
+                    flag=false;
+                }else if(result1==null&&isNaN(youxiao)){
+                    alert("有效期请输入时间例：(2012-01-01)或者有效期例:(60)")
+                    flag=false;
+				}
+	        if(flag){
+                if ($.validate.form()) {
+                    $("[name=fileNames]").val(uploadFileName)
                     $("[name=fileUrls]").val(uploadFileUrl)
                     $.operate.save(prefix + "/edit", $('#form-gurtOrder-add').serialize());
-	        }
+                }
+			}
 	    }
 
 	    function getMoney() {
@@ -204,7 +220,6 @@
             },"JSON")
         }
         function delfile(id) {
-
             $.post("/baohan/gurtOrder/delorderfile","id="+id+"",function (data) {
                 $("#"+id+"").remove();
             },"TEXT")

@@ -129,16 +129,34 @@
     });
 
     function submitHandler() {
-        var ty=[];
-        if ($.validate.form()) {
-            var checkInputs = document.querySelectorAll('input:checked')
-            for(var i = 0;i<checkInputs.length;i++){
-                ty.push(checkInputs[i].value);
-                // 计算
+		var a=document.getElementsByClassName("form-control");
+		var iosk=false;
+		for(var i=1;i<a.length;i++){
+
+            if (a[i].value != "") {
+                iosk = isNaN(a[i].value);//判断是否为数值类型 bool,false为数字类型，true为字符
+                if (iosk == true) {
+                    alert("请输入数字！");
+                    return;
+                }
+            }else{
+                alert("担保金额不能为空！");
+                return;
+			}
+
+		}
+        if(iosk==false){
+            var ty=[];
+            if ($.validate.form()) {
+                var checkInputs = document.querySelectorAll('input:checked')
+                for(var i = 0;i<checkInputs.length;i++){
+                    ty.push(checkInputs[i].value);
+                    // 计算
+                }
+                $("[name=type]").val(ty);
+                $.operate.save(prefix + "/addType", $('#form-gurtCategory-add').serialize());
             }
-            $("[name=type]").val(ty);
-            $.operate.save(prefix + "/addType", $('#form-gurtCategory-add').serialize());
-        }
+		}
     }
 </script>
 </body>

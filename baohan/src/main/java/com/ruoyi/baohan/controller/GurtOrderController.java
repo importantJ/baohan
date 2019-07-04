@@ -67,7 +67,6 @@ public class 	GurtOrderController extends BaseController
 		}else if(gurtOrder.getStatus()==4){
 			gurtOrder.setStatus(Long.valueOf(1));
 		}
-
 		if(gurtOrder.getStatus()==3){
 			//提交
 			gurtOrderService.insertinviteCommission(gurtOrder);
@@ -75,6 +74,18 @@ public class 	GurtOrderController extends BaseController
 		gurtOrderService.updateOrderstatus(gurtOrder);
 		UtilOrder.gurtOrder(modelMap,gurtOrderService);
 		return prefix + "/gurtOrder";
+	}
+
+	@GetMapping("/modifytijiao")
+	@ResponseBody
+	public Object modifytijiao(Long[] ids){
+		for(int i=0;i<ids.length;i++){
+			GurtOrder gurtOrder=new GurtOrder();
+			gurtOrder.setId(ids[i]);
+			gurtOrder.setStatus(Long.valueOf(1));
+			gurtOrderService.updateOrderstatus(gurtOrder);
+		}
+		return "提交成功";
 	}
 
 	@GetMapping("/modifystatusche/{id}")
@@ -186,6 +197,7 @@ public class 	GurtOrderController extends BaseController
 	@ResponseBody
 	public AjaxResult addSave(GurtOrder gurtOrder,String[] fileNames,String[] fileUrls,String[] money)
 	{
+
 		return toAjax(gurtOrderService.insertGurtOrder(gurtOrder,fileNames,fileUrls,money));
 	}
 	/**
