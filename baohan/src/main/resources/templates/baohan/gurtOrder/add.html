@@ -168,20 +168,35 @@
 		});
 		
 		function submitHandler() {
-	        if ($.validate.form()) {
-	            if(uploadFileName.length==0){
-	                alert("请先上传招标等文件后在进行添加!")
-				}else {
-	                $("[name=fileNames]").val(uploadFileName)
-                    $("[name=fileUrls]").val(uploadFileUrl)
-					var am=$("#amount").val();
-					if(isNaN(am)){
-						alert('金额超出范围')
-					}else {
-						$.operate.save(prefix + "/add", $('#form-gurtOrder-add').serialize());
-					}
+            var flag=true;
+            var youxiao=document.getElementById("validityDeadline").value;
+            var date = document.getElementById("closingTime").value;
+            var result1=youxiao.match(/((^((1[8-9]\d{2})|([2-9]\d{3}))(-)(10|12|0?[13578])(-)(3[01]|[12][0-9]|0?[1-9])$)|(^((1[8-9]\d{2})|([2-9]\d{3}))(-)(11|0?[469])(-)(30|[12][0-9]|0?[1-9])$)|(^((1[8-9]\d{2})|([2-9]\d{3}))(-)(0?2)(-)(2[0-8]|1[0-9]|0?[1-9])$)|(^([2468][048]00)(-)(0?2)(-)(29)$)|(^([3579][26]00)(-)(0?2)(-)(29)$)|(^([1][89][0][48])(-)(0?2)(-)(29)$)|(^([2-9][0-9][0][48])(-)(0?2)(-)(29)$)|(^([1][89][2468][048])(-)(0?2)(-)(29)$)|(^([2-9][0-9][2468][048])(-)(0?2)(-)(29)$)|(^([1][89][13579][26])(-)(0?2)(-)(29)$)|(^([2-9][0-9][13579][26])(-)(0?2)(-)(29)$))/);
+            var result = date.match(/((^((1[8-9]\d{2})|([2-9]\d{3}))(-)(10|12|0?[13578])(-)(3[01]|[12][0-9]|0?[1-9])$)|(^((1[8-9]\d{2})|([2-9]\d{3}))(-)(11|0?[469])(-)(30|[12][0-9]|0?[1-9])$)|(^((1[8-9]\d{2})|([2-9]\d{3}))(-)(0?2)(-)(2[0-8]|1[0-9]|0?[1-9])$)|(^([2468][048]00)(-)(0?2)(-)(29)$)|(^([3579][26]00)(-)(0?2)(-)(29)$)|(^([1][89][0][48])(-)(0?2)(-)(29)$)|(^([2-9][0-9][0][48])(-)(0?2)(-)(29)$)|(^([1][89][2468][048])(-)(0?2)(-)(29)$)|(^([2-9][0-9][2468][048])(-)(0?2)(-)(29)$)|(^([1][89][13579][26])(-)(0?2)(-)(29)$)|(^([2-9][0-9][13579][26])(-)(0?2)(-)(29)$))/);
+            if(result==null)
+            {
+                alert("截标时间请输入正确的日期格式如(2012-01-01)");
+                flag=false;
+            }else if(result1==null&&isNaN(youxiao)){
+                alert("有效期请输入时间例：(2012-01-01)或者有效期例:(60)")
+                flag=false;
+            }
+            if(flag) {
+                if ($.validate.form()) {
+                    if (uploadFileName.length == 0) {
+                        alert("请先上传招标等文件后在进行添加!")
+                    } else {
+                        $("[name=fileNames]").val(uploadFileName)
+                        $("[name=fileUrls]").val(uploadFileUrl)
+                        var am = $("#amount").val();
+                        if (isNaN(am)) {
+                            alert('金额超出范围')
+                        } else {
+                            $.operate.save(prefix + "/add", $('#form-gurtOrder-add').serialize());
+                        }
+                    }
                 }
-	        }
+            }
 	    }
 		function a() {
 			var money1=$("#money1").val();

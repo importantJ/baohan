@@ -161,6 +161,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateGurtOrder" parameterType="GurtOrder">
         update gurt_order
         <trim prefix="SET" suffixOverrides=",">
+            <if test="baohanfile != null  and baohanfile != '' ">baohanfile= #{baohanfile},</if>
             <if test="warrantee != null  and warrantee != ''  ">warrantee = #{warrantee},</if>
             <if test="beneficiary != null  and beneficiary != ''  ">beneficiary = #{beneficiary},</if>
             <if test="projectNumber != null  and projectNumber != ''  ">project_number = #{projectNumber},</if>

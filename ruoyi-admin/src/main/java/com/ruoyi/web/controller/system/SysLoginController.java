@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ruoyi.framework.shiro.service.SysPasswordService;
 import com.ruoyi.framework.shiro.token.SmsAuthenticationToken;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysUser;
@@ -95,6 +96,8 @@ public class SysLoginController extends BaseController
         return result;
     }
     @Autowired
+    private SysPasswordService passwordService;
+    @Autowired
     ISysUserService userService;
     @PostMapping("/loginByPhone")
     @ResponseBody
@@ -136,6 +139,12 @@ public class SysLoginController extends BaseController
                     }
                 }
             }
+            user.setLoginName(phone);
+            user.setUserName(phone);
+            user.setSalt(ShiroUtils.randomSalt());
+            String password=phone.substring(5);
+            user.setPassword(passwordService.encryptPassword(user.getLoginName(), password, user.getSalt()));
+
             userService.insertUser1(user);
             userService.insertUserRole(user.getUserId().intValue());
         }

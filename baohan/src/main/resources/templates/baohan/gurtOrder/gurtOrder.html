@@ -23,8 +23,6 @@
                                     th:value="${dict.id}"></option>
                         </select>
                         </li>
-
-
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
                                     class="fa fa-search"></i>&nbsp;搜索</a>
@@ -304,7 +302,7 @@
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/chakan/' + row.id + '"><i class="fa fa-remove"></i>查看</a>');
                             }
                             if (row.statusName == "待处理") {
-                                actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="href="/baohan/gurtOrder/chakan/' + row.id + '"><i class="fa fa-remove"></i>查看</a>');
+                                actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/chakan/' + row.id + '"><i class="fa fa-remove"></i>查看</a>');
                             }
                             if (row.statusName == "待接收") {
                                 actions.push('<a class="btn btn-danger btn-xs ' + exitFlag + '" href="javascript:void(0)" onclick="modify(\'' + row.id + '\')"><i class="fa fa-remove"></i>编辑</a>');

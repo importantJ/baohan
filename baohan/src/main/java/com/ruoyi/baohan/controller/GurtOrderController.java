@@ -27,6 +27,7 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.rmi.CORBA.Util;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -199,13 +200,28 @@ public class 	GurtOrderController extends BaseController
 	@Log(title = "订单", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(GurtOrder gurtOrder,String[] fileNames,String[] fileUrls,String[] money,HttpServletRequest request)
+	public AjaxResult addSave(GurtOrder gurtOrder,String[] fileNames,String[] fileUrls,String[] money)
 	{
 	    GurtGuarantee gurtGuarantee=iGurtGuaranteeService.selectGurtGuaranteeById(gurtOrder.getGuaranteeId());
 	    String baourl=gurtGuarantee.getGuaranteeFilePath();
 	    String ab=Global.getUploadPath()+baourl.substring(baourl.lastIndexOf("/"));
         Map map=new HashMap();
         map.put("warrantee",gurtOrder.getWarrantee());
+        map.put("beneficiary",gurtOrder.getBeneficiary());
+        List<GurtProjectType> gurtProjectTypeList=iGurtProjectTypeService.selectGurtProjectTypeList(new GurtProjectType());
+        for (GurtProjectType type : gurtProjectTypeList) {
+            if(type.getId()==gurtOrder.getProjectTypeId())
+                gurtOrder.setFenName(type.getName());
+        }
+        map.put("fenName",gurtOrder.getFenName());
+        map.put("xiao",gurtOrder.getAmount().toString());
+        map.put("da",UtilNumber.convert(gurtOrder.getAmount().toString()));
+        Calendar calendar = Calendar.getInstance();
+        Date date=new Date();
+        calendar.setTime(date);
+        map.put("yy",String.valueOf(calendar.get(Calendar.YEAR)));
+        map.put("mm",String.valueOf(calendar.get(Calendar.MONTH) + 1));
+        map.put("dd",String.valueOf(calendar.get(Calendar.DATE)));
         String newpath=Global.getUploadPath()+baourl.substring(baourl.lastIndexOf("/"),baourl.lastIndexOf("/"))+gurtOrder.getWarrantee()+gurtOrder.getBeneficiary()+".docx";
         Replace.searchAndReplace(ab,newpath,map);
 		String a=serverConfig.getUrl()+newpath.substring(newpath.lastIndexOf("/profile"));
@@ -221,6 +237,30 @@ public class 	GurtOrderController extends BaseController
 	@ResponseBody
 	public AjaxResult editSave(GurtOrder gurtOrder,String[] fileNames,String[] fileUrls,String[] money)
 	{
+        GurtGuarantee gurtGuarantee=iGurtGuaranteeService.selectGurtGuaranteeById(gurtOrder.getGuaranteeId());
+        String baourl=gurtGuarantee.getGuaranteeFilePath();
+        String ab=Global.getUploadPath()+baourl.substring(baourl.lastIndexOf("/"));
+        Map map=new HashMap();
+        map.put("warrantee",gurtOrder.getWarrantee());
+        map.put("beneficiary",gurtOrder.getBeneficiary());
+        List<GurtProjectType> gurtProjectTypeList=iGurtProjectTypeService.selectGurtProjectTypeList(new GurtProjectType());
+        for (GurtProjectType type : gurtProjectTypeList) {
+            if(type.getId()==gurtOrder.getProjectTypeId())
+                gurtOrder.setFenName(type.getName());
+        }
+        map.put("fenName",gurtOrder.getFenName());
+        map.put("xiao",gurtOrder.getAmount().toString());
+        map.put("da",UtilNumber.convert(gurtOrder.getAmount().toString()));
+        Calendar calendar = Calendar.getInstance();
+        Date date=new Date();
+        calendar.setTime(date);
+        map.put("yy",String.valueOf(calendar.get(Calendar.YEAR)));
+        map.put("mm",String.valueOf(calendar.get(Calendar.MONTH) + 1));
+        map.put("dd",String.valueOf(calendar.get(Calendar.DATE)));
+        String newpath=Global.getUploadPath()+baourl.substring(baourl.lastIndexOf("/"),baourl.lastIndexOf("/"))+gurtOrder.getWarrantee()+gurtOrder.getBeneficiary()+".docx";
+        Replace.searchAndReplace(ab,newpath,map);
+        String a=serverConfig.getUrl()+newpath.substring(newpath.lastIndexOf("/profile"));
+        gurtOrder.setBaohanfile(a);
 		return toAjax(gurtOrderService.updateGurtOrder(gurtOrder,fileNames,fileUrls,money));
 	}
 

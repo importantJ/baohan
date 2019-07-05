@@ -41,7 +41,7 @@
             </div>
             <div>
                 应付金额-邀请人项目成本*
-                <input type="text" value="0.5" name="cb"/>
+                <input type="text" th:value="${cb}" name="cb"/>
                 =邀请提成
             </div>
             <hr>
@@ -51,17 +51,10 @@
                     都计算为多笔(时间格式:24小时制)
                 </span>
             </div>
-            <div>
-                阶段一 开始时间: <input type="text" value="08:00:00" name="starttime"/> 结束时间:
-                <input type="text" value="10:00:00" name="endtime"/>
-            </div>
-            <div>
-                阶段二 开始时间: <input type="text" value="14:00:00" name="starttime"/> 结束时间:
-                <input type="text" value="16:00:00" name="endtime"/>
-            </div>
-            <div>
-                阶段三 开始时间: <input type="text" value="" name="starttime"/> 结束时间:
-                <input type="text" value="" name="endtime"/>
+
+            <div th:each="dict,status : ${getAllShezhi}">
+                阶段<span th:text="${status.index}"></span> 开始时间: <input type="text" th:value="${#dates.format(dict.starttime, 'HH:mm:ss')}" name="starttime"/> 结束时间:
+                <input type="text" th:value="${#dates.format(dict.endtime, 'HH:mm:ss')}" name="endtime"/>
             </div>
             <hr>
             <div>
@@ -101,6 +94,7 @@
         function add() {
             $.get("/baohan/gurtOrder/shezhi",$("form").serialize(),function (data) {
                 alert('更改设置成功')
+                $.table.refresh();
             })
         }
     </script>
